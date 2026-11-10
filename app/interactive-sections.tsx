@@ -7,8 +7,6 @@ const workImages = [
   ["work-1.jpg", "Completed modern home exterior"],
   ["work-2.jpg", "Residential construction project"],
   ["work-3.jpg", "Finished contemporary home"],
-  ["project-whitford.jpg", "Whitford Heights design and build project"],
-  ["project-new-lynn.jpg", "New Lynn two-storey home project"],
 ] as const;
 
 const sampleTestimonials = [
@@ -31,11 +29,35 @@ const sampleTestimonials = [
 
 export function ScrollableWorkGallery() {
   const rowRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const scrollGallery = (direction: -1 | 1) => {
+  const showProject = (index: number) => {
     const row = rowRef.current;
     if (!row) return;
-    row.scrollBy({ left: direction * row.clientWidth * 0.82, behavior: "smooth" });
+    const nextIndex = (index + workImages.length) % workImages.length;
+    const target = row.children[nextIndex] as HTMLElement | undefined;
+    if (!target) return;
+    setActiveIndex(nextIndex);
+    target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  };
+
+  const syncActiveProject = () => {
+    const row = rowRef.current;
+    if (!row) return;
+    const rowCenter = row.scrollLeft + row.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    Array.from(row.children).forEach((child, index) => {
+      const card = child as HTMLElement;
+      const distance = Math.abs(card.offsetLeft + card.clientWidth / 2 - rowCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex((current) => current === closestIndex ? current : closestIndex);
   };
 
   return (
@@ -45,12 +67,8 @@ export function ScrollableWorkGallery() {
           <span>RECENT PROJECTS</span>
           <h2>OUR WORK</h2>
         </div>
-        <div className="work-controls" aria-label="Project gallery controls">
-          <button type="button" onClick={() => scrollGallery(-1)} aria-label="Scroll projects left">←</button>
-          <button type="button" onClick={() => scrollGallery(1)} aria-label="Scroll projects right">→</button>
-        </div>
       </div>
-      <div className="home-work-row" ref={rowRef} tabIndex={0} aria-label="Scrollable project gallery">
+      <div className="home-work-row" ref={rowRef} tabIndex={0} onScroll={syncActiveProject} aria-label="Scrollable project gallery">
         {workImages.map(([file, alt], index) => (
           <figure key={file}>
             <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) 84vw, 498px" unoptimized />
@@ -58,7 +76,24 @@ export function ScrollableWorkGallery() {
           </figure>
         ))}
       </div>
-      <p className="work-scroll-hint">Drag, swipe or use the arrows to explore more projects.</p>
+      <div className="work-gallery-footer content-shell">
+        <div className="work-dots" aria-label="Choose a project">
+          {workImages.map(([file], index) => (
+            <button
+              type="button"
+              key={file}
+              className={index === activeIndex ? "active" : ""}
+              onClick={() => showProject(index)}
+              aria-label={`Show project ${index + 1}`}
+              aria-current={index === activeIndex ? "true" : undefined}
+            />
+          ))}
+        </div>
+        <div className="work-controls" aria-label="Project gallery controls">
+          <button type="button" className="work-arrow previous" onClick={() => showProject(activeIndex - 1)} aria-label="Previous project" />
+          <button type="button" className="work-arrow next" onClick={() => showProject(activeIndex + 1)} aria-label="Next project" />
+        </div>
+      </div>
     </section>
   );
 }
