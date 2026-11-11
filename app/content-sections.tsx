@@ -71,17 +71,17 @@ export function IntroSection({ type }: { type: keyof typeof introCopy }) {
 }
 
 const values = [
-  ["PASSION", "Building is more than a job to us. We genuinely love what we do and take pride in bringing our clients’ ideas to life."],
-  ["HONESTY", "We believe in being upfront with our clients, providing honest advice and realistic expectations throughout every stage of their project."],
-  ["COMMUNICATION", "We take the time to understand your vision, answer questions and keep you informed, making the building process easier to navigate."],
-  ["EXPERIENCE", "With over 30 years in the building industry, we bring practical knowledge and experience to every project, from renovations to new builds."],
+  { title: "PASSION", icon: "value-passion.png", copy: "Building is more than a job to us. We genuinely love what we do and take pride in bringing our clients’ ideas to life." },
+  { title: "HONESTY", icon: "value-honesty.png", copy: "We believe in being upfront with our clients, providing honest advice and realistic expectations throughout every stage of their project." },
+  { title: "COMMUNICATION", icon: "value-communication.png", copy: "We take the time to understand your vision, answer questions and keep you informed, making the building process easier to navigate." },
+  { title: "EXPERIENCE", icon: "value-experience.png", copy: "With over 30 years in the building industry, we bring practical knowledge and experience to every project, from renovations to new builds." },
 ];
 
 export function ValuesSection() {
   return <section className="values-section"><div className="content-shell">
     <SectionHeading title="OUR VALUES" />
-    <div className="value-grid">{values.map(([title, copy], index) => <article className="value-card" key={title}>
-      <span className="round-icon" aria-hidden="true">{["◆", "◇", "↔", "✦"][index]}</span><h3>{title}</h3><p>{copy}</p>
+    <div className="value-grid">{values.map(({ title, icon, copy }) => <article className="value-card" key={title}>
+      <span className="round-icon" aria-hidden="true"><Image src={`/icons/${icon}`} alt="" width={96} height={96} unoptimized /></span><h3>{title}</h3><p>{copy}</p>
     </article>)}</div>
   </div></section>;
 }

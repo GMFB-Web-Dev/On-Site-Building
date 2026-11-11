@@ -70,13 +70,27 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
 
 function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
-  const items = [["Home","/","home"],["Services","/services","services"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
+  const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
+  const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services#renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services#design-build"],["Additions & Extensions","/services#additions-extensions"],["Light Commercial Construction","/services#light-commercial-construction"]];
+  const servicesActive = active.startsWith("service");
   return <header className="site-header"><div className="header-inner">
     <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
       <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
     </Link>
-    <nav className="desktop-nav" aria-label="Primary navigation">{items.map(([label,href,key])=><Link key={href} href={href} className={active.includes(key) ? "active" : ""}>{label}</Link>)}<a className="phone-button" href="tel:0272868693">027 286 8693</a></nav>
-    <details className="mobile-nav"><summary>MENU</summary><nav>{items.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<a href="tel:0272868693">027 286 8693</a></nav></details>
+    <nav className="desktop-nav" aria-label="Primary navigation">
+      <Link href="/" className={active === "home" ? "active" : ""}>Home</Link>
+      <div className={`nav-service-dropdown ${servicesActive ? "active" : ""}`}>
+        <Link className="nav-service-trigger" href="/services">Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
+        <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
+      </div>
+      {items.slice(1).map(([label,href,key])=><Link key={href} href={href} className={active.includes(key) ? "active" : ""}>{label}</Link>)}
+      <a className="phone-button" href="tel:0272868693">027 286 8693</a>
+    </nav>
+    <details className="mobile-nav"><summary>MENU</summary><nav>
+      <Link href="/">Home</Link>
+      <details className="mobile-service-menu"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<a href="tel:0272868693">027 286 8693</a>
+    </nav></details>
   </div></header>;
 }
 
@@ -110,16 +124,16 @@ function HomeAbout() {
 }
 
 const serviceCards = [
-  ["RENOVATIONS & ALTERATIONS","service-renovations.jpg","/services"],
-  ["RESIDENTIAL NEW BUILDS","service-new-builds.jpg","/services/residential-new-builds"],
-  ["DESIGN & BUILD","service-design-build.jpg","/services"],
-  ["ADDITIONS & EXTENSIONS","service-extensions.jpg","/services"],
+  ["RENOVATIONS & ALTERATIONS","service-renovations.jpg","/services","renovations-alterations"],
+  ["RESIDENTIAL NEW BUILDS","service-new-builds.jpg","/services/residential-new-builds","residential-new-builds"],
+  ["DESIGN & BUILD","service-design-build.jpg","/services","design-build"],
+  ["ADDITIONS & EXTENSIONS","service-extensions.jpg","/services","additions-extensions"],
 ];
 
 function ServicesSection() {
   return <section className="services-section"><div className="content-shell"><h2>OUR SERVICES</h2><p>From renovations to new builds, we bring experience to every project.</p><div className="services-grid">
-    {serviceCards.map(([title,image,href])=><Link href={href} className="service-card" key={title}><Image src={`/design/${image}`} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" unoptimized/><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
-    <Link href="/services" className="service-card service-card-wide"><Image src="/design/light-commercial.jpg" alt="" fill sizes="100vw" unoptimized/><span><strong>LIGHT COMMERCIAL<br/>CONSTRUCTION</strong><small>LEARN MORE&nbsp; →</small></span></Link>
+    {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={`/design/${image}`} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" unoptimized/><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
+    <Link id="light-commercial-construction" href="/services" className="service-card service-card-wide"><Image src="/design/light-commercial.jpg" alt="" fill sizes="100vw" unoptimized/><span><strong>LIGHT COMMERCIAL<br/>CONSTRUCTION</strong><small>LEARN MORE&nbsp; →</small></span></Link>
   </div></div></section>;
 }
 
