@@ -305,8 +305,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .article-body > section { scroll-margin-top: 104px; margin-bottom: 50px; }
 .article-body h2 { margin: 8px 0 24px; color: var(--blue); font: 900 clamp(28px,2.5vw,38px)/1.2 var(--font-montserrat),sans-serif; }
 .article-body p { margin: 0 0 18px; }
-.article-callout { margin-top: 64px; padding: 32px 0 0; border-top: 1px solid var(--blue); color: #111; }
-.article-callout h2 { margin-top: 0; }
+.article-callout { margin: 0; padding: 0; border: 0; background: transparent; color: inherit; }
 .service-area-section { background: var(--ice); padding: 66px 0 72px; }
 .service-area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px,8vw,110px); align-items: center; }
 .service-area-grid .section-heading p { margin-left: 0; }
@@ -428,7 +427,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .article-body { font-size: 16px; }
   .article-body { padding: 30px 24px; }
   .article-lead { font-size: inherit; }
-  .article-callout { padding: 30px 0 0; }
   .service-area-map { min-height: 430px; }
   .service-area-section-map-only { padding: 32px 0; }
   .service-area-map-full { width: calc(100% - 32px); height: 430px; min-height: 0; }
