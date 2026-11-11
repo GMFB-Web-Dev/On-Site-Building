@@ -112,7 +112,7 @@ function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"]];
   const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services/renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services/design-build"],["Additions & Extensions","/services/additions-extensions"],["Light Commercial Construction","/services/light-commercial-construction"]];
-  const projectItems = [["All Projects","/projects"],["New Lynn","/projects/new-lynn"],["Manukau Heights","/projects/manukau-heights"],["Whitford Heights","/projects/whitford-heights"],["Botany","/projects/botany"]];
+  const projectItems = [["New Lynn","/projects/new-lynn"],["Manukau Heights","/projects/manukau-heights"],["Whitford Heights","/projects/whitford-heights"],["Botany","/projects/botany"]];
   const servicesActive = active.startsWith("service");
   const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
   return <header className="site-header"><div className="header-inner">

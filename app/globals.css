@@ -357,14 +357,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 1180px) {
   .desktop-nav { display: none; }
   .header-inner { gap: 16px; }
+  .site-header .header-brand:hover .header-logo img { transform: none; }
   .mobile-nav { display: block; }
   .mobile-nav > nav { position: fixed; right: 24px; top: calc(var(--site-header-height) + 8px); width: min(360px,calc(100% - 32px)); max-height: calc(100dvh - var(--site-header-height) - 24px - env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; padding: 12px; border: 1px solid rgba(24,58,114,.18); border-radius: 8px; background: var(--ice); box-shadow: 0 12px 28px rgba(24,58,114,.2); display: flex; flex-direction: column; gap: 4px; animation: menu-in .22s ease both; }
   .mobile-nav nav a { display: flex; align-items: center; min-height: 48px; padding: 12px; border-radius: 4px; text-decoration: none; overflow-wrap: anywhere; }
+  .mobile-nav > nav > a:not([href^="tel:"]),.mobile-service-menu > summary { font-size: 14px; font-weight: 500; line-height: 1.5; letter-spacing: .02em; text-transform: uppercase; }
   .mobile-nav nav a:hover { background: rgba(94,143,224,.14); }
   .mobile-nav nav a[href^="tel:"] { justify-content: center; margin-top: 8px; background: var(--navy); color: #fff; font-weight: 700; }
-  .mobile-service-menu summary { display: flex; min-height: 48px; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; padding: 12px; font-weight: 500; text-transform: uppercase; }
+  .mobile-service-menu summary { display: flex; min-height: 48px; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; padding: 12px; border-radius: 4px; }
   .mobile-service-menu summary::-webkit-details-marker { display: none; }
-  .mobile-service-menu[open] > summary { color: var(--navy); font-weight: 700; }
+  .mobile-service-menu[open] > summary { background: rgba(94,143,224,.14); color: var(--navy); }
   .mobile-service-menu[open] summary svg { transform: rotate(180deg); }
   .mobile-service-menu > div { display: flex; flex-direction: column; margin-left: 12px; border-left: 2px solid var(--blue); padding-left: 4px; }
   .mobile-service-menu > div a { font-size: 14px; line-height: 1.5; }
