@@ -10,7 +10,6 @@ import {
   CertificationSection,
   IntroSection,
   MissionSection,
-  ProjectGallerySection,
   ProjectOverviewSection,
   ProjectsSection,
   RelatedBlogsSection,
@@ -67,16 +66,16 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
     s("navbar-projects.png",80,"Projects navigation","nav"), s("hero-projects.png",820,"A Closer Look at Our Work","hero"), s("projects-grid.png",1083,"Our projects"),
     s("contact-strip-projects.png",612,"Contact details"), s("contact-form-map-projects.png",878,"Project enquiry form and map","form"), s("footer-projects.png",279,"Footer navigation") ] },
   whitford: { projectHero: ["WHITFORD HEIGHTS","A luxury design-and-build home created from the ground up for a couple in Whitford Heights, combining exceptional living spaces, personal touches and impressive features designed for both comfort and entertainment."], sections: [
-    s("navbar-whitford.png",80,"Whitford Heights project navigation","nav"), s("project-whitford.jpg",739,"Whitford Heights project overview"), s("project-gallery.png",531,"Whitford Heights gallery"),
+    s("navbar-whitford.png",80,"Whitford Heights project navigation","nav"), s("project-whitford.jpg",739,"Whitford Heights project overview"),
     s("projects-related-whitford.png",624,"Related projects"), s("contact-strip-whitford.png",612,"Contact details"), s("footer-whitford.png",279,"Footer navigation") ] },
   newLynn: { projectHero: ["NEW LYNN","A modern two-storey, four-bedroom home in New Lynn, designed around indoor-outdoor living, with a kitchen that opens directly onto the deck and an inviting outdoor entertainment area."], sections: [
-    s("navbar-new-lynn.png",80,"New Lynn project navigation","nav"), s("project-new-lynn.jpg",739,"New Lynn project overview"), s("project-gallery.png",531,"New Lynn project gallery"),
+    s("navbar-new-lynn.png",80,"New Lynn project navigation","nav"), s("project-new-lynn.jpg",739,"New Lynn project overview"),
     s("projects-related-new-lynn.png",624,"Related projects"), s("contact-strip-new-lynn.png",612,"Contact details"), s("footer-new-lynn.png",279,"Footer navigation") ] },
   manukau: { projectHero: ["MANUKAU HEIGHTS","A thoughtfully coordinated residential project created for practical family living, with durable construction, considered spaces and a strong connection to the outdoors."], sections: [
-    s("navbar-manukau.png",80,"Manukau Heights project navigation","nav"), s("project-manukau.jpg",739,"Manukau Heights project overview"), s("project-gallery.png",531,"Manukau Heights project gallery"),
+    s("navbar-manukau.png",80,"Manukau Heights project navigation","nav"), s("project-manukau.jpg",739,"Manukau Heights project overview"),
     s("projects-related-manukau.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
   botany: { projectHero: ["BOTANY","A contemporary residential project shaped around functional spaces, considered detailing and reliable delivery from the early building stages through to completion."], sections: [
-    s("navbar-botany.png",80,"Botany project navigation","nav"), s("project-botany.jpg",739,"Botany project overview"), s("project-gallery.png",531,"Botany project gallery"),
+    s("navbar-botany.png",80,"Botany project navigation","nav"), s("project-botany.jpg",739,"Botany project overview"),
     s("projects-related-botany.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
   about: { spacer: 1, sections: [
     s("navbar-about.png",80,"About navigation","nav"), s("hero-about.png",820,"Our Story. Your Future Project.","hero"), s("about-intro.jpg",739,"Built from the ground up"),
@@ -231,7 +230,7 @@ function VisualSection({ section }: { section: Section }) {
   if (file === "service-work.png") return <ScrollableWorkGallery service />;
   if (file.startsWith("testimonials")) return <TestimonialsCarousel />;
   if (file === "home-services.png" || file === "services-list.png") return <ServicesSection />;
-  if (file.startsWith("certification-")) return <CertificationSection blue={file === "certification-about.png"} />;
+  if (file.startsWith("certification-")) return <CertificationSection blue={file === "certification-about.png" || file === "certification-home.png"} />;
   if (file === "about-intro.jpg") return <IntroSection type="about" />;
   if (file === "service-intro.jpg") return <IntroSection type="service" />;
   if (file === "service-intro-renovations.jpg") return <IntroSection type="renovations" />;
@@ -251,7 +250,6 @@ function VisualSection({ section }: { section: Section }) {
   if (file === "project-new-lynn.jpg") return <ProjectOverviewSection project="newLynn" />;
   if (file === "project-manukau.jpg") return <ProjectOverviewSection project="manukau" />;
   if (file === "project-botany.jpg") return <ProjectOverviewSection project="botany" />;
-  if (file === "project-gallery.png") return <ProjectGallerySection />;
   if (file === "projects-related-whitford.png") return <ProjectsSection relatedTo="whitford" />;
   if (file === "projects-related-new-lynn.png") return <ProjectsSection relatedTo="newLynn" />;
   if (file === "projects-related-manukau.png") return <ProjectsSection relatedTo="manukau" />;
@@ -270,8 +268,7 @@ function VisualSection({ section }: { section: Section }) {
 }
 
 function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
-  const image: Record<string, string> = { "NEW LYNN": "hero-service-photo.jpg", "WHITFORD HEIGHTS": "hero-home-photo.jpg", "MANUKAU HEIGHTS": "work-1.jpg", "BOTANY": "work-3.jpg" };
-  return <section className="project-hero"><Image src={`/design/${image[hero[0]]}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {

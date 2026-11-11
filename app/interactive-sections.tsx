@@ -62,7 +62,6 @@ export function ScrollableWorkGallery({ service = false }: { service?: boolean }
     >
       <div className="home-work-heading content-shell">
         <div>
-          <span>RECENT PROJECTS</span>
           <h2>OUR WORK</h2>
         </div>
       </div>

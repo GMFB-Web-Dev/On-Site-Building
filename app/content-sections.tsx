@@ -27,9 +27,8 @@ const blogs = [
   { title: "What to Know Before Building a New Home", image: "figma-blog-new-home.png", href: "/blogs/building-a-new-home" },
 ];
 
-function SectionHeading({ eyebrow, title, copy }: { eyebrow?: string; title: string; copy?: string }) {
+function SectionHeading({ title, copy }: { title: string; copy?: string }) {
   return <header className="section-heading">
-    {eyebrow && <span>{eyebrow}</span>}
     <h2>{title}</h2>
     {copy && <p>{copy}</p>}
   </header>;
@@ -47,7 +46,6 @@ export function CertificationSection({ blue = false }: { blue?: boolean }) {
 
 const introCopy = {
   about: {
-    eyebrow: "",
     title: "BUILT FROM THE GROUND UP",
     image: "hero-about-photo.jpg",
     paragraphs: [
@@ -57,7 +55,6 @@ const introCopy = {
     ],
   },
   service: {
-    eyebrow: "",
     title: "RESIDENTIAL NEW BUILDS",
     image: "figma-newbuild-intro.png",
     paragraphs: [
@@ -67,7 +64,6 @@ const introCopy = {
     ],
   },
   renovations: {
-    eyebrow: "",
     title: "RENOVATIONS & ALTERATIONS",
     image: "figma-service-renovations.png",
     paragraphs: [
@@ -77,7 +73,6 @@ const introCopy = {
     ],
   },
   designBuild: {
-    eyebrow: "",
     title: "DESIGN & BUILD",
     image: "figma-service-design-build.png",
     paragraphs: [
@@ -87,7 +82,6 @@ const introCopy = {
     ],
   },
   extensions: {
-    eyebrow: "",
     title: "ADDITIONS & EXTENSIONS",
     image: "figma-service-extensions.png",
     paragraphs: [
@@ -97,7 +91,6 @@ const introCopy = {
     ],
   },
   commercial: {
-    eyebrow: "",
     title: "LIGHT COMMERCIAL CONSTRUCTION",
     image: "figma-service-commercial.png",
     paragraphs: [
@@ -112,9 +105,8 @@ export function IntroSection({ type }: { type: keyof typeof introCopy }) {
   const content = introCopy[type];
   const isService = type !== "about";
   return <section className={`split-story-section ${isService ? "service-intro-section" : ""}`}><div className="content-shell split-story-grid">
-    <div className="split-story-copy"><SectionHeading eyebrow={content.eyebrow} title={content.title} />
+    <div className="split-story-copy"><SectionHeading title={content.title} />
       {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      {!isService && <Link className="cta-button outline-button" href="/contact">TALK TO US</Link>}
     </div>
     {isService
       ? <div className="split-story-media"><Image src={`/design/${content.image}`} alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
@@ -133,7 +125,7 @@ export function ValuesSection() {
   return <section className="values-section"><div className="content-shell">
     <SectionHeading title="OUR VALUES" />
     <div className="value-grid">{values.map(({ title, icon, copy }) => <article className="value-card" key={title}>
-      <span className="round-icon" aria-hidden="true"><Image src={`/icons/${icon}`} alt="" width={28} height={28} unoptimized /></span><h3>{title}</h3><p>{copy}</p>
+      <span className="round-icon" aria-hidden="true"><Image src={`/icons/${icon}`} alt="" width={34} height={34} unoptimized /></span><h3>{title}</h3><p>{copy}</p>
     </article>)}</div>
   </div></section>;
 }
@@ -224,9 +216,8 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
   }
   const allProjects = !relatedTo && !compact;
   return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""} ${allProjects ? "projects-showcase-all" : ""}`}><div className="content-shell">
-    <SectionHeading eyebrow={relatedTo ? "EXPLORE MORE" : undefined} title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
-    <div className="project-card-grid">{cards.map((project) => <Link className={`project-tile ${compact || allProjects ? "project-tile-placeholder" : ""}`} href={project.href} key={project.title}>
-      {!compact && !allProjects && <Image src={`/design/${project.image}`} alt={`${project.title} building project`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized />}
+    <SectionHeading title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
+    <div className="project-card-grid">{cards.map((project) => <Link className="project-tile project-tile-placeholder" href={project.href} key={project.title}>
       <span>{!compact && <small>{project.location}</small>}<strong>{project.title}</strong><b>{compact ? "LEARN MORE" : "VIEW PROJECT"}&nbsp; →</b></span>
     </Link>)}</div>
   </div></section>;
@@ -262,14 +253,8 @@ const projectDetails = {
 export function ProjectOverviewSection({ project }: { project: keyof typeof projectDetails }) {
   const details = projectDetails[project];
   return <section className="project-overview-section"><div className="content-shell project-overview-grid">
-    <div><SectionHeading eyebrow="PROJECT OVERVIEW" title={details.title} /><p>{details.copy}</p><h3>PROJECT SCOPE</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
-    <div className="project-overview-photo"><Image src={`/design/${details.image}`} alt={`${details.title} project`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
-  </div></section>;
-}
-
-export function ProjectGallerySection() {
-  return <section className="project-gallery-section"><div className="content-shell"><SectionHeading eyebrow="THE DETAILS" title="PROJECT GALLERY" />
-    <div className="project-gallery-grid">{["work-1.jpg", "work-2.jpg", "work-3.jpg"].map((image, index) => <figure key={image}><Image src={`/design/${image}`} alt={`Project detail ${index + 1}`} fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></figure>)}</div>
+    <div><SectionHeading title={details.title} /><p>{details.copy}</p><h3>PROJECT SCOPE</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
+    <div className="project-overview-photo" role="img" aria-label={`${details.title} image placeholder`} />
   </div></section>;
 }
 
