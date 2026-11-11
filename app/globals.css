@@ -94,22 +94,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .work-arrow:hover::before { border-color: #a8cbff; }
 .work-arrow.previous:hover::before { transform: translate(-50%,-50%) rotate(-135deg); }
 .work-arrow.next:hover::before { transform: translate(-50%,-50%) rotate(45deg); }
-.testimonial-arrow { display: grid; place-items: center; width: 52px; height: 64px; border: 0; background: transparent; color: #639eff; cursor: pointer; font: 300 42px/1 Arial,sans-serif; }
-.testimonial-arrow:hover { color: var(--navy); transform: translateX(0) scale(1.12); }
-.testimonial-arrow:first-child:hover { transform: translateX(-4px) scale(1.12); }
-.testimonial-arrow:last-child:hover { transform: translateX(4px) scale(1.12); }
-.testimonials-section { position: relative; overflow: hidden; background: var(--ice); padding: 48px 0 52px; font-family: var(--font-montserrat),sans-serif; text-align: center; }
+.testimonial-arrow { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgba(99,158,255,.24); border-radius: 50%; background: rgba(255,255,255,.68); box-shadow: 0 14px 36px rgba(24,58,114,.08); color: #639eff; cursor: pointer; transition: color .2s ease, transform .2s ease, border-color .2s ease, background-color .2s ease; }
+.testimonial-arrow svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.testimonial-arrow:hover { border-color: currentColor; background: #fff; color: var(--navy); transform: scale(1.08); }
+.testimonial-arrow.previous:hover { transform: translateX(-4px) scale(1.08); }
+.testimonial-arrow.next:hover { transform: translateX(4px) scale(1.08); }
+.testimonial-arrow:focus-visible,.testimonial-dots button:focus-visible,.testimonial-carousel:focus-visible { outline: 3px solid rgba(99,158,255,.38); outline-offset: 4px; }
+.testimonials-section { position: relative; overflow: hidden; border-block: 9px solid #639eff; background: var(--ice); padding: 32px 0 38px; font-family: var(--font-montserrat),sans-serif; text-align: center; }
 .testimonials-inner { position: relative; }
-.testimonials-heading h2 { margin: 0; font-size: clamp(40px,3.9vw,56px); line-height: 1.05; font-weight: 900; letter-spacing: -.02em; }
-.testimonials-heading p { max-width: 780px; margin: 20px auto 24px; color: #17233a; font: 400 15px/1.55 var(--font-manrope),sans-serif; }
-.testimonial-carousel { display: grid; grid-template-columns: 52px minmax(0,820px) 52px; justify-content: space-between; gap: clamp(18px,4vw,60px); align-items: center; }
-.testimonial-carousel article { display: flex; min-height: 130px; flex-direction: column; align-items: center; justify-content: center; animation: testimonial-in .4s ease both; }
+.testimonials-heading { text-align: center; }
+.testimonials-heading h2 { margin: 0; color: var(--navy); font-size: clamp(40px,3.9vw,56px); line-height: 1.05; font-weight: 900; letter-spacing: -.035em; }
+.testimonial-carousel { display: grid; grid-template-columns: 52px minmax(0,820px) 52px; justify-content: space-between; gap: clamp(18px,4vw,60px); align-items: center; margin-top: 20px; border-radius: 18px; touch-action: pan-y; }
+.testimonial-carousel article { display: flex; min-height: 148px; flex-direction: column; align-items: center; justify-content: center; animation: testimonial-in .42s cubic-bezier(.22,1,.36,1) both; }
 .testimonial-carousel blockquote { width: 100%; max-width: 800px; margin: 0 0 20px; color: #17233a; text-align: center; font: 400 clamp(15px,1.25vw,18px)/1.55 var(--font-manrope),sans-serif; }
-.testimonial-carousel article > p { width: 100%; margin: 0; text-align: center; font-size: 14px; }
-.testimonial-dots { display: flex; justify-content: center; gap: 9px; margin-top: 16px; }
-.testimonial-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: #a9c8fa; cursor: pointer; }
-.testimonial-dots button.active { background: #639eff; transform: scale(1.15); }
-@keyframes testimonial-in { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+.testimonial-carousel article > p { width: 100%; margin: 0; color: var(--navy); text-align: center; font-size: 14px; }
+.testimonial-dots { display: flex; justify-content: center; gap: 9px; margin-top: 10px; }
+.testimonial-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: #a9c8fa; cursor: pointer; transition: width .22s ease, background-color .22s ease; }
+.testimonial-dots button.active { width: 27px; background: #639eff; }
+@keyframes testimonial-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .services-section { background: var(--ice); padding: 56px 0 64px; font-family: var(--font-montserrat),sans-serif; }
 .services-section h2 { margin: 0; text-align: center; color: var(--navy); font-size: clamp(40px,3.9vw,56px); font-weight: 900; line-height: 1.2; }
 .services-section > .content-shell > p { margin: 14px 0 32px; text-align: center; color: #111; font: 400 16px/1.5 var(--font-manrope),sans-serif; }
@@ -321,11 +323,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .home-work-row figure { height: auto; aspect-ratio: 498 / 429; }
   .work-gallery-footer { margin-top: 10px; }
   .work-controls { gap: 30px; }
-  .testimonials-section { padding: 52px 0; }
-  .testimonials-heading p { margin-bottom: 18px; }
+  .testimonials-section { border-block-width: 7px; padding: 42px 0 46px; }
   .testimonial-carousel { grid-template-columns: 34px minmax(0,1fr) 34px; gap: 6px; }
   .testimonial-carousel article { min-height: 210px; }
-  .testimonial-arrow { width: 34px; height: 48px; font-size: 34px; }
+  .testimonial-arrow { width: 34px; height: 34px; border-color: transparent; background: transparent; box-shadow: none; }
+  .testimonial-arrow svg { width: 21px; height: 21px; }
   .testimonial-dots { margin-top: 10px; }
   .project-hero { min-height: 560px; height: auto; padding: 72px 24px; }
   .project-hero p { margin-bottom: 48px; }
