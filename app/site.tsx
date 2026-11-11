@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MobileNavigation } from "./mobile-navigation";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
@@ -131,13 +132,13 @@ function SiteHeader({ file }: { file: string }) {
       </div>
       <a className="phone-button" href="tel:0272868693">027 286 8693</a>
     </nav>
-    <details className="mobile-nav"><summary>MENU</summary><nav>
+    <MobileNavigation>
       <Link href="/">Home</Link>
-      <details className="mobile-service-menu"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}
-      <details className="mobile-service-menu"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       <a href="tel:0272868693">027 286 8693</a>
-    </nav></details>
+    </MobileNavigation>
   </div></header>;
 }
 
