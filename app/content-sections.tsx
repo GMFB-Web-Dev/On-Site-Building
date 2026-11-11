@@ -223,37 +223,43 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
   </div></section>;
 }
 
-const projectDetails = {
+const projectDetails: Record<ProjectKey, { title: string; overviewTitle?: string; scopeTitle?: string; paragraphs: string[]; scope: string[] }> = {
   whitford: {
     title: "WHITFORD HEIGHTS",
-    image: "hero-home-photo.jpg",
-    copy: "A luxury design-and-build home created from the ground up for a couple in Whitford Heights. The home combines generous living spaces, personal touches and impressive features designed for comfort and entertainment.",
-    scope: ["Design and build", "New residential home", "Interior and exterior construction", "Outdoor entertaining areas"],
+    overviewTitle: "PROJECT OVERVIEW",
+    scopeTitle: "SCOPE OF WORK",
+    paragraphs: [
+      "Designed around a couple’s vision for their dream home, this remarkable residence spans approximately 667 m² across three storeys. The project brought together an ambitious design, generous proportions and spaces dedicated to relaxation, family living and entertaining.",
+      "Completed by a two-person building crew during a challenging period for the construction industry, the home remains one of On Site Building Construction’s standout residential projects and was featured in Trends magazine.",
+    ],
+    scope: ["Luxury residential design and build", "Three-storey home spanning approximately 667 m²", "Five bedrooms and five bathrooms", "Eight-car garage", "Dedicated living and entertainment areas", "Private theatre room", "Swimming pools", "Luxury landscaping"],
   },
   newLynn: {
     title: "NEW LYNN",
-    image: "hero-service-photo.jpg",
-    copy: "A modern two-storey, four-bedroom home designed around indoor-outdoor living. The kitchen opens directly onto the deck, creating an inviting entertainment area and a natural connection between the home and garden.",
-    scope: ["Residential new build", "Four bedrooms", "Two-storey construction", "Indoor-outdoor living"],
+    overviewTitle: "PROJECT OVERVIEW",
+    scopeTitle: "SCOPE OF WORK",
+    paragraphs: [
+      "This New Lynn residence brings together modern design and comfortable family living across two storeys. With four bedrooms, the home features an open connection between the kitchen and outdoor deck, making it easy to move between indoor and outdoor spaces.",
+      "An inset seating lounge provides a dedicated area for relaxation, while the outdoor BBQ area creates a space for entertaining. American-style taps add another distinctive detail to the home’s design.",
+    ],
+    scope: ["Modern two-storey residential home", "Four-bedroom layout", "Inset seating lounge", "Outdoor BBQ area", "American-style taps", "Direct kitchen-to-deck access", "Indoor-outdoor living design"],
   },
   manukau: {
     title: "MANUKAU HEIGHTS",
-    image: "work-1.jpg",
-    copy: "A carefully coordinated residential project in Manukau Heights, shaped around practical family living, durable materials and a clear connection between indoor and outdoor spaces.",
+    paragraphs: ["A carefully coordinated residential project in Manukau Heights, shaped around practical family living, durable materials and a clear connection between indoor and outdoor spaces."],
     scope: ["Residential construction", "Family-focused layout", "Interior and exterior work", "Trade coordination"],
   },
   botany: {
     title: "BOTANY",
-    image: "work-3.jpg",
-    copy: "A contemporary Botany project delivered with a focus on functional spaces, considered detailing and reliable coordination from the early building stages through to completion.",
+    paragraphs: ["A contemporary Botany project delivered with a focus on functional spaces, considered detailing and reliable coordination from the early building stages through to completion."],
     scope: ["Residential construction", "Contemporary detailing", "Interior and exterior work", "Project coordination"],
   },
 };
 
 export function ProjectOverviewSection({ project }: { project: keyof typeof projectDetails }) {
   const details = projectDetails[project];
-  return <section className="project-overview-section"><div className="content-shell project-overview-grid">
-    <div><SectionHeading title={details.title} /><p>{details.copy}</p><h3>PROJECT SCOPE</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
+  return <section className={`project-overview-section ${details.overviewTitle ? "project-overview-reference" : ""}`}><div className="content-shell project-overview-grid">
+    <div><SectionHeading title={details.overviewTitle ?? details.title} />{details.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h3>{details.scopeTitle ?? "PROJECT SCOPE"}</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
     <div className="project-overview-photo" role="img" aria-label={`${details.title} image placeholder`} />
   </div></section>;
 }

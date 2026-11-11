@@ -268,6 +268,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .project-overview-grid ul { margin: 0; padding: 0; list-style: none; }
 .project-overview-grid li { position: relative; padding: 8px 0 8px 24px; border-bottom: 1px solid rgba(24,58,114,.32); }
 .project-overview-grid li::before { content: "→"; position: absolute; left: 0; color: var(--navy); }
+.project-overview-reference .project-overview-grid > div:first-child > p { margin: 28px 0 24px; }
+.project-overview-reference .project-overview-grid h3 { margin-top: 42px; font-size: clamp(28px,2.8vw,40px); line-height: 1.2; }
+.project-overview-reference .project-overview-grid ul { padding-left: 24px; list-style: disc; }
+.project-overview-reference .project-overview-grid li { padding: 0; border: 0; line-height: 1.5; }
+.project-overview-reference .project-overview-grid li::before { content: none; }
 .project-overview-photo { position: relative; min-height: 590px; overflow: hidden; background: #cfd2d6; }
 .blogs-grid-section,.related-blogs-section { background: var(--ice); padding: 66px 0 74px; }
 .blogs-grid-section { min-height: 1538px; background: var(--blue); padding: 33px 0 48px; }
