@@ -142,29 +142,33 @@ function SiteHeader({ file }: { file: string }) {
 }
 
 const heroContent: Record<string,{title:string;copy:string;image:string}> = {
-  "hero-home.png": { title:"BUILT AROUND THE WAY YOU LIVE.", copy:"From renovations and extensions to new builds, On Site Building Construction brings over 30 years of experience to every project. We also offer complete design-and-build services throughout Auckland, Waikato and Whangārei.", image:"hero-home-photo.jpg" },
+  "hero-home.png": { title:"BUILT AROUND THE WAY YOU LIVE.", copy:"From renovations and extensions to new builds, On Site Building Construction brings over 30 years of experience to every project. We also offer complete design-and-build services throughout Auckland, Waikato and Whangārei.", image:"figma-blog-renovate-rebuild.png" },
   "hero-services.png": { title:"YOUR HOME. REIMAGINED.", copy:"Whether you’re transforming an existing home or building something new, we take the time to understand your vision, offer honest advice and guide you through every stage of your project.", image:"figma-services-hero.png" },
   "hero-service.png": { title:"A NEW HOME, BUILT AROUND YOU", copy:"Every new home starts with understanding what matters to you. We take the time to discuss your plans, offer honest guidance and bring your vision to life.", image:"figma-newbuild-hero.png" },
   "hero-service-renovations.png": { title:"YOUR HOME. REIMAGINED.", copy:"Transform the home you already know with thoughtful alterations, better flow and modern comfort, carefully planned around the way you want to live.", image:"figma-service-renovations.png" },
   "hero-service-design-build.png": { title:"DESIGNED WITH PURPOSE. BUILT WITH CARE.", copy:"Bring design and construction together through one coordinated team, with practical guidance from the first idea through to the finished build.", image:"figma-service-design-build.png" },
   "hero-service-extensions.png": { title:"MORE SPACE FOR THE WAY YOU LIVE.", copy:"Create room to grow with an addition or extension designed to connect naturally with your existing home, lifestyle and site.", image:"figma-service-extensions.png" },
   "hero-service-commercial.png": { title:"PRACTICAL SPACES. PROFESSIONAL DELIVERY.", copy:"From fit-outs and alterations to smaller commercial builds, we deliver functional spaces through clear planning, trusted trades and experienced coordination.", image:"figma-service-commercial.png" },
-  "hero-projects.png": { title:"A CLOSER LOOK AT OUR WORK", copy:"From home renovations and new builds to light commercial projects, take a look at the work that reflects our passion for building, practical approach and commitment to quality workmanship.", image:"hero-projects-photo.jpg" },
-  "hero-about.png": { title:"OUR STORY. YOUR FUTURE PROJECT.", copy:"Founded in 2003, On Site Building Construction brings over 30 years of building experience, honest communication and a genuine passion for creating spaces clients are proud to call home.", image:"hero-about-photo.jpg" },
+  "hero-projects.png": { title:"A CLOSER LOOK AT OUR WORK", copy:"From home renovations and new builds to light commercial projects, take a look at the work that reflects our passion for building, practical approach and commitment to quality workmanship.", image:"figma-blog-extension.png" },
+  "hero-about.png": { title:"OUR STORY. YOUR FUTURE PROJECT.", copy:"Founded in 2003, On Site Building Construction brings over 30 years of building experience, honest communication and a genuine passion for creating spaces clients are proud to call home.", image:"figma-blog-commercial.png" },
   "hero-blogs.png": { title:"BUILDING ADVICE, WITHOUT THE GUESSWORK", copy:"Explore practical advice on home renovations, extensions and new builds, with helpful insights to guide your decisions and plan your next project.", image:"figma-blogs-hero.png" },
-  "hero-blog.png": { title:"RENOVATE OR REBUILD? WHAT’S RIGHT FOR YOUR HOME?", copy:"Deciding whether to renovate your existing home or start fresh? Explore the key considerations to help you understand your options and make an informed decision.", image:"hero-home-photo.jpg" },
+  "hero-blog.png": { title:"RENOVATE OR REBUILD? WHAT’S RIGHT FOR YOUR HOME?", copy:"Deciding whether to renovate your existing home or start fresh? Explore the key considerations to help you understand your options and make an informed decision.", image:"figma-blog-renovate-rebuild.png" },
   "hero-blog-extension.png": { title:"PLANNING A HOME EXTENSION: WHAT TO CONSIDER FIRST", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-extension.png" },
   "hero-blog-blending.png": { title:"BLENDING OLD AND NEW IN A HOME RENOVATION", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-blending.png" },
   "hero-blog-commercial.png": { title:"WHAT IS LIGHT COMMERCIAL CONSTRUCTION?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-commercial.png" },
   "hero-blog-design-build.png": { title:"HOW DOES THE DESIGN AND BUILD PROCESS WORK?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-design-build.png" },
   "hero-blog-new-home.png": { title:"WHAT TO KNOW BEFORE BUILDING A NEW HOME", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-new-home.png" },
-  "hero-contact.png": { title:"EVERY GREAT PROJECT STARTS WITH A CHAT", copy:"Whether you’re planning a renovation, extension or new build, we’re here to help. Get in touch with On Site Building Construction to discuss your project.", image:"hero-contact-photo.jpg" },
+  "hero-contact.png": { title:"EVERY GREAT PROJECT STARTS WITH A CHAT", copy:"Whether you’re planning a renovation, extension or new build, we’re here to help. Get in touch with On Site Building Construction to discuss your project.", image:"figma-blog-new-home.png" },
 };
+
+function HeroOverlay() {
+  return <span className="hero-shade" aria-hidden="true" />;
+}
 
 function ResponsiveHero({ file }: { file:string }) {
   const hero = heroContent[file];
   const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about" } : { label: "SERVICES", href: "/services" };
-  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -268,7 +272,7 @@ function VisualSection({ section }: { section: Section }) {
 }
 
 function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
-  return <section className="project-hero"><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {

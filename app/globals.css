@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root { --blue: #5e8fe0; --navy: #183a72; --ice: #f5f9ff; }
+:root { --blue: #5e8fe0; --navy: #183a72; --ice: #f5f9ff; --hero-overlay-opacity: .18; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--ice); color: var(--navy); scrollbar-width: none; }
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
@@ -43,7 +43,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .mobile-nav { display: none; position: relative; }
 .responsive-hero { position: relative; min-height: 820px; display: grid; place-items: center; overflow: hidden; color: #fff; text-align: center; }
 .responsive-hero > img { object-fit: cover; animation: hero-image-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
-.hero-shade,.project-hero-shade { position: absolute; inset: 0; background: rgba(0,0,0,.18); }
+.hero-shade { position: absolute; inset: 0; background: #000; opacity: var(--hero-overlay-opacity); pointer-events: none; }
 .hero-content { position: relative; z-index: 1; width: min(100% - 48px,1132px); font-family: var(--font-montserrat),sans-serif; }
 .hero-content h1 { margin: 0; font-size: clamp(48px,4.45vw,64px); line-height: 1.2; font-weight: 900; letter-spacing: .06em; }
 .hero-content p { margin: 28px auto 54px; max-width: 1132px; font: 400 18px/1.5 var(--font-manrope),sans-serif; }
@@ -334,7 +334,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .motion-ready [data-reveal][data-revealed="true"] .service-card:nth-child(4) { transition-delay: .24s; }
 .motion-ready [data-reveal][data-revealed="true"] .service-card:nth-child(5) { transition-delay: .32s; }
 .motion-ready [data-reveal][data-revealed="true"] :is(.service-card,.home-work-row > figure,.contact-methods > *):hover { transition-delay: 0s; }
-@keyframes hero-image-in { from { transform: scale(1.06); filter: saturate(.82); } to { transform: scale(1); filter: saturate(1); } }
+@keyframes hero-image-in { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes hero-copy-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @media (max-width: 1439px) {
   .home-about-section { min-height: 0; padding: clamp(48px,5vw,66px) clamp(24px,4.45vw,64px); }
