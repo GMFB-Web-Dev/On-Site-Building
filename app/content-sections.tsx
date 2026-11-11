@@ -223,11 +223,9 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
   </div></section>;
 }
 
-const projectDetails: Record<ProjectKey, { title: string; overviewTitle?: string; scopeTitle?: string; paragraphs: string[]; scope: string[] }> = {
+const projectDetails: Record<ProjectKey, { title: string; paragraphs: string[]; scope: string[] }> = {
   whitford: {
     title: "WHITFORD HEIGHTS",
-    overviewTitle: "PROJECT OVERVIEW",
-    scopeTitle: "SCOPE OF WORK",
     paragraphs: [
       "Designed around a couple’s vision for their dream home, this remarkable residence spans approximately 667 m² across three storeys. The project brought together an ambitious design, generous proportions and spaces dedicated to relaxation, family living and entertaining.",
       "Completed by a two-person building crew during a challenging period for the construction industry, the home remains one of On Site Building Construction’s standout residential projects and was featured in Trends magazine.",
@@ -236,8 +234,6 @@ const projectDetails: Record<ProjectKey, { title: string; overviewTitle?: string
   },
   newLynn: {
     title: "NEW LYNN",
-    overviewTitle: "PROJECT OVERVIEW",
-    scopeTitle: "SCOPE OF WORK",
     paragraphs: [
       "This New Lynn residence brings together modern design and comfortable family living across two storeys. With four bedrooms, the home features an open connection between the kitchen and outdoor deck, making it easy to move between indoor and outdoor spaces.",
       "An inset seating lounge provides a dedicated area for relaxation, while the outdoor BBQ area creates a space for entertaining. American-style taps add another distinctive detail to the home’s design.",
@@ -246,20 +242,26 @@ const projectDetails: Record<ProjectKey, { title: string; overviewTitle?: string
   },
   manukau: {
     title: "MANUKAU HEIGHTS",
-    paragraphs: ["A carefully coordinated residential project in Manukau Heights, shaped around practical family living, durable materials and a clear connection between indoor and outdoor spaces."],
+    paragraphs: [
+      "This residential project in Manukau Heights is shaped around practical family living, durable materials and a clear connection between indoor and outdoor spaces.",
+      "The scope brings together interior and exterior building work, with careful coordination of the trades involved.",
+    ],
     scope: ["Residential construction", "Family-focused layout", "Interior and exterior work", "Trade coordination"],
   },
   botany: {
     title: "BOTANY",
-    paragraphs: ["A contemporary Botany project delivered with a focus on functional spaces, considered detailing and reliable coordination from the early building stages through to completion."],
+    paragraphs: [
+      "This contemporary Botany project focuses on functional spaces and considered detailing across the interior and exterior of the home.",
+      "Project coordination brings the work together from the early building stages through to completion.",
+    ],
     scope: ["Residential construction", "Contemporary detailing", "Interior and exterior work", "Project coordination"],
   },
 };
 
 export function ProjectOverviewSection({ project }: { project: keyof typeof projectDetails }) {
   const details = projectDetails[project];
-  return <section className={`project-overview-section ${details.overviewTitle ? "project-overview-reference" : ""}`}><div className="content-shell project-overview-grid">
-    <div><SectionHeading title={details.overviewTitle ?? details.title} />{details.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h3>{details.scopeTitle ?? "PROJECT SCOPE"}</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
+  return <section className="project-overview-section project-overview-reference"><div className="content-shell project-overview-grid">
+    <div><SectionHeading title="PROJECT OVERVIEW" />{details.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h3>SCOPE OF WORK</h3><ul>{details.scope.map((item) => <li key={item}>{item}</li>)}</ul></div>
     <div className="project-overview-photo" role="img" aria-label={`${details.title} image placeholder`} />
   </div></section>;
 }
