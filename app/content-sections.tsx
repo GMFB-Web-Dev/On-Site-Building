@@ -132,8 +132,8 @@ export function ValuesSection() {
 
 export function MissionSection() {
   return <section className="mission-section"><div className="content-shell mission-grid">
-    <article><h2>OUR MISSION</h2><p>To make the building process clear, collaborative and rewarding while delivering quality workmanship that stands the test of time.</p></article>
-    <article><h2>OUR PURPOSE</h2><p>To create well-built spaces that improve the way people live and work, guided by honest advice, practical thinking and genuine care.</p></article>
+    <article><h2>OUR MISSION</h2><p>To deliver quality building work through honesty, clear communication and a genuine understanding of our clients’ needs, making the building process as smooth and straightforward as possible.</p></article>
+    <article><h2>OUR PURPOSE</h2><p>To make a meaningful difference in people’s lives through building, creating spaces they can enjoy for years to come. Our greatest reward is seeing the pride and happiness our clients feel when their vision becomes a reality.</p></article>
     <Link className="cta-button outline-button" href="/contact">CONTACT</Link>
   </div></section>;
 }
@@ -215,10 +215,10 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
     cards = projects.filter((project) => project.title !== currentTitle[relatedTo]).slice(0, 3);
   }
   const allProjects = !relatedTo && !compact;
-  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""} ${allProjects ? "projects-showcase-all" : ""}`}><div className="content-shell">
-    <SectionHeading title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
+  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""} ${allProjects ? "projects-showcase-all" : ""} ${relatedTo ? "projects-showcase-related" : ""}`}><div className="content-shell">
+    <SectionHeading title="OUR PROJECTS" copy={relatedTo || compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
     <div className="project-card-grid">{cards.map((project) => <Link className="project-tile project-tile-placeholder" href={project.href} key={project.title}>
-      <span>{!compact && <small>{project.location}</small>}<strong>{project.title}</strong><b>{compact ? "LEARN MORE" : "VIEW PROJECT"}&nbsp; →</b></span>
+      <span>{!compact && !relatedTo && <small>{project.location}</small>}<strong>{project.title}</strong><b>{compact || relatedTo ? "LEARN MORE" : "VIEW PROJECT"}&nbsp; →</b></span>
     </Link>)}</div>
   </div></section>;
 }
@@ -286,19 +286,29 @@ const placeholderArticleSections = [
   ["Ut Enim Ad Minim Veniam", "Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."],
 ];
 
-export function BlogArticleSection({ placeholder = false }: { placeholder?: boolean }) {
+export function BlogArticleSection({ placeholder = false, publishedAt = "2026-10-21" }: { placeholder?: boolean; publishedAt?: string }) {
   const sections = placeholder ? placeholderArticleSections : articleSections;
+  const lead = placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet." : "Deciding whether to renovate your existing home or start again with a new build is a significant choice. Here are the practical considerations that help make the direction clearer.";
+  const closingTitle = placeholder ? "Lorem Ipsum Dolor" : "Not sure which option is right?";
+  const closingCopy = placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." : "We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step.";
+  const renovationBenefits = placeholder ? [] : ["Preserve the character and history you value", "Improve priority areas without replacing everything", "Adapt the work to suit your available budget"];
+  const wordCount = [lead, ...sections.flat(), ...renovationBenefits, closingTitle, closingCopy].join(" ").trim().split(/\s+/).length;
+  const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
+  const publicationDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${publishedAt}T00:00:00Z`));
   return <article className="article-section"><div className="content-shell article-layout">
     <aside aria-label="Table of contents"><strong>TABLE OF CONTENTS</strong><ol>{sections.map(([title]) => <li key={title}><a href={`#${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`}>{title}</a></li>)}</ol></aside>
-    <div className="article-body"><p className="article-lead">{placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet." : "Deciding whether to renovate your existing home or start again with a new build is a significant choice. Here are the practical considerations that help make the direction clearer."}</p>
-      {sections.map(([title, copy], index) => <section id={title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")} key={title}><h2>{title}</h2><p>{copy}</p>{!placeholder && index === 2 && <ul><li>Preserve the character and history you value</li><li>Improve priority areas without replacing everything</li><li>Adapt the work to suit your available budget</li></ul>}</section>)}
-      <div className="article-callout"><h2>{placeholder ? "Lorem Ipsum Dolor" : "Not sure which option is right?"}</h2><p>{placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." : "We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step."}</p><Link className="cta-button outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
+    <div className="article-body">
+      <div className="article-meta"><time dateTime={publishedAt}>{publicationDate}</time><span aria-hidden="true">•</span><span>{readingMinutes} min read</span></div>
+      <p className="article-lead">{lead}</p>
+      {sections.map(([title, copy], index) => <section id={title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")} key={title}><h2>{title}</h2><p>{copy}</p>{!placeholder && index === 2 && <ul>{renovationBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>}</section>)}
+      <div className="article-callout"><h2>{closingTitle}</h2><p>{closingCopy}</p><Link className="cta-button outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
     </div>
   </div></article>;
 }
 
 export function RelatedBlogsSection() {
-  return <section className="related-blogs-section"><div className="content-shell"><SectionHeading title="OUR BLOGS" copy="There’s more to building than what happens on site. Explore other topics covering home improvements, planning and construction." /><div className="blog-card-grid">{blogs.slice(1, 4).map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><span><strong>{blog.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>)}</div></div></section>;
+  const cards = [blogs[1], blogs[2], blogs[5], blogs[4]];
+  return <section className="related-blogs-section"><div className="content-shell"><SectionHeading title="OUR BLOGS" copy="There’s more to building than what happens on site. Explore other topics covering home improvements, planning and construction." /><div className="blog-card-grid">{cards.map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, (max-width: 1040px) 50vw, 25vw" unoptimized /></div><span><strong>{blog.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>)}</div></div></section>;
 }
 
 export function ServiceAreaSection() {

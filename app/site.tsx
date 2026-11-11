@@ -176,7 +176,7 @@ function HomeAbout() {
       <p>Working alongside a trusted network of builders and specialist trades, we bring the experience and people needed to see each project through, with a genuine commitment to delivering a result our clients are happy with.</p>
       <Link className="cta-button" href="/about">ABOUT US</Link>
     </div>
-    <div className="home-about-placeholder"><Image src="/design/hero-about-photo.jpg" alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
+    <div className="home-about-placeholder" role="img" aria-label="About On Site Building Construction image placeholder" />
   </section>;
 }
 
