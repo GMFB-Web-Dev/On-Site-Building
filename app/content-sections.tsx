@@ -38,7 +38,7 @@ export function CertificationSection() {
 
 const introCopy = {
   about: {
-    eyebrow: "OUR STORY",
+    eyebrow: "",
     title: "BUILT FROM THE GROUND UP",
     image: "hero-about-photo.jpg",
     paragraphs: [
@@ -64,7 +64,7 @@ export function IntroSection({ type }: { type: keyof typeof introCopy }) {
   return <section className="split-story-section"><div className="content-shell split-story-grid">
     <div className="split-story-copy"><SectionHeading eyebrow={content.eyebrow} title={content.title} />
       {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      <Link className="outline-button" href={type === "about" ? "/contact" : "/projects"}>{type === "about" ? "TALK TO US" : "VIEW PROJECTS"}</Link>
+      <Link className="cta-button outline-button" href={type === "about" ? "/contact" : "/projects"}>{type === "about" ? "TALK TO US" : "VIEW PROJECTS"}</Link>
     </div>
     <div className="split-story-media"><Image src={`/design/${content.image}`} alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
   </div></section>;
@@ -90,7 +90,7 @@ export function MissionSection() {
   return <section className="mission-section"><div className="content-shell mission-grid">
     <article><h2>OUR MISSION</h2><p>To make the building process clear, collaborative and rewarding while delivering quality workmanship that stands the test of time.</p></article>
     <article><h2>OUR PURPOSE</h2><p>To create well-built spaces that improve the way people live and work, guided by honest advice, practical thinking and genuine care.</p></article>
-    <Link className="outline-button" href="/contact">CONTACT US</Link>
+    <Link className="cta-button outline-button" href="/contact">CONTACT US</Link>
   </div></section>;
 }
 
@@ -106,7 +106,7 @@ export function BenefitsSection() {
     <div className="benefits-photo"><Image src="/design/service-new-builds.jpg" alt="A completed residential new build" fill sizes="(max-width: 900px) 100vw, 45vw" unoptimized /></div>
     <div className="benefits-content"><SectionHeading eyebrow="BUILD WITH CONFIDENCE" title="WHY NEW BUILDS" />
       <div className="benefit-grid">{benefits.map(([title, copy], index) => <article className="benefit-card" key={title}><span>{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-      <Link className="outline-button" href="/contact">START A CONVERSATION</Link>
+      <Link className="cta-button outline-button" href="/contact">START A CONVERSATION</Link>
     </div>
   </div></section>;
 }
@@ -161,7 +161,7 @@ export function BlogsSection() {
 }
 
 export function ServicesPromoSection() {
-  return <section className="services-promo-section"><div className="content-shell"><div><span>READY TO BUILD?</span><h2>EXPLORE OUR SERVICES</h2><p>From thoughtful renovations to complete new homes, see how we can help bring your plans to life.</p></div><Link className="outline-button" href="/services">VIEW SERVICES</Link></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><div><span>READY TO BUILD?</span><h2>EXPLORE OUR SERVICES</h2><p>From thoughtful renovations to complete new homes, see how we can help bring your plans to life.</p></div><Link className="cta-button outline-button" href="/services">VIEW SERVICES</Link></div></section>;
 }
 
 const articleSections = [
@@ -178,7 +178,7 @@ export function BlogArticleSection() {
     <aside><strong>IN THIS ARTICLE</strong><ol>{articleSections.map(([title]) => <li key={title}><a href={`#${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`}>{title}</a></li>)}</ol></aside>
     <div className="article-body"><p className="article-lead">Deciding whether to renovate your existing home or start again with a new build is a significant choice. Here are the practical considerations that help make the direction clearer.</p>
       {articleSections.map(([title, copy], index) => <section id={title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")} key={title}><span>{String(index + 1).padStart(2, "0")}</span><h2>{title}</h2><p>{copy}</p>{index === 2 && <ul><li>Preserve the character and history you value</li><li>Improve priority areas without replacing everything</li><li>Adapt the work to suit your available budget</li></ul>}</section>)}
-      <div className="article-callout"><h2>Not sure which option is right?</h2><p>We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step.</p><Link className="outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
+      <div className="article-callout"><h2>Not sure which option is right?</h2><p>We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step.</p><Link className="cta-button outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
     </div>
   </div></article>;
 }
@@ -188,5 +188,5 @@ export function RelatedBlogsSection() {
 }
 
 export function ServiceAreaSection() {
-  return <section className="service-area-section"><div className="content-shell service-area-grid"><div><SectionHeading eyebrow="WHERE WE BUILD" title="OUR SERVICE AREA" copy="On Site Building Construction works across Auckland, Waikato and Whangārei. Get in touch to discuss your location and project." /><Link className="outline-button" href="/contact">CHECK YOUR LOCATION</Link></div><ServiceAreaMap className="service-area-map" /></div></section>;
+  return <section className="service-area-section"><div className="content-shell service-area-grid"><div><SectionHeading eyebrow="WHERE WE BUILD" title="OUR SERVICE AREA" copy="On Site Building Construction works across Auckland, Waikato and Whangārei. Get in touch to discuss your location and project." /><Link className="cta-button outline-button" href="/contact">CHECK YOUR LOCATION</Link></div><ServiceAreaMap className="service-area-map" /></div></section>;
 }

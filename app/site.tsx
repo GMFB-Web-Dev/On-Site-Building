@@ -93,7 +93,7 @@ const heroContent: Record<string,{title:string;copy:string;image:string}> = {
 
 function ResponsiveHero({ file }: { file:string }) {
   const hero = heroContent[file];
-  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link href="/contact">CONTACT</Link><Link href="/services">SERVICES</Link></div></div></section>;
+  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -103,7 +103,7 @@ function HomeAbout() {
       <p>Founded in 2003, On Site Building Construction draws on building experience dating back to 1994, with practical skills and care. With strong roots in South Auckland, the business has built its reputation through hard work, experience and word-of-mouth referrals.</p>
       <p>From transforming existing homes to building new ones, we take pride in understanding what our clients want to achieve. We believe good communication, honest advice and a practical approach make all the difference throughout the building journey.</p>
       <p>Working alongside a trusted network of builders and specialist trades, we bring the experience and people needed to see each project through, with a genuine commitment to delivering a result our clients are happy with.</p>
-      <Link href="/about">ABOUT US</Link>
+      <Link className="cta-button" href="/about">ABOUT US</Link>
     </div>
     <div className="home-about-placeholder"><Image src="/design/hero-about-photo.jpg" alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
   </section>;
@@ -139,7 +139,7 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
     <label>PROJECT SIZE<select name="size" defaultValue="25 sqm"><option>25 sqm</option><option>50 sqm</option><option>100+ sqm</option></select></label>
     <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
     <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
-    <label className="checkbox"><input type="checkbox" name="terms" /> I AGREE TO THE TERMS AND CONDITIONS</label><button type="submit">SUBMIT</button>
+    <label className="checkbox"><input type="checkbox" name="terms" /> I AGREE TO THE TERMS AND CONDITIONS</label><button className="cta-button" type="submit">SUBMIT</button>
   </form>{withMap && <ServiceAreaMap className="map-panel" />}</div></section>;
 }
 
@@ -186,7 +186,7 @@ function VisualSection({ section }: { section: Section }) {
 
 function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
   const image = hero[0] === "NEW LYNN" ? "hero-service-photo.jpg" : "hero-home-photo.jpg";
-  return <section className="project-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link href="/contact">CONTACT</Link><Link href="/services">SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
