@@ -8,6 +8,10 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 export const metadata: Metadata = {
   title: "On Site Building Construction",
   description: "Renovations, residential new builds, design and build, extensions and light commercial construction across Auckland, Waikato and Whangārei.",
+  icons: {
+    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
