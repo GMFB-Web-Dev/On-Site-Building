@@ -2,6 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
+import {
+  BenefitsSection,
+  BlogArticleSection,
+  BlogsSection,
+  CertificationSection,
+  IntroSection,
+  MissionSection,
+  ProjectGallerySection,
+  ProjectOverviewSection,
+  ProjectsSection,
+  RelatedBlogsSection,
+  ServiceAreaSection,
+  ServicesPromoSection,
+  ValuesSection,
+} from "./content-sections";
 
 export type PageKey = "home" | "services" | "service" | "projects" | "whitford" | "newLynn" | "about" | "blogs" | "blog" | "contact";
 export const slugToPage: Record<string, PageKey> = {
@@ -78,15 +93,6 @@ function ResponsiveHero({ file }: { file:string }) {
   return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link href="/contact">CONTACT</Link><Link href="/services">SERVICES</Link></div></div></section>;
 }
 
-function FormOverlay() {
-  return <form className="interaction-overlay form-overlay" action="/contact" method="get" aria-label="Project enquiry form">
-    <label>First name<input name="firstName" autoComplete="given-name" /></label><label>Last name<input name="lastName" autoComplete="family-name" /></label>
-    <label>Email<input name="email" type="email" autoComplete="email" /></label><label>Phone<input name="phone" type="tel" autoComplete="tel" /></label>
-    <label>Service<select name="service" defaultValue=""><option value="">Select one</option><option>Residential new builds</option><option>Renovations and alterations</option><option>Design and build</option></select></label>
-    <label>Message<textarea name="message" /></label><button type="submit">Submit enquiry</button>
-  </form>;
-}
-
 function HomeAbout() {
   return <section className="home-about-section">
     <div className="home-about-copy">
@@ -96,7 +102,7 @@ function HomeAbout() {
       <p>Working alongside a trusted network of builders and specialist trades, we bring the experience and people needed to see each project through, with a genuine commitment to delivering a result our clients are happy with.</p>
       <Link href="/about">ABOUT US</Link>
     </div>
-    <div className="home-about-placeholder" aria-hidden="true" />
+    <div className="home-about-placeholder"><Image src="/design/hero-about-photo.jpg" alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
   </section>;
 }
 
@@ -131,7 +137,7 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
     <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
     <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
     <label className="checkbox"><input type="checkbox" name="terms" /> I AGREE TO THE TERMS AND CONDITIONS</label><button type="submit">SUBMIT</button>
-  </form>{withMap && <div className="map-panel"><Image src="/design/contact-map.png" alt="Service area map covering Auckland, Waikato and Whangārei" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized/></div>}</div></section>;
+  </form>{withMap && <div className="map-panel"><Image src="/design/service-area-map.png" alt="Service area map covering Auckland, Waikato and Whangārei" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized/></div>}</div></section>;
 }
 
 function SiteFooter() {
@@ -139,26 +145,42 @@ function SiteFooter() {
 }
 
 function VisualSection({ section }: { section: Section }) {
-  const [file,height,alt,kind,width=1440] = section;
-  const hero = kind === "hero";
+  const [file,,,kind] = section;
   if (kind === "nav") return <SiteHeader file={file} />;
   if (kind === "hero") return <ResponsiveHero file={file} />;
   if (file === "home-about.jpg") return <HomeAbout />;
   if (file === "home-work.png") return <ScrollableWorkGallery />;
+  if (file === "service-work.png") return <ScrollableWorkGallery />;
   if (file.startsWith("testimonials")) return <TestimonialsCarousel />;
   if (file === "home-services.png" || file === "services-list.png") return <ServicesSection />;
+  if (file.startsWith("certification-")) return <CertificationSection />;
+  if (file === "about-intro.jpg") return <IntroSection type="about" />;
+  if (file === "service-intro.jpg") return <IntroSection type="service" />;
+  if (file === "about-values.png") return <ValuesSection />;
+  if (file === "about-mission.png") return <MissionSection />;
+  if (file === "service-benefits.png") return <BenefitsSection />;
+  if (file === "projects-grid.png") return <ProjectsSection />;
+  if (file === "services-projects.png") return <ProjectsSection compact />;
+  if (file === "project-whitford.jpg") return <ProjectOverviewSection project="whitford" />;
+  if (file === "project-new-lynn.jpg") return <ProjectOverviewSection project="newLynn" />;
+  if (file === "project-gallery.png") return <ProjectGallerySection />;
+  if (file === "projects-related-whitford.png") return <ProjectsSection relatedTo="whitford" />;
+  if (file === "projects-related-new-lynn.png") return <ProjectsSection relatedTo="newLynn" />;
+  if (file === "blogs-grid.png") return <BlogsSection />;
+  if (file === "blogs-services.png") return <ServicesPromoSection />;
+  if (file === "blog-article.jpg") return <BlogArticleSection />;
+  if (file === "blog-related.png") return <RelatedBlogsSection />;
+  if (file === "contact-map.png") return <ServiceAreaSection />;
   if (file.startsWith("contact-strip")) return <ContactCTA blue={file.includes("whitford") || file.includes("new-lynn") || file.includes("blogs") || file.includes("blog") || file.includes("about")} />;
   if (file.startsWith("contact-form-map")) return <EnquirySection />;
   if (file === "contact-form.png") return <EnquirySection withMap={false} />;
   if (file.startsWith("footer-")) return <SiteFooter />;
-  return <section className={`visual-section ${hero ? "hero-crop" : ""}`} style={{ aspectRatio: `${width} / ${height}`, width: "100%" }}>
-    <Image src={`/design/${file}`} alt={alt} width={width} height={hero ? 900 : height} sizes="(max-width: 1440px) 100vw, 1440px" priority={hero} unoptimized />
-    {kind === "form" && <FormOverlay />}
-  </section>;
+  return null;
 }
 
 function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
-  return <section className="project-hero"><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link href="/contact">CONTACT</Link><Link href="/services">SERVICES</Link></div></div></section>;
+  const image = hero[0] === "NEW LYNN" ? "hero-service-photo.jpg" : "hero-home-photo.jpg";
+  return <section className="project-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link href="/contact">CONTACT</Link><Link href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
