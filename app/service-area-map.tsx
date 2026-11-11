@@ -1,5 +1,5 @@
 type ServiceAreaMapProps = {
-  className: "map-panel" | "service-area-map";
+  className: "map-panel" | "service-area-map" | "service-area-map service-area-map-full";
 };
 
 export function ServiceAreaMap({ className }: ServiceAreaMapProps) {

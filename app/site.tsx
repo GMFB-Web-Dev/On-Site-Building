@@ -19,13 +19,14 @@ import {
   ValuesSection,
 } from "./content-sections";
 
-export type PageKey = "home" | "services" | "service" | "serviceRenovations" | "serviceDesignBuild" | "serviceExtensions" | "serviceCommercial" | "projects" | "whitford" | "newLynn" | "about" | "blogs" | "blog" | "contact";
+export type PageKey = "home" | "services" | "service" | "serviceRenovations" | "serviceDesignBuild" | "serviceExtensions" | "serviceCommercial" | "projects" | "whitford" | "newLynn" | "manukau" | "botany" | "about" | "blogs" | "blog" | "blogExtension" | "blogBlending" | "blogCommercial" | "blogDesignBuild" | "blogNewHome" | "contact";
 export const slugToPage: Record<string, PageKey> = {
   services: "services", "services/residential-new-builds": "service",
   "services/renovations-alterations": "serviceRenovations", "services/design-build": "serviceDesignBuild",
   "services/additions-extensions": "serviceExtensions", "services/light-commercial-construction": "serviceCommercial", projects: "projects",
-  "projects/whitford-heights": "whitford", "projects/new-lynn": "newLynn", about: "about",
-  blogs: "blogs", "blogs/renovate-or-rebuild": "blog", contact: "contact",
+  "projects/whitford-heights": "whitford", "projects/new-lynn": "newLynn", "projects/manukau-heights": "manukau", "projects/botany": "botany", about: "about",
+  blogs: "blogs", "blogs/renovate-or-rebuild": "blog", "blogs/planning-a-home-extension": "blogExtension", "blogs/blending-old-and-new": "blogBlending",
+  "blogs/light-commercial-construction": "blogCommercial", "blogs/design-and-build-process": "blogDesignBuild", "blogs/building-a-new-home": "blogNewHome", contact: "contact",
 };
 
 type Kind = "nav" | "hero" | "form";
@@ -71,6 +72,12 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
   newLynn: { projectHero: ["NEW LYNN","A modern two-storey, four-bedroom home in New Lynn, designed around indoor-outdoor living, with a kitchen that opens directly onto the deck and an inviting outdoor entertainment area."], sections: [
     s("navbar-new-lynn.png",80,"New Lynn project navigation","nav"), s("project-new-lynn.jpg",739,"New Lynn project overview"), s("project-gallery.png",531,"New Lynn project gallery"),
     s("projects-related-new-lynn.png",624,"Related projects"), s("contact-strip-new-lynn.png",612,"Contact details"), s("footer-new-lynn.png",279,"Footer navigation") ] },
+  manukau: { projectHero: ["MANUKAU HEIGHTS","A thoughtfully coordinated residential project created for practical family living, with durable construction, considered spaces and a strong connection to the outdoors."], sections: [
+    s("navbar-manukau.png",80,"Manukau Heights project navigation","nav"), s("project-manukau.jpg",739,"Manukau Heights project overview"), s("project-gallery.png",531,"Manukau Heights project gallery"),
+    s("projects-related-manukau.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
+  botany: { projectHero: ["BOTANY","A contemporary residential project shaped around functional spaces, considered detailing and reliable delivery from the early building stages through to completion."], sections: [
+    s("navbar-botany.png",80,"Botany project navigation","nav"), s("project-botany.jpg",739,"Botany project overview"), s("project-gallery.png",531,"Botany project gallery"),
+    s("projects-related-botany.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
   about: { spacer: 1, sections: [
     s("navbar-about.png",80,"About navigation","nav"), s("hero-about.png",820,"Our Story. Your Future Project.","hero"), s("about-intro.jpg",739,"Built from the ground up"),
     s("about-values.png",435,"Our values"), s("certification-about.png",467,"NZCB certified and LBP expertise"), s("testimonials-about.png",379,"Testimonials"), s("about-mission.png",325,"Our mission and purpose"),
@@ -81,6 +88,21 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
   blog: { sections: [
     s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog.png",820,"Renovate or Rebuild? What's Right for Your Home?","hero"), s("blog-article.jpg",5249,"Renovate or Rebuild article"),
     s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
+  blogExtension: { sections: [
+    s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog-extension.png",820,"Planning a Home Extension: What to Consider First","hero"), s("blog-article-placeholder-extension.jpg",2600,"Lorem ipsum article"),
+    s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
+  blogBlending: { sections: [
+    s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog-blending.png",820,"Blending Old and New in a Home Renovation","hero"), s("blog-article-placeholder-blending.jpg",2600,"Lorem ipsum article"),
+    s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
+  blogCommercial: { sections: [
+    s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog-commercial.png",820,"What Is Light Commercial Construction?","hero"), s("blog-article-placeholder-commercial.jpg",2600,"Lorem ipsum article"),
+    s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
+  blogDesignBuild: { sections: [
+    s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog-design-build.png",820,"How Does the Design and Build Process Work?","hero"), s("blog-article-placeholder-design-build.jpg",2600,"Lorem ipsum article"),
+    s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
+  blogNewHome: { sections: [
+    s("navbar-blog.png",80,"Blog navigation","nav"), s("hero-blog-new-home.png",820,"What to Know Before Building a New Home","hero"), s("blog-article-placeholder-new-home.jpg",2600,"Lorem ipsum article"),
+    s("blog-related.png",624,"Related blogs"), s("contact-strip-blog.png",612,"Contact details"), s("footer-blog.png",279,"Footer navigation") ] },
   contact: { sections: [
     s("navbar-contact.png",80,"Contact navigation","nav"), s("hero-contact.png",820,"Every Great Project Starts with a Chat","hero"), s("contact-strip-contact.png",612,"Contact details",undefined,1438,2),
     s("contact-form.png",878,"Project enquiry form","form"), s("contact-map.png",854,"Auckland, Waikato and Whangārei service area map"), s("footer-contact.png",279,"Footer navigation") ] },
@@ -88,9 +110,11 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
 
 function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
-  const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
+  const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"]];
   const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services/renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services/design-build"],["Additions & Extensions","/services/additions-extensions"],["Light Commercial Construction","/services/light-commercial-construction"]];
+  const projectItems = [["All Projects","/projects"],["New Lynn","/projects/new-lynn"],["Manukau Heights","/projects/manukau-heights"],["Whitford Heights","/projects/whitford-heights"],["Botany","/projects/botany"]];
   const servicesActive = active.startsWith("service");
+  const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
   return <header className="site-header"><div className="header-inner">
     <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
       <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
@@ -101,13 +125,19 @@ function SiteHeader({ file }: { file: string }) {
         <Link className="nav-service-trigger" href="/services">Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
       </div>
-      {items.slice(1).map(([label,href,key])=><Link key={href} href={href} className={active.includes(key) ? "active" : ""}>{label}</Link>)}
+      {items.slice(1).map(([label,href,key])=><Link key={href} href={href} className={key === "blogs" ? (active.startsWith("blog") ? "active" : "") : (active.includes(key) ? "active" : "")}>{label}</Link>)}
+      <div className={`nav-service-dropdown ${projectsActive ? "active" : ""}`}>
+        <Link className="nav-service-trigger" href="/projects">Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
+        <div className="service-dropdown-menu">{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
+      </div>
       <a className="phone-button" href="tel:0272868693">027 286 8693</a>
     </nav>
     <details className="mobile-nav"><summary>MENU</summary><nav>
       <Link href="/">Home</Link>
       <details className="mobile-service-menu"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
-      {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<a href="tel:0272868693">027 286 8693</a>
+      {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}
+      <details className="mobile-service-menu"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <a href="tel:0272868693">027 286 8693</a>
     </nav></details>
   </div></header>;
 }
@@ -124,6 +154,11 @@ const heroContent: Record<string,{title:string;copy:string;image:string}> = {
   "hero-about.png": { title:"OUR STORY. YOUR FUTURE PROJECT.", copy:"Founded in 2003, On Site Building Construction brings over 30 years of building experience, honest communication and a genuine passion for creating spaces clients are proud to call home.", image:"hero-about-photo.jpg" },
   "hero-blogs.png": { title:"BUILDING ADVICE, WITHOUT THE GUESSWORK", copy:"Explore practical advice on home renovations, extensions and new builds, with helpful insights to guide your decisions and plan your next project.", image:"figma-blogs-hero.png" },
   "hero-blog.png": { title:"RENOVATE OR REBUILD? WHAT’S RIGHT FOR YOUR HOME?", copy:"Deciding whether to renovate your existing home or start fresh? Explore the key considerations to help you understand your options and make an informed decision.", image:"hero-home-photo.jpg" },
+  "hero-blog-extension.png": { title:"PLANNING A HOME EXTENSION: WHAT TO CONSIDER FIRST", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-extension.png" },
+  "hero-blog-blending.png": { title:"BLENDING OLD AND NEW IN A HOME RENOVATION", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-blending.png" },
+  "hero-blog-commercial.png": { title:"WHAT IS LIGHT COMMERCIAL CONSTRUCTION?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-commercial.png" },
+  "hero-blog-design-build.png": { title:"HOW DOES THE DESIGN AND BUILD PROCESS WORK?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-design-build.png" },
+  "hero-blog-new-home.png": { title:"WHAT TO KNOW BEFORE BUILDING A NEW HOME", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-new-home.png" },
   "hero-contact.png": { title:"EVERY GREAT PROJECT STARTS WITH A CHAT", copy:"Whether you’re planning a renovation, extension or new build, we’re here to help. Get in touch with On Site Building Construction to discuss your project.", image:"hero-contact-photo.jpg" },
 };
 
@@ -196,7 +231,7 @@ function VisualSection({ section }: { section: Section }) {
   if (file === "service-work.png") return <ScrollableWorkGallery service />;
   if (file.startsWith("testimonials")) return <TestimonialsCarousel />;
   if (file === "home-services.png" || file === "services-list.png") return <ServicesSection />;
-  if (file.startsWith("certification-")) return <CertificationSection />;
+  if (file.startsWith("certification-")) return <CertificationSection blue={file === "certification-about.png"} />;
   if (file === "about-intro.jpg") return <IntroSection type="about" />;
   if (file === "service-intro.jpg") return <IntroSection type="service" />;
   if (file === "service-intro-renovations.jpg") return <IntroSection type="renovations" />;
@@ -214,12 +249,17 @@ function VisualSection({ section }: { section: Section }) {
   if (file === "services-projects.png") return <ProjectsSection compact />;
   if (file === "project-whitford.jpg") return <ProjectOverviewSection project="whitford" />;
   if (file === "project-new-lynn.jpg") return <ProjectOverviewSection project="newLynn" />;
+  if (file === "project-manukau.jpg") return <ProjectOverviewSection project="manukau" />;
+  if (file === "project-botany.jpg") return <ProjectOverviewSection project="botany" />;
   if (file === "project-gallery.png") return <ProjectGallerySection />;
   if (file === "projects-related-whitford.png") return <ProjectsSection relatedTo="whitford" />;
   if (file === "projects-related-new-lynn.png") return <ProjectsSection relatedTo="newLynn" />;
+  if (file === "projects-related-manukau.png") return <ProjectsSection relatedTo="manukau" />;
+  if (file === "projects-related-botany.png") return <ProjectsSection relatedTo="botany" />;
   if (file === "blogs-grid.png") return <BlogsSection />;
   if (file === "blogs-services.png") return <ServicesPromoSection />;
   if (file === "blog-article.jpg") return <BlogArticleSection />;
+  if (file.startsWith("blog-article-placeholder-")) return <BlogArticleSection placeholder />;
   if (file === "blog-related.png") return <RelatedBlogsSection />;
   if (file === "contact-map.png") return <ServiceAreaSection />;
   if (file.startsWith("contact-strip")) return <ContactCTA blue={file.includes("whitford") || file.includes("new-lynn") || file.includes("blogs") || file.includes("blog") || file.includes("about")} />;
@@ -230,8 +270,8 @@ function VisualSection({ section }: { section: Section }) {
 }
 
 function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
-  const image = hero[0] === "NEW LYNN" ? "hero-service-photo.jpg" : "hero-home-photo.jpg";
-  return <section className="project-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
+  const image: Record<string, string> = { "NEW LYNN": "hero-service-photo.jpg", "WHITFORD HEIGHTS": "hero-home-photo.jpg", "MANUKAU HEIGHTS": "work-1.jpg", "BOTANY": "work-3.jpg" };
+  return <section className="project-hero"><Image src={`/design/${image[hero[0]]}`} alt="" fill priority sizes="100vw" unoptimized /><span className="project-hero-shade"/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {

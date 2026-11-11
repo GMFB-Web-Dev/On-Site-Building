@@ -67,12 +67,11 @@ export function ScrollableWorkGallery({ service = false }: { service?: boolean }
         </div>
       </div>
       <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
-        <div className="home-work-row" style={{ transform: `translateX(calc(-${activePhase} * (50% + 12px)))` }}>
+        <div className={`home-work-row phase-${activePhase}`}>
           {images.map(([file, alt], index) => (
             <figure
               key={file}
               className={index === focusedProject ? "is-focused" : ""}
-              aria-hidden={index < activePhase || index > activePhase + 1}
             >
               <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) 50vw, 520px" unoptimized />
             </figure>

@@ -4,10 +4,12 @@ import { ServiceAreaMap } from "./service-area-map";
 
 const projects = [
   { title: "NEW LYNN", location: "Auckland", image: "hero-service-photo.jpg", href: "/projects/new-lynn" },
-  { title: "MANUKAU HEIGHTS", location: "South Auckland", image: "work-1.jpg", href: "/projects" },
+  { title: "MANUKAU HEIGHTS", location: "South Auckland", image: "work-1.jpg", href: "/projects/manukau-heights" },
   { title: "WHITFORD HEIGHTS", location: "East Auckland", image: "hero-home-photo.jpg", href: "/projects/whitford-heights" },
-  { title: "BOTANY", location: "East Auckland", image: "work-3.jpg", href: "/projects" },
+  { title: "BOTANY", location: "East Auckland", image: "work-3.jpg", href: "/projects/botany" },
 ];
+
+type ProjectKey = "whitford" | "newLynn" | "manukau" | "botany";
 
 const servicesProjects = [
   { title: "PAPAKURA", location: "South Auckland", image: "figma-newbuild-work-1.png", href: "/projects" },
@@ -18,11 +20,11 @@ const servicesProjects = [
 
 const blogs = [
   { title: "Renovate or Rebuild? What’s Right for Your Home?", image: "figma-blog-renovate-rebuild.png", href: "/blogs/renovate-or-rebuild" },
-  { title: "Planning a Home Extension: What to Consider First", image: "figma-blog-extension.png", href: "/blogs" },
-  { title: "Blending Old and New in a Home Renovation", image: "figma-blog-blending.png", href: "/blogs" },
-  { title: "What Is Light Commercial Construction?", image: "figma-blog-commercial.png", href: "/blogs" },
-  { title: "How Does the Design and Build Process Work?", image: "figma-blog-design-build.png", href: "/blogs" },
-  { title: "What to Know Before Building a New Home", image: "figma-blog-new-home.png", href: "/blogs" },
+  { title: "Planning a Home Extension: What to Consider First", image: "figma-blog-extension.png", href: "/blogs/planning-a-home-extension" },
+  { title: "Blending Old and New in a Home Renovation", image: "figma-blog-blending.png", href: "/blogs/blending-old-and-new" },
+  { title: "What Is Light Commercial Construction?", image: "figma-blog-commercial.png", href: "/blogs/light-commercial-construction" },
+  { title: "How Does the Design and Build Process Work?", image: "figma-blog-design-build.png", href: "/blogs/design-and-build-process" },
+  { title: "What to Know Before Building a New Home", image: "figma-blog-new-home.png", href: "/blogs/building-a-new-home" },
 ];
 
 function SectionHeading({ eyebrow, title, copy }: { eyebrow?: string; title: string; copy?: string }) {
@@ -33,12 +35,12 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow?: string; title: str
   </header>;
 }
 
-export function CertificationSection() {
-  return <section className="certification-section"><div className="content-shell">
+export function CertificationSection({ blue = false }: { blue?: boolean }) {
+  return <section className={`certification-section ${blue ? "certification-section-blue" : ""}`}><div className="content-shell">
     <SectionHeading title={"NZCB CERTIFIED.\nLBP EXPERTISE."} copy="Led by an experienced Licensed Building Practitioner (LBP) and long-standing member of New Zealand Certified Builders (NZCB), On Site Building Construction brings over 30 years of industry experience to residential and commercial builds." />
     <div className="certification-logos" aria-label="Industry memberships and certifications">
       <Image src="/design/nzcb-logo.png" alt="New Zealand Certified Builders" width={146} height={246} unoptimized />
-      <Image src="/design/lbp-logo.png" alt="Licensed Building Practitioner" width={209} height={118} unoptimized />
+      <Image src={blue ? "/design/lbp-logo.png" : "/design/lbp-logo-white-bg.jpg"} alt="Licensed Building Practitioners" width={blue ? 209 : 382} height={blue ? 118 : 150} unoptimized />
     </div>
   </div></section>;
 }
@@ -114,7 +116,9 @@ export function IntroSection({ type }: { type: keyof typeof introCopy }) {
       {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       {!isService && <Link className="cta-button outline-button" href="/contact">TALK TO US</Link>}
     </div>
-    <div className="split-story-media"><Image src={`/design/${content.image}`} alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
+    {isService
+      ? <div className="split-story-media"><Image src={`/design/${content.image}`} alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
+      : <div className="split-story-media split-story-placeholder" role="img" aria-label="Project image placeholder" />}
   </div></section>;
 }
 
@@ -129,7 +133,7 @@ export function ValuesSection() {
   return <section className="values-section"><div className="content-shell">
     <SectionHeading title="OUR VALUES" />
     <div className="value-grid">{values.map(({ title, icon, copy }) => <article className="value-card" key={title}>
-      <span className="round-icon" aria-hidden="true"><Image src={`/icons/${icon}`} alt="" width={96} height={96} unoptimized /></span><h3>{title}</h3><p>{copy}</p>
+      <span className="round-icon" aria-hidden="true"><Image src={`/icons/${icon}`} alt="" width={28} height={28} unoptimized /></span><h3>{title}</h3><p>{copy}</p>
     </article>)}</div>
   </div></section>;
 }
@@ -138,7 +142,7 @@ export function MissionSection() {
   return <section className="mission-section"><div className="content-shell mission-grid">
     <article><h2>OUR MISSION</h2><p>To make the building process clear, collaborative and rewarding while delivering quality workmanship that stands the test of time.</p></article>
     <article><h2>OUR PURPOSE</h2><p>To create well-built spaces that improve the way people live and work, guided by honest advice, practical thinking and genuine care.</p></article>
-    <Link className="cta-button outline-button" href="/contact">CONTACT US</Link>
+    <Link className="cta-button outline-button" href="/contact">CONTACT</Link>
   </div></section>;
 }
 
@@ -212,14 +216,17 @@ export function BenefitsSection({ service = "service" }: { service?: keyof typeo
   </div></section>;
 }
 
-export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: "whitford" | "newLynn"; compact?: boolean }) {
+export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: ProjectKey; compact?: boolean }) {
   let cards = compact ? servicesProjects : projects;
-  if (relatedTo === "whitford") cards = projects.filter((project) => project.title !== "WHITFORD HEIGHTS").slice(0, 3);
-  if (relatedTo === "newLynn") cards = projects.filter((project) => project.title !== "NEW LYNN").slice(0, 3);
-  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""}`}><div className="content-shell">
+  if (relatedTo) {
+    const currentTitle: Record<ProjectKey, string> = { whitford: "WHITFORD HEIGHTS", newLynn: "NEW LYNN", manukau: "MANUKAU HEIGHTS", botany: "BOTANY" };
+    cards = projects.filter((project) => project.title !== currentTitle[relatedTo]).slice(0, 3);
+  }
+  const allProjects = !relatedTo && !compact;
+  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""} ${allProjects ? "projects-showcase-all" : ""}`}><div className="content-shell">
     <SectionHeading eyebrow={relatedTo ? "EXPLORE MORE" : undefined} title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
-    <div className="project-card-grid">{cards.map((project) => <Link className="project-tile" href={project.href} key={project.title}>
-      <Image src={`/design/${project.image}`} alt={`${project.title} building project`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized />
+    <div className="project-card-grid">{cards.map((project) => <Link className={`project-tile ${compact || allProjects ? "project-tile-placeholder" : ""}`} href={project.href} key={project.title}>
+      {!compact && !allProjects && <Image src={`/design/${project.image}`} alt={`${project.title} building project`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized />}
       <span>{!compact && <small>{project.location}</small>}<strong>{project.title}</strong><b>{compact ? "LEARN MORE" : "VIEW PROJECT"}&nbsp; →</b></span>
     </Link>)}</div>
   </div></section>;
@@ -237,6 +244,18 @@ const projectDetails = {
     image: "hero-service-photo.jpg",
     copy: "A modern two-storey, four-bedroom home designed around indoor-outdoor living. The kitchen opens directly onto the deck, creating an inviting entertainment area and a natural connection between the home and garden.",
     scope: ["Residential new build", "Four bedrooms", "Two-storey construction", "Indoor-outdoor living"],
+  },
+  manukau: {
+    title: "MANUKAU HEIGHTS",
+    image: "work-1.jpg",
+    copy: "A carefully coordinated residential project in Manukau Heights, shaped around practical family living, durable materials and a clear connection between indoor and outdoor spaces.",
+    scope: ["Residential construction", "Family-focused layout", "Interior and exterior work", "Trade coordination"],
+  },
+  botany: {
+    title: "BOTANY",
+    image: "work-3.jpg",
+    copy: "A contemporary Botany project delivered with a focus on functional spaces, considered detailing and reliable coordination from the early building stages through to completion.",
+    scope: ["Residential construction", "Contemporary detailing", "Interior and exterior work", "Project coordination"],
   },
 };
 
@@ -273,20 +292,30 @@ const articleSections = [
   ["Building Consents and Approvals", "Both options may require design work, engineering and council approval. Planning these early helps protect the programme and makes it easier to understand the true scope before construction begins."],
 ];
 
-export function BlogArticleSection() {
+const placeholderArticleSections = [
+  ["Lorem Ipsum Dolor Sit Amet", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."],
+  ["Consectetur Adipiscing Elit", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt."],
+  ["Sed Do Eiusmod Tempor", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum."],
+  ["Incididunt Ut Labore", "Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec ullamcorper nulla non metus auctor fringilla. Aenean lacinia bibendum nulla sed consectetur."],
+  ["Dolore Magna Aliqua", "Curabitur blandit tempus porttitor. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit."],
+  ["Ut Enim Ad Minim Veniam", "Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."],
+];
+
+export function BlogArticleSection({ placeholder = false }: { placeholder?: boolean }) {
+  const sections = placeholder ? placeholderArticleSections : articleSections;
   return <article className="article-section"><div className="content-shell article-layout">
-    <aside><strong>IN THIS ARTICLE</strong><ol>{articleSections.map(([title]) => <li key={title}><a href={`#${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`}>{title}</a></li>)}</ol></aside>
-    <div className="article-body"><p className="article-lead">Deciding whether to renovate your existing home or start again with a new build is a significant choice. Here are the practical considerations that help make the direction clearer.</p>
-      {articleSections.map(([title, copy], index) => <section id={title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")} key={title}><span>{String(index + 1).padStart(2, "0")}</span><h2>{title}</h2><p>{copy}</p>{index === 2 && <ul><li>Preserve the character and history you value</li><li>Improve priority areas without replacing everything</li><li>Adapt the work to suit your available budget</li></ul>}</section>)}
-      <div className="article-callout"><h2>Not sure which option is right?</h2><p>We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step.</p><Link className="cta-button outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
+    <aside><strong>IN THIS ARTICLE</strong><ol>{sections.map(([title]) => <li key={title}><a href={`#${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")}`}>{title}</a></li>)}</ol></aside>
+    <div className="article-body"><p className="article-lead">{placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet." : "Deciding whether to renovate your existing home or start again with a new build is a significant choice. Here are the practical considerations that help make the direction clearer."}</p>
+      {sections.map(([title, copy], index) => <section id={title.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-")} key={title}><span>{String(index + 1).padStart(2, "0")}</span><h2>{title}</h2><p>{copy}</p>{!placeholder && index === 2 && <ul><li>Preserve the character and history you value</li><li>Improve priority areas without replacing everything</li><li>Adapt the work to suit your available budget</li></ul>}</section>)}
+      <div className="article-callout"><h2>{placeholder ? "Lorem Ipsum Dolor" : "Not sure which option is right?"}</h2><p>{placeholder ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." : "We can look at your goals, your current home and the practical realities of the site, then help you understand the best next step."}</p><Link className="cta-button outline-button" href="/contact">TALK TO OUR TEAM</Link></div>
     </div>
   </div></article>;
 }
 
 export function RelatedBlogsSection() {
-  return <section className="related-blogs-section"><div className="content-shell"><SectionHeading eyebrow="KEEP READING" title="RELATED ARTICLES" /><div className="blog-card-grid">{blogs.slice(1, 4).map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><span><strong>{blog.title}</strong><b>READ ARTICLE&nbsp; →</b></span></Link>)}</div></div></section>;
+  return <section className="related-blogs-section"><div className="content-shell"><SectionHeading title="OUR BLOGS" copy="There’s more to building than what happens on site. Explore other topics covering home improvements, planning and construction." /><div className="blog-card-grid">{blogs.slice(1, 4).map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><span><strong>{blog.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>)}</div></div></section>;
 }
 
 export function ServiceAreaSection() {
-  return <section className="service-area-section"><div className="content-shell service-area-grid"><div><SectionHeading eyebrow="WHERE WE BUILD" title="OUR SERVICE AREA" copy="On Site Building Construction works across Auckland, Waikato and Whangārei. Get in touch to discuss your location and project." /><Link className="cta-button outline-button" href="/contact">CHECK YOUR LOCATION</Link></div><ServiceAreaMap className="service-area-map" /></div></section>;
+  return <section className="service-area-section service-area-section-map-only"><ServiceAreaMap className="service-area-map service-area-map-full" /></section>;
 }
