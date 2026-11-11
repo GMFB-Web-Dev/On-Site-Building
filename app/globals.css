@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root { --blue: #5e8fe0; --navy: #183a72; --ice: #f5f9ff; --hero-overlay-opacity: .28; }
+:root { --blue: #5e8fe0; --navy: #183a72; --ice: #f5f9ff; --hero-overlay-opacity: .35; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--ice); color: var(--navy); scrollbar-width: none; }
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
