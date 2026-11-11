@@ -9,6 +9,8 @@ const workImages = [
   ["work-3.jpg", "Finished contemporary home"],
 ] as const;
 
+const workPhaseCount = workImages.length - 1;
+
 const sampleTestimonials = [
   {
     quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Distinctio exercitationem laboriosam culpa sit qui placeat, aut officia facere sed amet pariatur ex sunt esse maxime corrupti tempor enim fuga atque accusamus.",
@@ -25,22 +27,23 @@ const sampleTestimonials = [
 ] as const;
 
 export function ScrollableWorkGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activePhase, setActivePhase] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const focusedProject = activePhase === 0 ? 0 : workImages.length - 1;
 
-  const showProject = (index: number) => {
-    const nextIndex = (index + workImages.length) % workImages.length;
-    setActiveIndex(nextIndex);
+  const showPhase = (index: number) => {
+    const nextPhase = (index + workPhaseCount) % workPhaseCount;
+    setActivePhase(nextPhase);
   };
 
   useEffect(() => {
     if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(
-      () => setActiveIndex((current) => (current + 1) % workImages.length),
+      () => setActivePhase((current) => (current + 1) % workPhaseCount),
       4600,
     );
     return () => window.clearTimeout(timer);
-  }, [activeIndex, isPaused]);
+  }, [activePhase, isPaused]);
 
   return (
     <section
@@ -56,31 +59,35 @@ export function ScrollableWorkGallery() {
           <h2>OUR WORK</h2>
         </div>
       </div>
-      <div className="home-work-viewport" aria-live="polite" aria-label={`Project ${activeIndex + 1} of ${workImages.length}`}>
-        <div className="home-work-row" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+      <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
+        <div className="home-work-row" style={{ transform: `translateX(calc(-${activePhase} * (50% + 12px)))` }}>
           {workImages.map(([file, alt], index) => (
-            <figure key={file} aria-hidden={index !== activeIndex}>
-              <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) calc(100vw - 32px), 1040px" unoptimized />
+            <figure
+              key={file}
+              className={index === focusedProject ? "is-focused" : ""}
+              aria-hidden={index < activePhase || index > activePhase + 1}
+            >
+              <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) 50vw, 520px" unoptimized />
             </figure>
           ))}
         </div>
       </div>
       <div className="work-gallery-footer content-shell">
-        <div className="work-dots" aria-label="Choose a project">
-          {workImages.map(([file], index) => (
+        <div className="work-dots" role="group" aria-label="Choose a project phase">
+          {Array.from({ length: workPhaseCount }, (_, index) => (
             <button
               type="button"
-              key={file}
-              className={index === activeIndex ? "active" : ""}
-              onClick={() => showProject(index)}
-              aria-label={`Show project ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
+              key={index}
+              className={index === activePhase ? "active" : ""}
+              onClick={() => showPhase(index)}
+              aria-label={`Show projects ${index + 1} and ${index + 2}`}
+              aria-current={index === activePhase ? "true" : undefined}
             />
           ))}
         </div>
         <div className="work-controls" aria-label="Project gallery controls">
-          <button type="button" className="work-arrow previous" onClick={() => showProject(activeIndex - 1)} aria-label="Previous project" />
-          <button type="button" className="work-arrow next" onClick={() => showProject(activeIndex + 1)} aria-label="Next project" />
+          <button type="button" className="work-arrow previous" onClick={() => showPhase(activePhase - 1)} aria-label="Previous project phase" />
+          <button type="button" className="work-arrow next" onClick={() => showPhase(activePhase + 1)} aria-label="Next project phase" />
         </div>
       </div>
     </section>

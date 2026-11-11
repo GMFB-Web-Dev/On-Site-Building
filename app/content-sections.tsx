@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ServiceAreaMap } from "./service-area-map";
 
 const projects = [
   { title: "NEW LYNN", location: "Auckland", image: "hero-service-photo.jpg", href: "/projects/new-lynn" },
@@ -187,5 +188,5 @@ export function RelatedBlogsSection() {
 }
 
 export function ServiceAreaSection() {
-  return <section className="service-area-section"><div className="content-shell service-area-grid"><div><SectionHeading eyebrow="WHERE WE BUILD" title="OUR SERVICE AREA" copy="On Site Building Construction works across Auckland, Waikato and Whangārei. Get in touch to discuss your location and project." /><Link className="outline-button" href="/contact">CHECK YOUR LOCATION</Link></div><div className="service-area-map"><Image src="/design/service-area-map.png" alt="Map highlighting Auckland, Waikato and Whangārei" width={270} height={312} unoptimized /></div></div></section>;
+  return <section className="service-area-section"><div className="content-shell service-area-grid"><div><SectionHeading eyebrow="WHERE WE BUILD" title="OUR SERVICE AREA" copy="On Site Building Construction works across Auckland, Waikato and Whangārei. Get in touch to discuss your location and project." /><Link className="outline-button" href="/contact">CHECK YOUR LOCATION</Link></div><ServiceAreaMap className="service-area-map" /></div></section>;
 }

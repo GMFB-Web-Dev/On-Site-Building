@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
+import { ServiceAreaMap } from "./service-area-map";
 import {
   BenefitsSection,
   BlogArticleSection,
@@ -71,7 +72,9 @@ function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const items = [["Home","/","home"],["Services","/services","services"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
   return <header className="site-header"><div className="header-inner">
-    <Link href="/" className="brand"><span className="brand-mark">OSBC</span><span>ON SITE BUILDING CONSTRUCTION<small>LIMITED</small></span></Link>
+    <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
+      <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
+    </Link>
     <nav className="desktop-nav" aria-label="Primary navigation">{items.map(([label,href,key])=><Link key={href} href={href} className={active.includes(key) ? "active" : ""}>{label}</Link>)}<a className="phone-button" href="tel:0272868693">027 286 8693</a></nav>
     <details className="mobile-nav"><summary>MENU</summary><nav>{items.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<a href="tel:0272868693">027 286 8693</a></nav></details>
   </div></header>;
@@ -122,9 +125,9 @@ function ServicesSection() {
 
 function ContactCTA({ blue = false }: { blue?: boolean }) {
   return <section className={`contact-cta ${blue ? "contact-cta-blue" : ""}`}><div className="content-shell"><div className="contact-heading"><h2>Let’s Talk About Your Project</h2><p>Planning a renovation, extension or new build? Tell us about your plans and let’s discuss how we can bring your project to life.</p></div><div className="contact-methods">
-    <a href="mailto:onsitebuilding1@gmail.com"><b>✉</b><strong>EMAIL</strong><span>onsitebuilding1@gmail.com</span></a>
-    <a href="tel:021715196"><b>⌕</b><strong>PHONE</strong><span>021 715 196</span></a>
-    <span><b>⌖</b><strong>SERVICE AREAS</strong><u>Auckland, Waikato &amp; Whangārei</u></span>
+    <a href="mailto:onsitebuilding1@gmail.com"><b><Image src="/icons/email.svg" alt="" width={42} height={42} unoptimized /></b><strong>EMAIL</strong><span>onsitebuilding1@gmail.com</span></a>
+    <a href="tel:021715196"><b><Image src="/icons/phone.svg" alt="" width={42} height={42} unoptimized /></b><strong>PHONE</strong><span>021 715 196</span></a>
+    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>SERVICE AREAS</strong><u>Auckland, Waikato &amp; Whangārei</u></span>
   </div></div></section>;
 }
 
@@ -137,11 +140,14 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
     <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
     <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
     <label className="checkbox"><input type="checkbox" name="terms" /> I AGREE TO THE TERMS AND CONDITIONS</label><button type="submit">SUBMIT</button>
-  </form>{withMap && <div className="map-panel"><Image src="/design/service-area-map.png" alt="Service area map covering Auckland, Waikato and Whangārei" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized/></div>}</div></section>;
+  </form>{withMap && <ServiceAreaMap className="map-panel" />}</div></section>;
 }
 
-function SiteFooter() {
-  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand"><span className="brand-mark">OSBC</span><span>ON SITE BUILDING CONSTRUCTION<small>LIMITED</small></span></Link><nav><Link href="/">Home</Link><Link href="/services">Services</Link><Link href="/about">About us</Link><Link href="/contact">Contact us</Link><Link href="/blogs">Blogs</Link><Link href="/projects">Projects</Link></nav></div><div className="footer-bottom"><span>© Developed by GMFB LTD. All rights reserved.</span><Link href="#">Privacy Policy</Link></div></div></footer>;
+function SiteFooter({ file }: { file: string }) {
+  const page = file.replace("footer-", "").replace(".png", "");
+  const active = page === "service" ? "services" : page === "blog" ? "blogs" : ["whitford", "new-lynn"].includes(page) ? "projects" : page;
+  const items = [["Home","/","home"],["Services","/services","services"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
+  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand"><span className="brand-mark">OSBC</span><span>ON SITE BUILDING CONSTRUCTION<small>LIMITED</small></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><div className="footer-bottom"><span>© Developed by GMFB LTD. All rights reserved.</span><Link href="#">Privacy Policy</Link></div></div></footer>;
 }
 
 function VisualSection({ section }: { section: Section }) {
@@ -174,7 +180,7 @@ function VisualSection({ section }: { section: Section }) {
   if (file.startsWith("contact-strip")) return <ContactCTA blue={file.includes("whitford") || file.includes("new-lynn") || file.includes("blogs") || file.includes("blog") || file.includes("about")} />;
   if (file.startsWith("contact-form-map")) return <EnquirySection />;
   if (file === "contact-form.png") return <EnquirySection withMap={false} />;
-  if (file.startsWith("footer-")) return <SiteFooter />;
+  if (file.startsWith("footer-")) return <SiteFooter file={file} />;
   return null;
 }
 
