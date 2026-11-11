@@ -19,9 +19,11 @@ import {
   ValuesSection,
 } from "./content-sections";
 
-export type PageKey = "home" | "services" | "service" | "projects" | "whitford" | "newLynn" | "about" | "blogs" | "blog" | "contact";
+export type PageKey = "home" | "services" | "service" | "serviceRenovations" | "serviceDesignBuild" | "serviceExtensions" | "serviceCommercial" | "projects" | "whitford" | "newLynn" | "about" | "blogs" | "blog" | "contact";
 export const slugToPage: Record<string, PageKey> = {
-  services: "services", "services/residential-new-builds": "service", projects: "projects",
+  services: "services", "services/residential-new-builds": "service",
+  "services/renovations-alterations": "serviceRenovations", "services/design-build": "serviceDesignBuild",
+  "services/additions-extensions": "serviceExtensions", "services/light-commercial-construction": "serviceCommercial", projects: "projects",
   "projects/whitford-heights": "whitford", "projects/new-lynn": "newLynn", about: "about",
   blogs: "blogs", "blogs/renovate-or-rebuild": "blog", contact: "contact",
 };
@@ -43,6 +45,22 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
   service: { sections: [
     s("navbar-service.png",80,"Residential new builds navigation","nav"), s("hero-service.png",820,"A New Home, Built Around You","hero"), s("service-intro.jpg",739,"Residential new builds"),
     s("service-benefits.png",852,"Why new builds"), s("service-work.png",700,"Our work"), s("contact-strip-service.png",612,"Contact details"),
+    s("contact-form-map-service.png",878,"Project enquiry form and map","form"), s("footer-service.png",279,"Footer navigation") ] },
+  serviceRenovations: { sections: [
+    s("navbar-service.png",80,"Renovations and alterations navigation","nav"), s("hero-service-renovations.png",820,"Your Home Reimagined","hero"), s("service-intro-renovations.jpg",739,"Renovations and alterations"),
+    s("service-benefits-renovations.png",852,"Why renovate"), s("service-work.png",700,"Our work"), s("contact-strip-service.png",612,"Contact details"),
+    s("contact-form-map-service.png",878,"Project enquiry form and map","form"), s("footer-service.png",279,"Footer navigation") ] },
+  serviceDesignBuild: { sections: [
+    s("navbar-service.png",80,"Design and build navigation","nav"), s("hero-service-design-build.png",820,"Designed with purpose and built with care","hero"), s("service-intro-design-build.jpg",739,"Design and build"),
+    s("service-benefits-design-build.png",852,"Why design and build"), s("service-work.png",700,"Our work"), s("contact-strip-service.png",612,"Contact details"),
+    s("contact-form-map-service.png",878,"Project enquiry form and map","form"), s("footer-service.png",279,"Footer navigation") ] },
+  serviceExtensions: { sections: [
+    s("navbar-service.png",80,"Additions and extensions navigation","nav"), s("hero-service-extensions.png",820,"More space for the way you live","hero"), s("service-intro-extensions.jpg",739,"Additions and extensions"),
+    s("service-benefits-extensions.png",852,"Why extend"), s("service-work.png",700,"Our work"), s("contact-strip-service.png",612,"Contact details"),
+    s("contact-form-map-service.png",878,"Project enquiry form and map","form"), s("footer-service.png",279,"Footer navigation") ] },
+  serviceCommercial: { sections: [
+    s("navbar-service.png",80,"Light commercial construction navigation","nav"), s("hero-service-commercial.png",820,"Practical spaces with professional delivery","hero"), s("service-intro-commercial.jpg",739,"Light commercial construction"),
+    s("service-benefits-commercial.png",852,"Why work with us"), s("service-work.png",700,"Our work"), s("contact-strip-service.png",612,"Contact details"),
     s("contact-form-map-service.png",878,"Project enquiry form and map","form"), s("footer-service.png",279,"Footer navigation") ] },
   projects: { sections: [
     s("navbar-projects.png",80,"Projects navigation","nav"), s("hero-projects.png",820,"A Closer Look at Our Work","hero"), s("projects-grid.png",1083,"Our projects"),
@@ -71,7 +89,7 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
 function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
-  const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services#renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services#design-build"],["Additions & Extensions","/services#additions-extensions"],["Light Commercial Construction","/services#light-commercial-construction"]];
+  const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services/renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services/design-build"],["Additions & Extensions","/services/additions-extensions"],["Light Commercial Construction","/services/light-commercial-construction"]];
   const servicesActive = active.startsWith("service");
   return <header className="site-header"><div className="header-inner">
     <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
@@ -96,18 +114,23 @@ function SiteHeader({ file }: { file: string }) {
 
 const heroContent: Record<string,{title:string;copy:string;image:string}> = {
   "hero-home.png": { title:"BUILT AROUND THE WAY YOU LIVE.", copy:"From renovations and extensions to new builds, On Site Building Construction brings over 30 years of experience to every project. We also offer complete design-and-build services throughout Auckland, Waikato and Whangārei.", image:"hero-home-photo.jpg" },
-  "hero-services.png": { title:"YOUR HOME. REIMAGINED.", copy:"Whether you’re transforming an existing home or building something new, we take the time to understand your vision, offer honest advice and guide you through every stage of your project.", image:"hero-services-photo.jpg" },
-  "hero-service.png": { title:"A NEW HOME, BUILT AROUND YOU", copy:"Every new home starts with understanding what matters to you. We take the time to discuss your plans, offer honest guidance and bring your vision to life.", image:"hero-service-photo.jpg" },
+  "hero-services.png": { title:"YOUR HOME. REIMAGINED.", copy:"Whether you’re transforming an existing home or building something new, we take the time to understand your vision, offer honest advice and guide you through every stage of your project.", image:"figma-services-hero.png" },
+  "hero-service.png": { title:"A NEW HOME, BUILT AROUND YOU", copy:"Every new home starts with understanding what matters to you. We take the time to discuss your plans, offer honest guidance and bring your vision to life.", image:"figma-newbuild-hero.png" },
+  "hero-service-renovations.png": { title:"YOUR HOME. REIMAGINED.", copy:"Transform the home you already know with thoughtful alterations, better flow and modern comfort, carefully planned around the way you want to live.", image:"figma-service-renovations.png" },
+  "hero-service-design-build.png": { title:"DESIGNED WITH PURPOSE. BUILT WITH CARE.", copy:"Bring design and construction together through one coordinated team, with practical guidance from the first idea through to the finished build.", image:"figma-service-design-build.png" },
+  "hero-service-extensions.png": { title:"MORE SPACE FOR THE WAY YOU LIVE.", copy:"Create room to grow with an addition or extension designed to connect naturally with your existing home, lifestyle and site.", image:"figma-service-extensions.png" },
+  "hero-service-commercial.png": { title:"PRACTICAL SPACES. PROFESSIONAL DELIVERY.", copy:"From fit-outs and alterations to smaller commercial builds, we deliver functional spaces through clear planning, trusted trades and experienced coordination.", image:"figma-service-commercial.png" },
   "hero-projects.png": { title:"A CLOSER LOOK AT OUR WORK", copy:"From home renovations and new builds to light commercial projects, take a look at the work that reflects our passion for building, practical approach and commitment to quality workmanship.", image:"hero-projects-photo.jpg" },
   "hero-about.png": { title:"OUR STORY. YOUR FUTURE PROJECT.", copy:"Founded in 2003, On Site Building Construction brings over 30 years of building experience, honest communication and a genuine passion for creating spaces clients are proud to call home.", image:"hero-about-photo.jpg" },
-  "hero-blogs.png": { title:"BUILDING ADVICE, WITHOUT THE GUESSWORK", copy:"Explore practical advice on home renovations, extensions and new builds, with helpful insights to guide your decisions and plan your next project.", image:"hero-blogs-photo.jpg" },
+  "hero-blogs.png": { title:"BUILDING ADVICE, WITHOUT THE GUESSWORK", copy:"Explore practical advice on home renovations, extensions and new builds, with helpful insights to guide your decisions and plan your next project.", image:"figma-blogs-hero.png" },
   "hero-blog.png": { title:"RENOVATE OR REBUILD? WHAT’S RIGHT FOR YOUR HOME?", copy:"Deciding whether to renovate your existing home or start fresh? Explore the key considerations to help you understand your options and make an informed decision.", image:"hero-home-photo.jpg" },
   "hero-contact.png": { title:"EVERY GREAT PROJECT STARTS WITH A CHAT", copy:"Whether you’re planning a renovation, extension or new build, we’re here to help. Get in touch with On Site Building Construction to discuss your project.", image:"hero-contact-photo.jpg" },
 };
 
 function ResponsiveHero({ file }: { file:string }) {
   const hero = heroContent[file];
-  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
+  const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about" } : { label: "SERVICES", href: "/services" };
+  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><div className="hero-shade"/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -124,16 +147,16 @@ function HomeAbout() {
 }
 
 const serviceCards = [
-  ["RENOVATIONS & ALTERATIONS","service-renovations.jpg","/services","renovations-alterations"],
-  ["RESIDENTIAL NEW BUILDS","service-new-builds.jpg","/services/residential-new-builds","residential-new-builds"],
-  ["DESIGN & BUILD","service-design-build.jpg","/services","design-build"],
-  ["ADDITIONS & EXTENSIONS","service-extensions.jpg","/services","additions-extensions"],
+  ["RENOVATIONS & ALTERATIONS","figma-service-renovations.png","/services/renovations-alterations","renovations-alterations"],
+  ["RESIDENTIAL NEW BUILDS","figma-service-new-builds.png","/services/residential-new-builds","residential-new-builds"],
+  ["DESIGN & BUILD","figma-service-design-build.png","/services/design-build","design-build"],
+  ["ADDITIONS & EXTENSIONS","figma-service-extensions.png","/services/additions-extensions","additions-extensions"],
 ];
 
 function ServicesSection() {
   return <section className="services-section"><div className="content-shell"><h2>OUR SERVICES</h2><p>From renovations to new builds, we bring experience to every project.</p><div className="services-grid">
     {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={`/design/${image}`} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" unoptimized/><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
-    <Link id="light-commercial-construction" href="/services" className="service-card service-card-wide"><Image src="/design/light-commercial.jpg" alt="" fill sizes="100vw" unoptimized/><span><strong>LIGHT COMMERCIAL<br/>CONSTRUCTION</strong><small>LEARN MORE&nbsp; →</small></span></Link>
+    <Link id="light-commercial-construction" href="/services/light-commercial-construction" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.png" alt="" fill sizes="100vw" unoptimized/><span><strong>LIGHT COMMERCIAL<br/>CONSTRUCTION</strong><small>LEARN MORE&nbsp; →</small></span></Link>
   </div></div></section>;
 }
 
@@ -149,7 +172,7 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
   return <section className={`enquiry-section ${withMap ? "with-map" : ""}`}><div className="content-shell enquiry-grid"><form action="/contact" method="get" aria-label="Project enquiry form">
     <div className="field-pair"><label>FIRST NAME*<input name="firstName" placeholder="First Name" /></label><label>LAST NAME*<input name="lastName" placeholder="Last Name" /></label></div>
     <div className="field-pair"><label>EMAIL*<input name="email" type="email" placeholder="Email" /></label><label>PHONE*<input name="phone" type="tel" placeholder="+64 21 345 6789" /></label></div>
-    <label>SELECT A SERVICE*<select name="service" defaultValue=""><option value="">Select One...</option><option>Residential new builds</option><option>Renovations and alterations</option><option>Design and build</option></select></label>
+    <label>SELECT A SERVICE*<select name="service" defaultValue=""><option value="">Select One...</option><option>Residential new builds</option><option>Renovations and alterations</option><option>Design and build</option><option>Additions and extensions</option><option>Light commercial construction</option></select></label>
     <label>PROJECT SIZE<select name="size" defaultValue="25 sqm"><option>25 sqm</option><option>50 sqm</option><option>100+ sqm</option></select></label>
     <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
     <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
@@ -170,15 +193,23 @@ function VisualSection({ section }: { section: Section }) {
   if (kind === "hero") return <ResponsiveHero file={file} />;
   if (file === "home-about.jpg") return <HomeAbout />;
   if (file === "home-work.png") return <ScrollableWorkGallery />;
-  if (file === "service-work.png") return <ScrollableWorkGallery />;
+  if (file === "service-work.png") return <ScrollableWorkGallery service />;
   if (file.startsWith("testimonials")) return <TestimonialsCarousel />;
   if (file === "home-services.png" || file === "services-list.png") return <ServicesSection />;
   if (file.startsWith("certification-")) return <CertificationSection />;
   if (file === "about-intro.jpg") return <IntroSection type="about" />;
   if (file === "service-intro.jpg") return <IntroSection type="service" />;
+  if (file === "service-intro-renovations.jpg") return <IntroSection type="renovations" />;
+  if (file === "service-intro-design-build.jpg") return <IntroSection type="designBuild" />;
+  if (file === "service-intro-extensions.jpg") return <IntroSection type="extensions" />;
+  if (file === "service-intro-commercial.jpg") return <IntroSection type="commercial" />;
   if (file === "about-values.png") return <ValuesSection />;
   if (file === "about-mission.png") return <MissionSection />;
   if (file === "service-benefits.png") return <BenefitsSection />;
+  if (file === "service-benefits-renovations.png") return <BenefitsSection service="renovations" />;
+  if (file === "service-benefits-design-build.png") return <BenefitsSection service="designBuild" />;
+  if (file === "service-benefits-extensions.png") return <BenefitsSection service="extensions" />;
+  if (file === "service-benefits-commercial.png") return <BenefitsSection service="commercial" />;
   if (file === "projects-grid.png") return <ProjectsSection />;
   if (file === "services-projects.png") return <ProjectsSection compact />;
   if (file === "project-whitford.jpg") return <ProjectOverviewSection project="whitford" />;

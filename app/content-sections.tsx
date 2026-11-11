@@ -9,13 +9,20 @@ const projects = [
   { title: "BOTANY", location: "East Auckland", image: "work-3.jpg", href: "/projects" },
 ];
 
+const servicesProjects = [
+  { title: "PAPAKURA", location: "South Auckland", image: "figma-newbuild-work-1.png", href: "/projects" },
+  { title: "TAKANINI COMPLEX", location: "South Auckland", image: "figma-newbuild-work-2.png", href: "/projects" },
+  { title: "WHITFORD HEIGHTS", location: "East Auckland", image: "figma-newbuild-work-3.png", href: "/projects/whitford-heights" },
+  { title: "BRUCE PULMAN", location: "Takanini", image: "figma-newbuild-hero.png", href: "/projects" },
+];
+
 const blogs = [
-  { title: "Renovate or Rebuild? What’s Right for Your Home?", image: "hero-home-photo.jpg", href: "/blogs/renovate-or-rebuild" },
-  { title: "Planning a Home Extension: What to Consider First", image: "service-extensions.jpg", href: "/blogs" },
-  { title: "Blending Old and New in a Home Renovation", image: "service-renovations.jpg", href: "/blogs" },
-  { title: "What Is Light Commercial Construction?", image: "light-commercial.jpg", href: "/blogs" },
-  { title: "How Does the Design and Build Process Work?", image: "service-design-build.jpg", href: "/blogs" },
-  { title: "What to Know Before Building a New Home", image: "service-new-builds.jpg", href: "/blogs" },
+  { title: "Renovate or Rebuild? What’s Right for Your Home?", image: "figma-blog-renovate-rebuild.png", href: "/blogs/renovate-or-rebuild" },
+  { title: "Planning a Home Extension: What to Consider First", image: "figma-blog-extension.png", href: "/blogs" },
+  { title: "Blending Old and New in a Home Renovation", image: "figma-blog-blending.png", href: "/blogs" },
+  { title: "What Is Light Commercial Construction?", image: "figma-blog-commercial.png", href: "/blogs" },
+  { title: "How Does the Design and Build Process Work?", image: "figma-blog-design-build.png", href: "/blogs" },
+  { title: "What to Know Before Building a New Home", image: "figma-blog-new-home.png", href: "/blogs" },
 ];
 
 function SectionHeading({ eyebrow, title, copy }: { eyebrow?: string; title: string; copy?: string }) {
@@ -48,23 +55,64 @@ const introCopy = {
     ],
   },
   service: {
-    eyebrow: "RESIDENTIAL NEW BUILDS",
-    title: "A HOME DESIGNED AROUND YOU",
-    image: "hero-service-photo.jpg",
+    eyebrow: "",
+    title: "RESIDENTIAL NEW BUILDS",
+    image: "figma-newbuild-intro.png",
     paragraphs: [
-      "Building a new home is a chance to create a space that truly reflects how you live. We work closely with you from the earliest ideas through to completion, helping turn your plans into a practical, well-built home.",
-      "Our team brings more than 30 years of building experience, clear communication and honest guidance to every stage of the process. We coordinate trusted trades and keep the details moving so the experience feels considered and manageable.",
-      "Whether you already have plans or need design-and-build support, we can help shape a home that fits your site, lifestyle and budget.",
+      "On Site Building Construction undertakes residential new builds, constructing homes from the ground up. From foundations and framing through to the finishing stages, we coordinate building work and specialist trades to bring each project together.",
+      "Whether you have plans ready or are exploring your options, we begin by understanding your section, design requirements and what you want from your home. We can work alongside an architect if design input is needed.",
+      "Throughout the build, On Site works with trusted builders and subcontractors, maintaining open communication and discussing changes as they arise. Our focus is on practical advice, quality workmanship and delivering a finished home that reflects your needs.",
+    ],
+  },
+  renovations: {
+    eyebrow: "",
+    title: "RENOVATIONS & ALTERATIONS",
+    image: "figma-service-renovations.png",
+    paragraphs: [
+      "A thoughtful renovation can make your existing home work better without losing the character and features you already value. We start by understanding what is not working and what you want the finished space to achieve.",
+      "From layout changes and modern upgrades to substantial alterations, our team brings practical advice, careful planning and experienced coordination to every stage of the work.",
+      "We manage the details and trusted trades so new and existing construction come together as one considered, well-built home.",
+    ],
+  },
+  designBuild: {
+    eyebrow: "",
+    title: "DESIGN & BUILD",
+    image: "figma-service-design-build.png",
+    paragraphs: [
+      "Our design-and-build service brings planning, design and construction together through one coordinated process. That means decisions can be tested early against your site, priorities and available budget.",
+      "We work closely with designers, consultants and trusted trades to keep information moving and make sure the finished plans are practical to build.",
+      "With one experienced team guiding the project, you have clearer communication, fewer handovers and a more connected path from the first conversation to completion.",
+    ],
+  },
+  extensions: {
+    eyebrow: "",
+    title: "ADDITIONS & EXTENSIONS",
+    image: "figma-service-extensions.png",
+    paragraphs: [
+      "An extension should feel like it has always belonged to your home. We help shape additional living, bedroom, workspace or entertaining areas around the way your household needs to grow.",
+      "Our team considers structure, flow, light and the relationship between old and new so the added space works naturally with the rest of the property.",
+      "From early planning through construction, we coordinate the details and trades required to deliver a seamless, practical result.",
+    ],
+  },
+  commercial: {
+    eyebrow: "",
+    title: "LIGHT COMMERCIAL CONSTRUCTION",
+    image: "figma-service-commercial.png",
+    paragraphs: [
+      "Light commercial projects need practical planning, durable construction and clear coordination. We work with owners and project teams to understand how the space needs to function and what delivery constraints matter most.",
+      "Our experience covers fit-outs, alterations and smaller commercial builds, with trusted trades coordinated around quality, programme and site requirements.",
+      "We keep communication straightforward and the work moving so you can make informed decisions throughout the project.",
     ],
   },
 };
 
 export function IntroSection({ type }: { type: keyof typeof introCopy }) {
   const content = introCopy[type];
-  return <section className="split-story-section"><div className="content-shell split-story-grid">
+  const isService = type !== "about";
+  return <section className={`split-story-section ${isService ? "service-intro-section" : ""}`}><div className="content-shell split-story-grid">
     <div className="split-story-copy"><SectionHeading eyebrow={content.eyebrow} title={content.title} />
       {content.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      <Link className="cta-button outline-button" href={type === "about" ? "/contact" : "/projects"}>{type === "about" ? "TALK TO US" : "VIEW PROJECTS"}</Link>
+      {!isService && <Link className="cta-button outline-button" href="/contact">TALK TO US</Link>}
     </div>
     <div className="split-story-media"><Image src={`/design/${content.image}`} alt="On Site Building Construction project" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
   </div></section>;
@@ -94,33 +142,85 @@ export function MissionSection() {
   </div></section>;
 }
 
-const benefits = [
-  ["CUSTOMISATION", "A new build gives you the freedom to shape layouts, finishes and details around the way you want to live."],
-  ["EFFICIENCY", "Modern materials and construction methods help create a warmer, drier and more energy-efficient home."],
-  ["TRUSTED TRADES", "We work with a reliable network of experienced tradespeople and coordinate the build from start to finish."],
-  ["DESIGN & BUILD SUPPORT", "From early ideas to completed construction, we can guide design decisions, planning and delivery."],
-];
+const serviceBenefits = {
+  service: {
+    title: "WHY NEW BUILDS",
+    image: "figma-newbuild-benefits.png",
+    imageAlt: "A completed residential new build",
+    items: [
+      ["CUSTOMISATION", "Building from the ground up gives you the freedom to create a home that suits your lifestyle, from the floor plan and room layouts to the finishing details."],
+      ["EFFICIENCY", "A new build allows you to consider modern materials, insulation and energy-efficient features from the beginning, helping create a comfortable, practical home."],
+      ["TRUSTED TRADES", "Every new home requires different skills. We work with a trusted network of builders and specialist trades, coordinating the people needed throughout the construction process."],
+      ["DESIGN & BUILD SUPPORT", "Whether you already have plans or are starting from scratch, we work alongside an experienced architect to help bring your ideas into a practical, well-planned new home."],
+    ],
+  },
+  renovations: {
+    title: "WHY RENOVATE",
+    image: "figma-service-renovations.png",
+    imageAlt: "A carefully renovated home interior",
+    items: [
+      ["BETTER USE OF SPACE", "Improve flow, storage and everyday function without leaving the home you know."],
+      ["PRESERVE WHAT YOU LOVE", "Keep the character and features that make your property feel like home."],
+      ["MODERN COMFORT", "Upgrade performance, finishes and services for warmer, easier living."],
+      ["CAREFUL INTEGRATION", "New work is planned to connect naturally with the existing structure."],
+    ],
+  },
+  designBuild: {
+    title: "WHY DESIGN & BUILD",
+    image: "figma-service-design-build.png",
+    imageAlt: "Architectural plans and a completed building project",
+    items: [
+      ["ONE POINT OF CONTACT", "A coordinated team keeps communication simple throughout the project."],
+      ["BUILDABLE DESIGN", "Construction experience informs design decisions from the beginning."],
+      ["BUDGET ALIGNMENT", "Scope and selections can be tested against your priorities early."],
+      ["CONNECTED DELIVERY", "Design, consultants, trades and construction move through one clear process."],
+    ],
+  },
+  extensions: {
+    title: "WHY EXTEND",
+    image: "figma-service-extensions.png",
+    imageAlt: "A seamless residential home extension",
+    items: [
+      ["ROOM TO GROW", "Add the living, bedroom or work space your household needs."],
+      ["STAY WHERE YOU ARE", "Gain more space while keeping the location and community you value."],
+      ["SEAMLESS CONNECTION", "Layouts, materials and details are planned to unite old and new."],
+      ["LONG-TERM VALUE", "A well-designed extension can improve both daily life and property value."],
+    ],
+  },
+  commercial: {
+    title: "WHY WORK WITH US",
+    image: "figma-service-commercial.png",
+    imageAlt: "A completed light commercial construction project",
+    items: [
+      ["PRACTICAL PLANNING", "Project decisions are shaped around how the space needs to perform."],
+      ["DURABLE DELIVERY", "Materials and construction are selected for reliable commercial use."],
+      ["COORDINATED TRADES", "Trusted specialists are managed through one experienced team."],
+      ["CLEAR COMMUNICATION", "Straightforward updates help owners make informed decisions throughout."],
+    ],
+  },
+};
 
-export function BenefitsSection() {
-  return <section className="benefits-section"><div className="content-shell benefits-layout">
-    <div className="benefits-photo"><Image src="/design/service-new-builds.jpg" alt="A completed residential new build" fill sizes="(max-width: 900px) 100vw, 45vw" unoptimized /></div>
-    <div className="benefits-content"><SectionHeading eyebrow="BUILD WITH CONFIDENCE" title="WHY NEW BUILDS" />
-      <div className="benefit-grid">{benefits.map(([title, copy], index) => <article className="benefit-card" key={title}><span>{index + 1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-      <Link className="cta-button outline-button" href="/contact">START A CONVERSATION</Link>
+export function BenefitsSection({ service = "service" }: { service?: keyof typeof serviceBenefits }) {
+  const content = serviceBenefits[service];
+  const icons = ["benefit-customisation.png", "benefit-efficiency.png", "benefit-trades.png", "benefit-design.png"];
+  return <section className="benefits-section figma-benefits-section"><div className="content-shell benefits-layout">
+    <div className="benefits-photo"><Image src={`/design/${content.image}`} alt={content.imageAlt} fill sizes="(max-width: 900px) 100vw, 45vw" unoptimized /></div>
+    <div className="benefits-content"><SectionHeading title={content.title} />
+      <div className="benefit-grid">{content.items.map(([title, copy], index) => <article className="benefit-card" key={title}><span><Image src={`/icons/${icons[index]}`} alt="" width={48} height={48} unoptimized /></span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+      <Link className="cta-button outline-button" href="/contact">CONTACT</Link>
     </div>
   </div></section>;
 }
 
 export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: "whitford" | "newLynn"; compact?: boolean }) {
-  let cards = projects;
+  let cards = compact ? servicesProjects : projects;
   if (relatedTo === "whitford") cards = projects.filter((project) => project.title !== "WHITFORD HEIGHTS").slice(0, 3);
   if (relatedTo === "newLynn") cards = projects.filter((project) => project.title !== "NEW LYNN").slice(0, 3);
-  if (compact) cards = projects.slice(0, 3);
-  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""}`}><div className="content-shell">
-    <SectionHeading eyebrow={relatedTo ? "EXPLORE MORE" : undefined} title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
+  return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""}`}><div className="content-shell">
+    <SectionHeading eyebrow={relatedTo ? "EXPLORE MORE" : undefined} title={relatedTo ? "RELATED PROJECTS" : "OUR PROJECTS"} copy={relatedTo ? "Take a look at more projects completed by On Site Building Construction." : compact ? "Take a closer look at the homes and spaces we’ve helped bring to life." : "Explore a selection of residential builds, renovations and construction projects completed across Auckland."} />
     <div className="project-card-grid">{cards.map((project) => <Link className="project-tile" href={project.href} key={project.title}>
       <Image src={`/design/${project.image}`} alt={`${project.title} building project`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized />
-      <span><small>{project.location}</small><strong>{project.title}</strong><b>VIEW PROJECT&nbsp; →</b></span>
+      <span>{!compact && <small>{project.location}</small>}<strong>{project.title}</strong><b>{compact ? "LEARN MORE" : "VIEW PROJECT"}&nbsp; →</b></span>
     </Link>)}</div>
   </div></section>;
 }
@@ -155,13 +255,13 @@ export function ProjectGallerySection() {
 }
 
 export function BlogsSection() {
-  return <section className="blogs-grid-section"><div className="content-shell"><SectionHeading title="BUILDING ADVICE & INSIGHTS" copy="Straightforward advice to help you plan with confidence, understand the process and make informed decisions about your project." />
-    <div className="blog-card-grid">{blogs.map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, 33vw" unoptimized /></div><span><small>BUILDING ADVICE</small><strong>{blog.title}</strong><b>READ ARTICLE&nbsp; →</b></span></Link>)}</div>
+  return <section className="blogs-grid-section"><div className="content-shell"><SectionHeading title="ALL BLOGS" copy="From real building challenges to fresh ideas, there’s always something worth exploring." />
+    <div className="blog-card-grid">{blogs.map((blog) => <Link className="blog-card" href={blog.href} key={blog.title}><div><Image src={`/design/${blog.image}`} alt="" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div><span><strong>{blog.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>)}</div>
   </div></section>;
 }
 
 export function ServicesPromoSection() {
-  return <section className="services-promo-section"><div className="content-shell"><div><span>READY TO BUILD?</span><h2>EXPLORE OUR SERVICES</h2><p>From thoughtful renovations to complete new homes, see how we can help bring your plans to life.</p></div><Link className="cta-button outline-button" href="/services">VIEW SERVICES</Link></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><h2>OUR SERVICES</h2><div><p>From full home renovations and extensions to residential new builds, design and build, and light commercial work, explore the types of projects we undertake.</p><Link className="cta-button outline-button" href="/services">SERVICES</Link></div></div></section>;
 }
 
 const articleSections = [

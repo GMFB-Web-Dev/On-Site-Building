@@ -9,6 +9,12 @@ const workImages = [
   ["work-3.jpg", "Finished contemporary home"],
 ] as const;
 
+const serviceWorkImages = [
+  ["figma-newbuild-work-1.png", "Papakura residential new build"],
+  ["figma-newbuild-work-2.png", "Contemporary residential new build"],
+  ["figma-newbuild-work-3.png", "Whitford Heights residential new build"],
+] as const;
+
 const workPhaseCount = workImages.length - 1;
 
 const sampleTestimonials = [
@@ -26,10 +32,11 @@ const sampleTestimonials = [
   },
 ] as const;
 
-export function ScrollableWorkGallery() {
+export function ScrollableWorkGallery({ service = false }: { service?: boolean }) {
+  const images = service ? serviceWorkImages : workImages;
   const [activePhase, setActivePhase] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const focusedProject = activePhase === 0 ? 0 : workImages.length - 1;
+  const focusedProject = activePhase === 0 ? 0 : images.length - 1;
 
   const showPhase = (index: number) => {
     const nextPhase = (index + workPhaseCount) % workPhaseCount;
@@ -61,7 +68,7 @@ export function ScrollableWorkGallery() {
       </div>
       <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
         <div className="home-work-row" style={{ transform: `translateX(calc(-${activePhase} * (50% + 12px)))` }}>
-          {workImages.map(([file, alt], index) => (
+          {images.map(([file, alt], index) => (
             <figure
               key={file}
               className={index === focusedProject ? "is-focused" : ""}
