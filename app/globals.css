@@ -5,6 +5,7 @@
 html, body { margin: 0; background: var(--ice); color: var(--navy); scrollbar-width: none; }
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 a { color: inherit; }
+h1, h2, h3, h4, h5, h6, .blog-card strong, .testimonial-carousel article > p { text-transform: uppercase; }
 button, input, select, textarea, summary { font: inherit; }
 a, button, input, select, textarea, summary { transition: color .22s ease, background-color .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 5px var(--navy); }

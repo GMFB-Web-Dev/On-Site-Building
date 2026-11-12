@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { masterContent } from "./master-content";
 
 const workImages = [
   ["work-1.jpg", "Completed modern home exterior"],
@@ -17,20 +18,11 @@ const serviceWorkImages = [
 
 const workPhaseCount = workImages.length - 1;
 
-const sampleTestimonials = [
-  {
-    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Distinctio exercitationem laboriosam culpa sit qui placeat, aut officia facere sed amet pariatur ex sunt esse maxime corrupti tempor enim fuga atque accusamus.",
-    client: "Lorem Ipsum",
-  },
-  {
-    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor enim fuga atque accusamus sint in facilis nihil quis iusto, aut quo est sit dolores atque dolorem labore et dolore magna aliqua.",
-    client: "Dolor Sit",
-  },
-  {
-    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.",
-    client: "Amet Elit",
-  },
-] as const;
+const sampleTestimonials = Array.from({ length: 3 }, (_, id) => ({
+  id,
+  quote: masterContent.testimonials.quote,
+  client: masterContent.testimonials.client,
+}));
 
 export function ScrollableWorkGallery({ service = false }: { service?: boolean }) {
   const images = service ? serviceWorkImages : workImages;
@@ -62,7 +54,7 @@ export function ScrollableWorkGallery({ service = false }: { service?: boolean }
     >
       <div className="home-work-heading content-shell">
         <div>
-          <h2>OUR WORK</h2>
+          <h2>{masterContent.work.title}</h2>
         </div>
       </div>
       <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
@@ -141,7 +133,7 @@ export function TestimonialsCarousel() {
     >
       <div className="content-shell testimonials-inner">
         <div className="testimonials-heading">
-          <h2 id="testimonials-heading">TESTIMONIALS</h2>
+          <h2 id="testimonials-heading">{masterContent.testimonials.title}</h2>
         </div>
         <div
           className="testimonial-carousel"
@@ -168,7 +160,7 @@ export function TestimonialsCarousel() {
           {sampleTestimonials.map((item, index) => (
             <button
               type="button"
-              key={item.client}
+              key={item.id}
               className={index === activeIndex ? "active" : ""}
               onClick={() => setActiveIndex(index)}
               aria-label={`Show testimonial ${index + 1}`}

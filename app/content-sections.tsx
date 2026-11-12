@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ServiceAreaMap } from "./service-area-map";
+import { masterContent } from "./master-content";
 
 const projects = [
   { title: "NEW LYNN", location: "Auckland", image: "hero-service-photo.jpg", href: "/projects/new-lynn" },
@@ -36,7 +37,7 @@ function SectionHeading({ title, copy }: { title: string; copy?: string }) {
 
 export function CertificationSection({ blue = false }: { blue?: boolean }) {
   return <section className={`certification-section ${blue ? "certification-section-blue" : ""}`}><div className="content-shell">
-    <SectionHeading title={"NZCB CERTIFIED.\nLBP EXPERTISE."} copy="Led by an experienced Licensed Building Practitioner (LBP) and long-standing member of New Zealand Certified Builders (NZCB), On Site Building Construction brings over 30 years of industry experience to residential and commercial builds." />
+    <SectionHeading title={masterContent.certification.title.replace(". ", ".\n")} copy={masterContent.certification.description} />
     <div className="certification-logos" aria-label="Industry memberships and certifications">
       <Image src="/design/nzcb-logo.png" alt="New Zealand Certified Builders" width={146} height={246} unoptimized />
       <Image src={blue ? "/design/lbp-logo.png" : "/design/lbp-logo-white-bg.jpg"} alt="Licensed Building Practitioners" width={blue ? 209 : 382} height={blue ? 118 : 150} unoptimized />
@@ -48,11 +49,7 @@ const introCopy = {
   about: {
     title: "BUILT FROM THE GROUND UP",
     image: "hero-about-photo.jpg",
-    paragraphs: [
-      "On Site Building Construction was founded in 2003, drawing on building experience dating back to 1994. What began with practical skills, hard work and a passion for building has grown into a trusted construction business serving Auckland, Waikato and Whangārei.",
-      "We take the time to understand each client’s ideas, offer honest advice and keep communication clear from start to finish. Whether it is a renovation, extension, new home or light commercial project, our approach stays personal and practical.",
-      "Together with a trusted network of builders and specialist trades, we bring the experience and care needed to create spaces our clients are proud of.",
-    ],
+    paragraphs: masterContent.about.paragraphs,
   },
   service: {
     title: "RESIDENTIAL NEW BUILDS",
@@ -273,7 +270,7 @@ export function BlogsSection() {
 }
 
 export function ServicesPromoSection() {
-  return <section className="services-promo-section"><div className="content-shell"><h2>OUR SERVICES</h2><div><p>From full home renovations and extensions to residential new builds, design and build, and light commercial work, explore the types of projects we undertake.</p><Link className="cta-button outline-button" href="/services">SERVICES</Link></div></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><h2>{masterContent.services.title}</h2><div><p>{masterContent.services.description}</p><Link className="cta-button outline-button" href="/services">SERVICES</Link></div></div></section>;
 }
 
 const articleSections = [

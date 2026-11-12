@@ -4,6 +4,7 @@ import { MobileNavigation } from "./mobile-navigation";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
+import { masterContent } from "./master-content";
 import {
   BenefitsSection,
   BlogArticleSection,
@@ -111,7 +112,8 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
 function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"]];
-  const serviceItems = [["All Services","/services"],["Renovations & Alterations","/services/renovations-alterations"],["Residential New Builds","/services/residential-new-builds"],["Design & Build","/services/design-build"],["Additions & Extensions","/services/additions-extensions"],["Light Commercial Construction","/services/light-commercial-construction"]];
+  const labels = masterContent.services.labels;
+  const serviceItems = [["All Services","/services"],[labels.renovations,"/services/renovations-alterations"],[labels.newBuilds,"/services/residential-new-builds"],[labels.designBuild,"/services/design-build"],[labels.extensions,"/services/additions-extensions"],[labels.commercial,"/services/light-commercial-construction"]];
   const projectItems = [["New Lynn","/projects/new-lynn"],["Manukau Heights","/projects/manukau-heights"],["Whitford Heights","/projects/whitford-heights"],["Botany","/projects/botany"]];
   const servicesActive = active.startsWith("service");
   const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
@@ -130,20 +132,20 @@ function SiteHeader({ file }: { file: string }) {
         <Link className="nav-service-trigger" href="/projects">Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
       </div>
-      <a className="phone-button" href="tel:0272868693">027 286 8693</a>
+      <a className="phone-button" href={masterContent.business.phoneHref}>{masterContent.business.phone}</a>
     </nav>
     <MobileNavigation>
       <Link href="/">Home</Link>
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
-      <a href="tel:0272868693">027 286 8693</a>
+      <a href={masterContent.business.phoneHref}>{masterContent.business.phone}</a>
     </MobileNavigation>
   </div></header>;
 }
 
 const heroContent: Record<string,{title:string;copy:string;image:string}> = {
-  "hero-home.png": { title:"BUILT AROUND THE WAY YOU LIVE.", copy:"From renovations and extensions to new builds, On Site Building Construction brings over 30 years of experience to every project. We also offer complete design-and-build services throughout Auckland, Waikato and Whangārei.", image:"figma-blog-renovate-rebuild.png" },
+  "hero-home.png": { title:masterContent.hero.title, copy:masterContent.hero.description, image:"figma-blog-renovate-rebuild.png" },
   "hero-services.png": { title:"YOUR HOME. REIMAGINED.", copy:"Whether you’re transforming an existing home or building something new, we take the time to understand your vision, offer honest advice and guide you through every stage of your project.", image:"figma-services-hero.png" },
   "hero-service.png": { title:"A NEW HOME, BUILT AROUND YOU", copy:"Every new home starts with understanding what matters to you. We take the time to discuss your plans, offer honest guidance and bring your vision to life.", image:"figma-newbuild-hero.png" },
   "hero-service-renovations.png": { title:"YOUR HOME. REIMAGINED.", copy:"Transform the home you already know with thoughtful alterations, better flow and modern comfort, carefully planned around the way you want to live.", image:"figma-service-renovations.png" },
@@ -175,10 +177,8 @@ function ResponsiveHero({ file }: { file:string }) {
 function HomeAbout() {
   return <section className="home-about-section">
     <div className="home-about-copy">
-      <h2>ABOUT ON SITE<br/>BUILDING<br/>CONSTRUCTION</h2>
-      <p>Founded in 2003, On Site Building Construction draws on building experience dating back to 1994, with practical skills and care. With strong roots in South Auckland, the business has built its reputation through hard work, experience and word-of-mouth referrals.</p>
-      <p>From transforming existing homes to building new ones, we take pride in understanding what our clients want to achieve. We believe good communication, honest advice and a practical approach make all the difference throughout the building journey.</p>
-      <p>Working alongside a trusted network of builders and specialist trades, we bring the experience and people needed to see each project through, with a genuine commitment to delivering a result our clients are happy with.</p>
+      <h2>{masterContent.about.title}</h2>
+      {masterContent.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       <Link className="cta-button" href="/about">ABOUT US</Link>
     </div>
     <div className="home-about-placeholder" role="img" aria-label="About On Site Building Construction image placeholder" />
@@ -186,24 +186,24 @@ function HomeAbout() {
 }
 
 const serviceCards = [
-  ["RENOVATIONS & ALTERATIONS","figma-service-renovations.png","/services/renovations-alterations","renovations-alterations"],
-  ["RESIDENTIAL NEW BUILDS","figma-service-new-builds.png","/services/residential-new-builds","residential-new-builds"],
-  ["DESIGN & BUILD","figma-service-design-build.png","/services/design-build","design-build"],
-  ["ADDITIONS & EXTENSIONS","figma-service-extensions.png","/services/additions-extensions","additions-extensions"],
+  [masterContent.services.labels.renovations,"figma-service-renovations.png","/services/renovations-alterations","renovations-alterations"],
+  [masterContent.services.labels.newBuilds,"figma-service-new-builds.png","/services/residential-new-builds","residential-new-builds"],
+  [masterContent.services.labels.designBuild,"figma-service-design-build.png","/services/design-build","design-build"],
+  [masterContent.services.labels.extensions,"figma-service-extensions.png","/services/additions-extensions","additions-extensions"],
 ];
 
 function ServicesSection() {
-  return <section className="services-section"><div className="content-shell"><h2>OUR SERVICES</h2><p>From renovations to new builds, we bring experience to every project.</p><div className="services-grid">
+  return <section className="services-section"><div className="content-shell"><h2>{masterContent.services.title}</h2><p>{masterContent.services.description}</p><div className="services-grid">
     {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={`/design/${image}`} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" unoptimized/><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
-    <Link id="light-commercial-construction" href="/services/light-commercial-construction" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.png" alt="" fill sizes="100vw" unoptimized/><span><strong>LIGHT COMMERCIAL<br/>CONSTRUCTION</strong><small>LEARN MORE&nbsp; →</small></span></Link>
+    <Link id="light-commercial-construction" href="/services/light-commercial-construction" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.png" alt="" fill sizes="100vw" unoptimized/><span><strong>{masterContent.services.labels.commercial}</strong><small>LEARN MORE&nbsp; →</small></span></Link>
   </div></div></section>;
 }
 
 function ContactCTA({ blue = false }: { blue?: boolean }) {
-  return <section className={`contact-cta ${blue ? "contact-cta-blue" : ""}`}><div className="content-shell"><div className="contact-heading"><h2>Let’s Talk About Your Project</h2><p>Planning a renovation, extension or new build? Tell us about your plans and let’s discuss how we can bring your project to life.</p></div><div className="contact-methods">
-    <a href="mailto:onsitebuilding1@gmail.com"><b><Image src="/icons/email.svg" alt="" width={42} height={42} unoptimized /></b><strong>EMAIL</strong><span>onsitebuilding1@gmail.com</span></a>
-    <a href="tel:021715196"><b><Image src="/icons/phone.svg" alt="" width={42} height={42} unoptimized /></b><strong>PHONE</strong><span>021 715 196</span></a>
-    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>SERVICE AREAS</strong><u>Auckland, Waikato &amp; Whangārei</u></span>
+  return <section className={`contact-cta ${blue ? "contact-cta-blue" : ""}`}><div className="content-shell"><div className="contact-heading"><h2>{masterContent.contact.title}</h2><p>{masterContent.contact.description}</p></div><div className="contact-methods">
+    <a href={`mailto:${masterContent.business.email}`}><b><Image src="/icons/email.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.emailLabel}</strong><span>{masterContent.business.email}</span></a>
+    <a href={masterContent.business.phoneHref}><b><Image src="/icons/phone.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.phoneLabel}</strong><span>{masterContent.business.phone}</span></a>
+    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.areasLabel}</strong><u>{masterContent.business.serviceAreas}</u></span>
   </div></div></section>;
 }
 
@@ -211,7 +211,7 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
   return <section className={`enquiry-section ${withMap ? "with-map" : ""}`}><div className="content-shell enquiry-grid"><form action="/contact" method="get" aria-label="Project enquiry form">
     <div className="field-pair"><label>FIRST NAME*<input name="firstName" placeholder="First Name" /></label><label>LAST NAME*<input name="lastName" placeholder="Last Name" /></label></div>
     <div className="field-pair"><label>EMAIL*<input name="email" type="email" placeholder="Email" /></label><label>PHONE*<input name="phone" type="tel" placeholder="+64 21 345 6789" /></label></div>
-    <label>SELECT A SERVICE*<select name="service" defaultValue=""><option value="">Select One...</option><option>Residential new builds</option><option>Renovations and alterations</option><option>Design and build</option><option>Additions and extensions</option><option>Light commercial construction</option></select></label>
+    <label>SELECT A SERVICE*<select name="service" defaultValue=""><option value="">Select One...</option>{Object.values(masterContent.services.labels).map((label) => <option key={label}>{label}</option>)}</select></label>
     <label>PROJECT SIZE<select name="size" defaultValue="25 sqm"><option>25 sqm</option><option>50 sqm</option><option>100+ sqm</option></select></label>
     <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
     <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
