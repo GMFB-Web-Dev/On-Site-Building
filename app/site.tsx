@@ -4,7 +4,8 @@ import { MobileNavigation } from "./mobile-navigation";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
-import { masterContent } from "./master-content";
+import { masterContent, pageCopy, copyParagraphs, type CopyPageKey } from "./master-content";
+import type { BlogKey } from "./content-sections";
 import {
   BenefitsSection,
   BlogArticleSection,
@@ -33,6 +34,11 @@ export const slugToPage: Record<string, PageKey> = {
 type Kind = "nav" | "hero" | "form";
 type Section = [src: string, height: number, alt: string, kind?: Kind, width?: number, offsetX?: number];
 const s = (src: string, height: number, alt: string, kind?: Kind, width?: number, offsetX?: number): Section => [src, height, alt, kind, width, offsetX];
+
+function projectHero(page: "whitford" | "newLynn" | "manukau" | "botany"): [string, string] {
+  const hero = pageCopy[page].hero;
+  return [hero.title, copyParagraphs(hero)[0]];
+}
 
 const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, string]; spacer?: number }> = {
   home: { sections: [
@@ -67,16 +73,16 @@ const pages: Record<PageKey, { sections: Section[]; projectHero?: [string, strin
   projects: { sections: [
     s("navbar-projects.png",80,"Projects navigation","nav"), s("hero-projects.png",820,"A Closer Look at Our Work","hero"), s("projects-grid.png",1083,"Our projects"),
     s("contact-strip-projects.png",612,"Contact details"), s("contact-form-map-projects.png",878,"Project enquiry form and map","form"), s("footer-projects.png",279,"Footer navigation") ] },
-  whitford: { projectHero: ["WHITFORD HEIGHTS","A luxury design-and-build home created from the ground up for a couple in Whitford Heights, combining exceptional living spaces, personal touches and impressive features designed for both comfort and entertainment."], sections: [
+  whitford: { projectHero: projectHero("whitford"), sections: [
     s("navbar-whitford.png",80,"Whitford Heights project navigation","nav"), s("project-whitford.jpg",739,"Whitford Heights project overview"),
     s("projects-related-whitford.png",624,"Related projects"), s("contact-strip-whitford.png",612,"Contact details"), s("footer-whitford.png",279,"Footer navigation") ] },
-  newLynn: { projectHero: ["NEW LYNN","A modern two-storey, four-bedroom home in New Lynn, designed around indoor-outdoor living, with a kitchen that opens directly onto the deck and an inviting outdoor entertainment area."], sections: [
+  newLynn: { projectHero: projectHero("newLynn"), sections: [
     s("navbar-new-lynn.png",80,"New Lynn project navigation","nav"), s("project-new-lynn.jpg",739,"New Lynn project overview"),
     s("projects-related-new-lynn.png",624,"Related projects"), s("contact-strip-new-lynn.png",612,"Contact details"), s("footer-new-lynn.png",279,"Footer navigation") ] },
-  manukau: { projectHero: ["MANUKAU HEIGHTS","A thoughtfully coordinated residential project created for practical family living, with durable construction, considered spaces and a strong connection to the outdoors."], sections: [
+  manukau: { projectHero: projectHero("manukau"), sections: [
     s("navbar-manukau.png",80,"Manukau Heights project navigation","nav"), s("project-manukau.jpg",739,"Manukau Heights project overview"),
     s("projects-related-manukau.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
-  botany: { projectHero: ["BOTANY","A contemporary residential project shaped around functional spaces, considered detailing and reliable delivery from the early building stages through to completion."], sections: [
+  botany: { projectHero: projectHero("botany"), sections: [
     s("navbar-botany.png",80,"Botany project navigation","nav"), s("project-botany.jpg",739,"Botany project overview"),
     s("projects-related-botany.png",624,"Related projects"), s("contact-strip-projects.png",612,"Contact details"), s("footer-projects.png",279,"Footer navigation") ] },
   about: { spacer: 1, sections: [
@@ -144,24 +150,24 @@ function SiteHeader({ file }: { file: string }) {
   </div></header>;
 }
 
-const heroContent: Record<string,{title:string;copy:string;image:string}> = {
-  "hero-home.png": { title:masterContent.hero.title, copy:masterContent.hero.description, image:"figma-blog-renovate-rebuild.png" },
-  "hero-services.png": { title:"YOUR HOME. REIMAGINED.", copy:"Whether you’re transforming an existing home or building something new, we take the time to understand your vision, offer honest advice and guide you through every stage of your project.", image:"figma-services-hero.png" },
-  "hero-service.png": { title:"A NEW HOME, BUILT AROUND YOU", copy:"Every new home starts with understanding what matters to you. We take the time to discuss your plans, offer honest guidance and bring your vision to life.", image:"figma-newbuild-hero.png" },
-  "hero-service-renovations.png": { title:"YOUR HOME. REIMAGINED.", copy:"Transform the home you already know with thoughtful alterations, better flow and modern comfort, carefully planned around the way you want to live.", image:"figma-service-renovations.png" },
-  "hero-service-design-build.png": { title:"DESIGNED WITH PURPOSE. BUILT WITH CARE.", copy:"Bring design and construction together through one coordinated team, with practical guidance from the first idea through to the finished build.", image:"figma-service-design-build.png" },
-  "hero-service-extensions.png": { title:"MORE SPACE FOR THE WAY YOU LIVE.", copy:"Create room to grow with an addition or extension designed to connect naturally with your existing home, lifestyle and site.", image:"figma-service-extensions.png" },
-  "hero-service-commercial.png": { title:"PRACTICAL SPACES. PROFESSIONAL DELIVERY.", copy:"From fit-outs and alterations to smaller commercial builds, we deliver functional spaces through clear planning, trusted trades and experienced coordination.", image:"figma-service-commercial.png" },
-  "hero-projects.png": { title:"A CLOSER LOOK AT OUR WORK", copy:"From home renovations and new builds to light commercial projects, take a look at the work that reflects our passion for building, practical approach and commitment to quality workmanship.", image:"figma-blog-extension.png" },
-  "hero-about.png": { title:"OUR STORY. YOUR FUTURE PROJECT.", copy:"Founded in 2003, On Site Building Construction brings over 30 years of building experience, honest communication and a genuine passion for creating spaces clients are proud to call home.", image:"figma-blog-commercial.png" },
-  "hero-blogs.png": { title:"BUILDING ADVICE, WITHOUT THE GUESSWORK", copy:"Explore practical advice on home renovations, extensions and new builds, with helpful insights to guide your decisions and plan your next project.", image:"figma-blogs-hero.png" },
-  "hero-blog.png": { title:"RENOVATE OR REBUILD? WHAT’S RIGHT FOR YOUR HOME?", copy:"Deciding whether to renovate your existing home or start fresh? Explore the key considerations to help you understand your options and make an informed decision.", image:"figma-blog-renovate-rebuild.png" },
-  "hero-blog-extension.png": { title:"PLANNING A HOME EXTENSION: WHAT TO CONSIDER FIRST", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-extension.png" },
-  "hero-blog-blending.png": { title:"BLENDING OLD AND NEW IN A HOME RENOVATION", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-blending.png" },
-  "hero-blog-commercial.png": { title:"WHAT IS LIGHT COMMERCIAL CONSTRUCTION?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-commercial.png" },
-  "hero-blog-design-build.png": { title:"HOW DOES THE DESIGN AND BUILD PROCESS WORK?", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-design-build.png" },
-  "hero-blog-new-home.png": { title:"WHAT TO KNOW BEFORE BUILDING A NEW HOME", copy:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", image:"figma-blog-new-home.png" },
-  "hero-contact.png": { title:"EVERY GREAT PROJECT STARTS WITH A CHAT", copy:"Whether you’re planning a renovation, extension or new build, we’re here to help. Get in touch with On Site Building Construction to discuss your project.", image:"figma-blog-new-home.png" },
+const heroContent: Record<string, { page: CopyPageKey; image: string }> = {
+  "hero-home.png": { page: "home", image: "figma-blog-renovate-rebuild.png" },
+  "hero-services.png": { page: "services", image: "figma-services-hero.png" },
+  "hero-service.png": { page: "service", image: "figma-newbuild-hero.png" },
+  "hero-service-renovations.png": { page: "serviceRenovations", image: "figma-service-renovations.png" },
+  "hero-service-design-build.png": { page: "serviceDesignBuild", image: "figma-service-design-build.png" },
+  "hero-service-extensions.png": { page: "serviceExtensions", image: "figma-service-extensions.png" },
+  "hero-service-commercial.png": { page: "serviceCommercial", image: "figma-service-commercial.png" },
+  "hero-projects.png": { page: "projects", image: "figma-blog-extension.png" },
+  "hero-about.png": { page: "about", image: "figma-blog-commercial.png" },
+  "hero-blogs.png": { page: "blogs", image: "figma-blogs-hero.png" },
+  "hero-blog.png": { page: "blog", image: "figma-blog-renovate-rebuild.png" },
+  "hero-blog-extension.png": { page: "blogExtension", image: "figma-blog-extension.png" },
+  "hero-blog-blending.png": { page: "blogBlending", image: "figma-blog-blending.png" },
+  "hero-blog-commercial.png": { page: "blogCommercial", image: "figma-blog-commercial.png" },
+  "hero-blog-design-build.png": { page: "blogDesignBuild", image: "figma-blog-design-build.png" },
+  "hero-blog-new-home.png": { page: "blogNewHome", image: "figma-blog-new-home.png" },
+  "hero-contact.png": { page: "contact", image: "figma-blog-new-home.png" },
 };
 
 function HeroOverlay() {
@@ -169,9 +175,10 @@ function HeroOverlay() {
 }
 
 function ResponsiveHero({ file }: { file:string }) {
-  const hero = heroContent[file];
+  const { page, image } = heroContent[file];
+  const hero = pageCopy[page].hero;
   const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about" } : { label: "SERVICES", href: "/services" };
-  return <section className="responsive-hero"><Image src={`/design/${hero.image}`} alt="" fill priority sizes="100vw" unoptimized/><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{hero.copy}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  return <section className="responsive-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized/><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -226,7 +233,7 @@ function SiteFooter({ file }: { file: string }) {
   return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><div className="footer-bottom"><span>© Developed by GMFB LTD. All rights reserved.</span><Link href="#">Privacy Policy</Link></div></div></footer>;
 }
 
-function VisualSection({ section }: { section: Section }) {
+function VisualSection({ section, page }: { section: Section; page: PageKey }) {
   const [file,,,kind] = section;
   if (kind === "nav") return <SiteHeader file={file} />;
   if (kind === "hero") return <ResponsiveHero file={file} />;
@@ -261,9 +268,8 @@ function VisualSection({ section }: { section: Section }) {
   if (file === "projects-related-botany.png") return <ProjectsSection relatedTo="botany" />;
   if (file === "blogs-grid.png") return <BlogsSection />;
   if (file === "blogs-services.png") return <ServicesPromoSection />;
-  if (file === "blog-article.jpg") return <BlogArticleSection />;
-  if (file.startsWith("blog-article-placeholder-")) return <BlogArticleSection placeholder />;
-  if (file === "blog-related.png") return <RelatedBlogsSection />;
+  if (file.startsWith("blog-article")) return <BlogArticleSection page={page as BlogKey} />;
+  if (file === "blog-related.png") return <RelatedBlogsSection page={page as BlogKey} />;
   if (file === "contact-map.png") return <ServiceAreaSection />;
   if (file.startsWith("contact-strip")) return <ContactCTA blue={file.includes("whitford") || file.includes("new-lynn") || file.includes("blogs") || file.includes("blog") || file.includes("about")} />;
   if (file.startsWith("contact-form-map")) return <EnquirySection />;
@@ -278,6 +284,6 @@ function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
 
 export function SitePage({ page }: { page: PageKey }) {
   const config = pages[page]; const [nav,...rest] = config.sections;
-  return <main className="site-canvas" data-page={page}><RevealObserver/><VisualSection section={nav}/>{config.projectHero && <PlaceholderProjectHero hero={config.projectHero}/>} {rest.map((section,index) =>
-    <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>{config.spacer && index === 1 ? <div style={{height:config.spacer,background:"var(--blue)"}}/> : null}<VisualSection section={section}/></div>)}</main>;
+  return <main className="site-canvas" data-page={page}><RevealObserver/><VisualSection section={nav} page={page}/>{config.projectHero && <PlaceholderProjectHero hero={config.projectHero}/>} {rest.map((section,index) =>
+    <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>{config.spacer && index === 1 ? <div style={{height:config.spacer,background:"var(--blue)"}}/> : null}<VisualSection section={section} page={page}/></div>)}</main>;
 }

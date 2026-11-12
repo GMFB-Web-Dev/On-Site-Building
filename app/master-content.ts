@@ -1,51 +1,59 @@
-// Website copy from docs/On Site Copy Writing.docx.
-// Keep shared business information here so every page uses the master copy.
+import sourcePages from "./master-pages.json";
+
+// Extracted verbatim from docs/On Site Copy Writing.docx.
+export type CopyNode =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[] };
+export type CopySection = { title: string; nodes: CopyNode[] };
+export type CopyPage = { hero: CopySection; sections: CopySection[] };
+export type CopyPageKey = keyof typeof sourcePages;
+export const pageCopy = sourcePages as Record<CopyPageKey, CopyPage>;
+
+export function getCopySection(page: CopyPageKey, title: string): CopySection {
+  const section = pageCopy[page].sections.find(section => section.title.toUpperCase() === title.toUpperCase());
+  if (!section) throw new Error(`Missing master copy: ${page} / ${title}`);
+  return section;
+}
+
+export function copyParagraphs(section: CopySection) {
+  return section.nodes.filter((node): node is Extract<CopyNode, { type: "paragraph" }> => node.type === "paragraph").map(node => node.text);
+}
+
+export function copySubsections(section: CopySection): CopySection[] {
+  const sections: CopySection[] = [];
+  for (const node of section.nodes) {
+    if (node.type === "heading") sections.push({ title: node.text, nodes: [] });
+    else sections.at(-1)?.nodes.push(node);
+  }
+  return sections;
+}
+
+const homeAbout = getCopySection("home", "ABOUT ON SITE BUILDING CONSTRUCTION");
+const homeServices = getCopySection("home", "OUR SERVICES");
+const homeTestimonials = getCopySection("home", "TESTIMONIALS");
+const certification = getCopySection("home", "NZCB CERTIFIED. LBP EXPERTISE.");
+const contact = getCopySection("home", "Let’s Talk About Your Project");
+const contactItems = copySubsections(contact);
+const serviceItems = copySubsections(homeServices);
+
 export const masterContent = {
   business: {
     name: "On Site Building Construction",
-    email: "onsitebuilding1@gmail.com",
-    phone: "021 715 196",
-    phoneHref: "tel:021715196",
-    serviceAreas: "Auckland, Waikato & Whangārei",
+    email: copyParagraphs(contactItems[0])[0],
+    phone: copyParagraphs(contactItems[1])[0],
+    phoneHref: `tel:${copyParagraphs(contactItems[1])[0].replace(/\s/g, "")}`,
+    serviceAreas: copyParagraphs(contactItems[2])[0],
   },
-  hero: {
-    title: "BUILT AROUND THE WAY YOU LIVE.",
-    description: "From renovations and extensions to new builds, On Site Building Construction brings over 30 years of experience to every project. We also offer complete design-and-build services throughout Auckland, Waikato and Whangārei.",
-  },
-  about: {
-    title: "ABOUT ON SITE BUILDING CONSTRUCTION",
-    paragraphs: [
-      "Founded in 2003, On Site Building Construction draws on building experience dating back to 1994, with practical skills and care. With strong roots in South Auckland, the business has built its reputation through hard work, experience and word-of-mouth referrals.",
-      "From transforming existing homes to building new ones, we take pride in understanding what our clients want to achieve. We believe good communication, honest advice and a practical approach make all the difference throughout the building journey.",
-      "Working alongside a trusted network of builders and specialist trades, we bring the experience and people needed to see each project through, with a genuine commitment to delivering a result our clients are happy with.",
-    ],
-  },
+  hero: { title: pageCopy.home.hero.title, description: copyParagraphs(pageCopy.home.hero)[0] },
+  about: { title: homeAbout.title, paragraphs: copyParagraphs(homeAbout) },
   services: {
-    title: "OUR SERVICES",
-    description: "From renovations to new builds, we bring experience to every project.",
-    labels: {
-      renovations: "RENOVATIONS & ALTERATIONS",
-      newBuilds: "RESIDENTIAL NEW BUILDS",
-      designBuild: "DESIGN & BUILD",
-      extensions: "ADDITIONS & EXTENSIONS",
-      commercial: "LIGHT COMMERCIAL CONSTRUCTION",
-    },
+    title: homeServices.title,
+    description: copyParagraphs(homeServices)[0],
+    labels: { renovations: serviceItems[0].title, newBuilds: serviceItems[1].title, designBuild: serviceItems[2].title, extensions: serviceItems[3].title, commercial: serviceItems[4].title },
   },
-  work: { title: "OUR WORK" },
-  testimonials: {
-    title: "TESTIMONIALS",
-    quote: "lorem ipsum dolor sit amet consectetur adipiscing elit distinctio exercitation est laborum culpa sit qui placeat aute officia facere sed amet pariatur ex sunt esse maxime corrupti tempor enim fuga atque accusamus sint in in facilis nihil quis iusto aut quo est sit aut est dolore dolor elit adipiscing mollitia lorem ipsum dolor sit amet consectetur adipiscing elit distinctio exercitation est.",
-    client: "John Doe",
-  },
-  certification: {
-    title: "NZCB CERTIFIED. LBP EXPERTISE.",
-    description: "Led by an experienced Licensed Building Practitioner (LBP) and long-standing member of New Zealand Certified Builders (NZCB), On Site Building Construction brings over 30 years of industry experience to residential and commercial builds.",
-  },
-  contact: {
-    title: "LET’S TALK ABOUT YOUR PROJECT",
-    description: "Planning a renovation, extension or new build? Tell us about your plans and let's discuss how we can bring your project to life.",
-    emailLabel: "EMAIL",
-    phoneLabel: "PHONE",
-    areasLabel: "SERVICE AREAS",
-  },
-} as const;
+  work: { title: getCopySection("home", "OUR WORK").title },
+  testimonials: { title: homeTestimonials.title, quote: copyParagraphs(homeTestimonials)[0].replace(/^[“”]|[“”]$/g, ""), client: copySubsections(homeTestimonials)[0].title },
+  certification: { title: certification.title, description: copyParagraphs(certification)[0] },
+  contact: { title: contact.title, description: copyParagraphs(contact)[0], emailLabel: contactItems[0].title.toUpperCase(), phoneLabel: contactItems[1].title.toUpperCase(), areasLabel: contactItems[2].title.toUpperCase() },
+};
