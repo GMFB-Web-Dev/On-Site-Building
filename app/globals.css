@@ -554,3 +554,29 @@ a.project-tile:hover img { transform: scale(1.055); }
   .footer-link-column h2 { font-size: 14px; }
   .footer-link-column a { font-size: 13px; }
 }
+
+
+/* Subtle, manually controllable photography slideshows on approved hero sections. */
+.hero-slideshow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; transform: none; }
+.hero-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility .9s ease; }
+.hero-slide.is-active { opacity: 1; visibility: visible; }
+.hero-slide img { object-fit: cover; object-position: center; }
+.responsive-hero > .hero-shade,.project-hero > .hero-shade { z-index: 1; }
+.responsive-hero > .hero-content { z-index: 2; }
+.project-hero > .hero-slideshow { position: absolute; inset: 0; width: 100%; height: 100%; transform: none; z-index: 0; }
+.project-hero > div:not(.hero-slideshow) { position: relative; z-index: 2; }
+.hero-slide-controls { position: absolute; bottom: clamp(14px,2.2vw,26px); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; z-index: 3; padding: 5px 9px; border-radius: 999px; background: rgba(0,0,0,.32); backdrop-filter: blur(5px); }
+.hero-slide-arrow { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; color: #fff; background: rgba(255,255,255,.18); font: 400 27px/1 Arial,sans-serif; cursor: pointer; }
+.hero-slide-arrow:hover { background: rgba(255,255,255,.36); }
+.hero-slide-dots { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.hero-slide-dots button { display: grid; place-items: center; border: none; background: transparent; padding: 0; width: 25px; height: 34px; cursor: pointer; }
+.hero-slide-dots button::after { content: ""; display: block; width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.55); transition: width .25s ease, background-color .25s ease; }
+.hero-slide-dots button.is-active::after { width: 19px; border-radius: 7px; background: #fff; }
+@media (max-width: 800px) {
+  .hero-slide-controls { bottom: 12px; }
+  .hero-slide-arrow { width: 36px; height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none !important; }
+  .hero-slide-dots button::after { transition: none !important; }
+}
