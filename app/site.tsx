@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { MobileNavigation } from "./mobile-navigation";
 import { PhotoGallery } from "./interactive-sections";
+import { HeroSlideshow } from "./hero-slideshow";
 import { EnquiryForm } from "./enquiry-form";
-import { clientImages, getProject, projects, serviceMedia, servicePageKeys, type ProjectKey } from "./client-media";
+import { clientImages, getProject, projects, serviceMedia, servicePageKeys, type ProjectKey, type SiteImage } from "./client-media";
 import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
 import { masterContent, pageCopy, copyParagraphs, type CopyPageKey } from "./master-content";
@@ -170,6 +171,23 @@ const heroContent: Record<string, { page: CopyPageKey; image: string }> = {
   "hero-contact.png": { page: "contact", image: "figma-blog-new-home.webp" },
 };
 
+// Keep every approved hero as the first slide; additional images are client supplied.
+// Light Commercial, contact and individual blog articles stay static where no distinct
+// relevant client photography is available.
+const homeSlides = [
+  clientImages["home.hero"], clientImages["project.new-lynn.hero"], clientImages["project.manukau-heights.hero"],
+];
+const heroAlternatives: Partial<Record<CopyPageKey, SiteImage[]>> = {
+  home: homeSlides,
+  services: [clientImages["project.whitford-heights.hero"], clientImages["project.botany.hero"]],
+  about: [clientImages["about.hero"], clientImages["project.whitford-heights.gallery.7"]],
+  service: [clientImages["residential-new-builds.hero"], clientImages["residential-new-builds.gallery.6"], clientImages["residential-new-builds.gallery.3"]],
+  serviceRenovations: [clientImages["renovations-alterations.hero"], clientImages["renovations-alterations.gallery.2"], clientImages["renovations-alterations.gallery.1"]],
+  serviceDesignBuild: [clientImages["design-build.why-design-build"], clientImages["design-build.overview"]],
+  serviceExtensions: [clientImages["additions-extensions.hero"], clientImages["additions-extensions.gallery.1"], clientImages["additions-extensions.why-extend"]],
+  projects: [clientImages["project.botany.hero"], clientImages["project.whitford-heights.gallery.10"]],
+};
+
 function HeroOverlay() {
   return <span className="hero-shade" aria-hidden="true" />;
 }
@@ -181,9 +199,12 @@ function ResponsiveHero({ file }: { file:string }) {
     serviceRenovations: "renovations-alterations.hero", serviceExtensions: "additions-extensions.hero",
   };
   const replacement = clientImages[replacementKeys[page]];
+  const original: SiteImage = replacement ?? { src: `/design/${image}`, alt: "", width: 1440, height: 820 };
+  const extra = heroAlternatives[page] ?? [];
+  const images = [original, ...extra].filter((photo, index, all) => all.findIndex(other => other.src === photo.src) === index);
   const hero = pageCopy[page].hero;
   const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about-onsite-building-auckland" } : { label: "SERVICES", href: "/building-services-auckland" };
-  return <section className="responsive-hero"><Image src={replacement?.src ?? `/design/${image}`} alt={replacement?.alt ?? ""} fill priority sizes="100vw" /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -309,8 +330,9 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
 }
 
 function ProjectHero({ hero, project }: { hero: [string,string]; project: ProjectKey }) {
-  const image = getProject(project).hero;
-  return <section className="project-hero"><Image src={image.src} alt={image.alt} fill priority sizes="100vw" /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/building-services-auckland">SERVICES</Link></div></div></section>;
+  const photos = getProject(project);
+  const images = [photos.hero, ...photos.gallery.slice(0,1)];
+  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/building-services-auckland">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
