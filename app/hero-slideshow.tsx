@@ -39,7 +39,6 @@ export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
   }, [index, total, paused, visible, reducedMotion, documentVisible, intervalMs]);
 
   if (!total) return null;
-  const select = (next: number) => setIndex((next + total) % total);
   return <div
     ref={container}
     className="hero-slideshow"
@@ -57,12 +56,6 @@ export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
     >
       <Image src={item.src} alt={index === i ? item.alt : ""} fill priority={i === 0} sizes="100vw" />
     </div>)}
-    {total > 1 && <div className="hero-slide-controls" aria-label={`${label} photo controls`}>
-      <button type="button" className="hero-slide-arrow" onClick={() => select(index - 1)} aria-label="Previous photograph">‹</button>
-      <div className="hero-slide-dots" role="group" aria-label="Choose photograph">
-        {images.map((item, i) => <button key={item.src} type="button" className={index === i ? "is-active" : ""} aria-label={`Show photograph ${i + 1} of ${total}`} aria-pressed={index === i} onClick={() => select(i)} />)}
-      </div>
-      <button type="button" className="hero-slide-arrow" onClick={() => select(index + 1)} aria-label="Next photograph">›</button>
-    </div>}
+
   </div>;
 }
