@@ -224,19 +224,40 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
 }
 
 export function SiteFooter({ file }: { file: string }) {
-  const page = file.replace("footer-", "").replace(".png", "");
-  const active = page === "service" ? "services" : page === "blog" ? "blogs" : ["whitford", "new-lynn"].includes(page) ? "projects" : page;
-  const items = [["Home",paths.home,"home"],["Services",paths.services,"services"],["About us",paths.about,"about"],["Projects",paths.projects,"projects"],["Blogs",paths.blogs,"blogs"],["Contact us",paths.contact,"contact"],["Service areas",paths.serviceAreas,"serviceAreas"]];
+  const labels = masterContent.services.labels;
+  const services = [
+    [labels.renovations, paths.serviceRenovations],
+    [labels.newBuilds, paths.service],
+    [labels.designBuild, paths.serviceDesignBuild],
+    [labels.extensions, paths.serviceExtensions],
+    [labels.commercial, paths.serviceCommercial],
+    ["All Services", paths.services],
+  ] as const;
+  const projectLinks = [
+    ...projects.map(project => [project.name, project.href] as const),
+    ["All Projects", paths.projects] as const,
+  ];
   return <footer className="site-footer"><div className="content-shell">
     <div className="footer-top">
       <div className="footer-brand-column">
         <Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link>
-        <nav className="footer-regions" aria-label="Service areas">
-          <strong>Service areas</strong>
-          <ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul>
-        </nav>
+        <div className="footer-contact-details">
+          <div><strong>Phone</strong><a href={masterContent.business.phoneHref}>{masterContent.business.phone}</a></div>
+          <div><strong>Email</strong><a href={`mailto:${masterContent.business.email}`}>{masterContent.business.email}</a></div>
+        </div>
       </div>
-      <nav className="footer-navigation" aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav>
+      <nav className="footer-link-column" aria-label="Footer services">
+        <h2>Services</h2>
+        <ul>{services.map(([label,href]) => <li key={href}><Link href={href}>{label}</Link></li>)}</ul>
+      </nav>
+      <nav className="footer-link-column" aria-label="Footer projects">
+        <h2>Projects</h2>
+        <ul>{projectLinks.map(([label,href]) => <li key={href}><Link href={href}>{label}</Link></li>)}</ul>
+      </nav>
+      <nav className="footer-link-column footer-regions" aria-label="Footer service areas">
+        <h2>Service Areas</h2>
+        <ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul>
+      </nav>
     </div>
     <div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div>
   </div></footer>;
