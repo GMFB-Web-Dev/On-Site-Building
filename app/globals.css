@@ -36,7 +36,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font: 800 10px/1.15 var(--font-montserrat),sans-serif; letter-spacing: .02em; }
 .header-brand { width: clamp(230px,24vw,340px); min-width: 230px; height: 100%; overflow: hidden; }
 .header-logo { position: relative; display: block; width: 100%; height: 64px; overflow: hidden; }
-.header-logo img { object-fit: cover; object-position: 50% 44%; mix-blend-mode: screen; transition: transform .3s ease; }
+.header-logo img { object-fit: contain; object-position: left center; mix-blend-mode: screen; transition: transform .3s ease; }
 .header-brand:hover .header-logo img { transform: scale(1.018); }
 .brand-mark { display: grid; place-items: center; width: 46px; height: 34px; border: 2px solid currentColor; border-radius: 18px 18px 5px 5px; font-size: 11px; transition: transform .25s ease, background-color .25s ease; }
 .brand:hover .brand-mark { transform: translateY(-2px) rotate(-2deg); background: rgba(255,255,255,.1); }
