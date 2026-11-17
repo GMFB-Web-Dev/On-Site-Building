@@ -55,7 +55,7 @@ export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
       className={`hero-slide ${index === i ? "is-active" : ""}`}
       aria-hidden={index !== i}
     >
-      <Image src={item.src} alt={index === i ? item.alt : ""} fill priority={i === 0} loading={i === 0 ? "eager" : "lazy"} sizes="100vw" />
+      <Image src={item.src} alt={index === i ? item.alt : ""} fill priority={i === 0} sizes="100vw" />
     </div>)}
     {total > 1 && <div className="hero-slide-controls" aria-label={`${label} photo controls`}>
       <button type="button" className="hero-slide-arrow" onClick={() => select(index - 1)} aria-label="Previous photograph">‹</button>
