@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "./site";
 import styles from "./legal.module.css";
-import { Breadcrumbs } from "./seo-components";
 
 type LegalDocument = {
   path: string;
@@ -19,7 +18,6 @@ export function LegalPage({ document }: { document: LegalDocument }) {
   return (
     <div className="site-canvas">
       <SiteHeader file="navbar-legal.png" />
-      <Breadcrumbs page={document.path === "/privacy-policy" ? "privacy" : "terms"} />
       <main className={styles.main} id="main-content">
         <article className={styles.document} aria-labelledby="legal-title">
           <header className={styles.heading}>

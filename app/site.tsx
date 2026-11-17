@@ -24,7 +24,6 @@ import {
 } from "./content-sections";
 
 import { paths, type PageKey } from "./site-routes";
-import { Breadcrumbs } from "./seo-components";
 import { CoverageSection, coverageRegions } from "./service-coverage";
 export type { PageKey } from "./site-routes";
 export { slugToPage } from "./site-routes";
@@ -115,10 +114,9 @@ const pages: Record<Exclude<PageKey, "serviceAreas">, { sections: Section[]; pro
 
 export function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
-  const items = [["Home","/","home"],["About us","/about-onsite-building-auckland","about"],["Contact us","/contact-auckland-builders","contact"],["Blogs","/building-advice-auckland","blogs"]];
   const labels = masterContent.services.labels;
-  const serviceItems = [["All Services","/building-services-auckland"],["Service Areas",paths.serviceAreas],[labels.renovations,"/services/home-renovations-south-auckland"],[labels.newBuilds,"/services/new-home-builders-auckland"],[labels.designBuild,"/services/design-and-build-auckland"],[labels.extensions,"/services/home-extensions-auckland"],[labels.commercial,"/services/light-commercial-builders-auckland"]];
-  const projectItems = [["All Projects", "/building-projects-auckland"], ...projects.map(project => [project.name, project.href])];
+  const serviceItems = [[labels.renovations,paths.serviceRenovations],[labels.newBuilds,paths.service],[labels.designBuild,paths.serviceDesignBuild],[labels.extensions,paths.serviceExtensions],[labels.commercial,paths.serviceCommercial],["Service Areas",paths.serviceAreas],["All Services",paths.services]];
+  const projectItems = [...projects.map(project => [project.name, project.href]), ["All Projects", paths.projects]];
   const servicesActive = active.startsWith("service");
   const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
   return <header className="site-header"><div className="header-inner">
@@ -131,18 +129,22 @@ export function SiteHeader({ file }: { file: string }) {
         <Link className="nav-service-trigger" href="/building-services-auckland">Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
       </div>
-      {items.slice(1).map(([label,href,key])=><Link key={href} href={href} className={key === "blogs" ? (active.startsWith("blog") ? "active" : "") : (active.includes(key) ? "active" : "")}>{label}</Link>)}
+      <Link href={paths.about} className={active === "about" ? "active" : ""}>About us</Link>
       <div className={`nav-service-dropdown ${projectsActive ? "active" : ""}`}>
         <Link className="nav-service-trigger" href="/building-projects-auckland">Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
       </div>
+      <Link href={paths.blogs} className={active.startsWith("blog") ? "active" : ""}>Blogs</Link>
+      <Link href={paths.contact} className={active === "contact" ? "active" : ""}>Contact us</Link>
       <a className="phone-button" href={masterContent.business.phoneHref}>{masterContent.business.phone}</a>
     </nav>
     <MobileNavigation>
       <Link href="/">Home</Link>
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
-      {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}
+      <Link href={paths.about}>About us</Link>
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <Link href={paths.blogs}>Blogs</Link>
+      <Link href={paths.contact}>Contact us</Link>
       <a href={masterContent.business.phoneHref}>{masterContent.business.phone}</a>
     </MobileNavigation>
   </div></header>;
@@ -224,8 +226,20 @@ function EnquirySection({ withMap = true }: { withMap?: boolean }) {
 export function SiteFooter({ file }: { file: string }) {
   const page = file.replace("footer-", "").replace(".png", "");
   const active = page === "service" ? "services" : page === "blog" ? "blogs" : ["whitford", "new-lynn"].includes(page) ? "projects" : page;
-  const items = [["Home","/","home"],["Services","/building-services-auckland","services"],["About us","/about-onsite-building-auckland","about"],["Contact us","/contact-auckland-builders","contact"],["Blogs","/building-advice-auckland","blogs"],["Projects","/building-projects-auckland","projects"],["Service areas",paths.serviceAreas,"serviceAreas"]];
-  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><nav className="footer-regions" aria-label="Service areas"><strong>Service areas</strong><ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul></nav><div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div></div></footer>;
+  const items = [["Home",paths.home,"home"],["Services",paths.services,"services"],["About us",paths.about,"about"],["Projects",paths.projects,"projects"],["Blogs",paths.blogs,"blogs"],["Contact us",paths.contact,"contact"],["Service areas",paths.serviceAreas,"serviceAreas"]];
+  return <footer className="site-footer"><div className="content-shell">
+    <div className="footer-top">
+      <div className="footer-brand-column">
+        <Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link>
+        <nav className="footer-regions" aria-label="Service areas">
+          <strong>Service areas</strong>
+          <ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul>
+        </nav>
+      </div>
+      <nav className="footer-navigation" aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav>
+    </div>
+    <div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div>
+  </div></footer>;
 }
 
 function VisualSection({ section, page }: { section: Section; page: PageKey }) {
@@ -281,17 +295,17 @@ function ProjectHero({ hero, project }: { hero: [string,string]; project: Projec
 export function SitePage({ page }: { page: PageKey }) {
   if (page === "serviceAreas") return <div className="site-canvas">
     <SiteHeader file="navbar-services.png" />
-    <main id="main-content"><Breadcrumbs page={page} />
+    <main id="main-content">
       <header className="interior-intro content-shell"><h1>Service Areas</h1><p>Based in South Auckland, we work across Auckland, Waikato and Whangārei.</p></header>
       <CoverageSection />
-    </main><SiteFooter file="footer-services.png" />
+    </main><SiteFooter file="footer-serviceAreas.png" />
   </div>;
   const config = pages[page];
   const [nav, ...rest] = config.sections;
   const footer = rest.find(section => section[0].startsWith("footer-"));
   return <div className="site-canvas" data-page={page}>
     <RevealObserver /><VisualSection section={nav} page={page} />
-    <main id="main-content"><Breadcrumbs page={page} />
+    <main id="main-content">
       {config.projectHero && <ProjectHero hero={config.projectHero} project={page as ProjectKey} />}
       {rest.filter(section => !section[0].startsWith("testimonials") && !section[0].startsWith("footer-")).map((section, index) =>
         <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>
