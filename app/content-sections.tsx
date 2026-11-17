@@ -103,7 +103,7 @@ export function ProjectOverviewSection({ project }: { project: ProjectKey }) {
   return <><section className="project-overview-section project-overview-reference"><div className="content-shell project-overview-grid">
     <div><SectionHeading title={content.title} /><CopyNodes nodes={content.nodes} /></div>
     <div className="project-overview-photo"><Image src={photos.overview.src} alt={photos.overview.alt} fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
-  </div></section><PhotoGallery title="PROJECT GALLERY" images={photos.gallery} /></>;
+  </div></section><PhotoGallery title="PROJECT GALLERY" images={photos.gallery.slice(1)} /></>;
 }
 
 function BlogCards({ sections }: { sections: CopySection[] }) {
