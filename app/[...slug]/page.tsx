@@ -1,6 +1,9 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { SitePage, type PageKey, slugToPage } from "../site";
+import { metadataFor } from "../seo";
+import { PageStructuredData } from "../seo-components";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return Object.keys(slugToPage).map((slug) => ({ slug: slug.split("/") }));
@@ -8,15 +11,16 @@ export function generateStaticParams() {
 
 type RoutedPageProps = { params: Promise<{ slug: string[] }> };
 
-async function RouteContent({ params }: RoutedPageProps) {
+export async function generateMetadata({ params }: RoutedPageProps) {
   const { slug } = await params;
   const page = slugToPage[slug.join("/")] as PageKey | undefined;
   if (!page) notFound();
-  return <SitePage page={page} />;
+  return metadataFor(page);
 }
 
-export default function RoutedPage({ params }: RoutedPageProps) {
-  return <Suspense fallback={<main className="route-loading" aria-busy="true"><p role="status">Loading page…</p></main>}>
-    <RouteContent params={params} />
-  </Suspense>;
+export default async function RoutedPage({ params }: RoutedPageProps) {
+  const { slug } = await params;
+  const page = slugToPage[slug.join("/")] as PageKey | undefined;
+  if (!page) notFound();
+  return <><PageStructuredData page={page} /><SitePage page={page} /></>;
 }

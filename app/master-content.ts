@@ -42,7 +42,7 @@ export const masterContent = {
     name: "On Site Building Construction",
     email: copyParagraphs(contactItems[0])[0],
     phone: copyParagraphs(contactItems[1])[0],
-    phoneHref: `tel:${copyParagraphs(contactItems[1])[0].replace(/\s/g, "")}`,
+    phoneHref: "tel:+6421715196",
     serviceAreas: copyParagraphs(contactItems[2])[0],
   },
   hero: { title: pageCopy.home.hero.title, description: copyParagraphs(pageCopy.home.hero)[0] },

@@ -1,0 +1,344 @@
+{
+  "home.about": {
+    "src": "/images/client/home-about.webp",
+    "alt": "Two-storey charcoal and white home with a landscaped front garden and double garage",
+    "width": 1448,
+    "height": 1086
+  },
+  "home.hero": {
+    "src": "/images/client/home-hero.webp",
+    "alt": "Whitford Heights home with glass balconies, pale exterior walls and multiple garages",
+    "width": 1448,
+    "height": 1086
+  },
+  "about.hero": {
+    "src": "/images/client/about-hero.webp",
+    "alt": "Open interior with a glass balustrade, tiled floor and adjoining lounge",
+    "width": 1448,
+    "height": 1086
+  },
+  "about.built-from-the-ground-up": {
+    "src": "/images/client/about-rakesh.webp",
+    "alt": "Rakesh from On Site Building Construction",
+    "width": 789,
+    "height": 1200
+  },
+  "blogs.hero": {
+    "src": "/images/client/blogs-hero.webp",
+    "alt": "Charcoal kitchen cabinetry with a central island and light worktops",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.7": {
+    "src": "/images/client/residential-new-builds-gallery-07.webp",
+    "alt": "Two-storey home exterior with a covered glass balcony",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.6": {
+    "src": "/images/client/residential-new-builds-gallery-06.webp",
+    "alt": "Home exterior above a terraced retaining wall and lawn",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.5": {
+    "src": "/images/client/residential-new-builds-gallery-05.webp",
+    "alt": "Two-storey home with a driveway, front lawn and timber garage door",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.4": {
+    "src": "/images/client/residential-new-builds-gallery-04.webp",
+    "alt": "Charcoal and white two-storey home before front landscaping",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.3": {
+    "src": "/images/client/residential-new-builds-gallery-03.webp",
+    "alt": "Family home with a red tiled roof and arched upper windows",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.2": {
+    "src": "/images/client/residential-new-builds-gallery-02.webp",
+    "alt": "Wide exterior view of a home with glass balconies and a lawn",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.gallery.1": {
+    "src": "/images/client/residential-new-builds-gallery-01.webp",
+    "alt": "Home exterior with glass balconies and multiple garages",
+    "width": 1448,
+    "height": 1086
+  },
+  "residential-new-builds.hero": {
+    "src": "/images/client/residential-new-builds-hero.webp",
+    "alt": "Two-storey charcoal and white home with a landscaped front garden and double garage",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.gallery.4": {
+    "src": "/images/client/renovations-gallery-04.webp",
+    "alt": "Light kitchen with a dark island worktop and pendant lighting",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.gallery.3": {
+    "src": "/images/client/renovations-gallery-03.webp",
+    "alt": "Charcoal kitchen with a central island and white worktops",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.gallery.2": {
+    "src": "/images/client/renovations-gallery-02.webp",
+    "alt": "Bathroom with twin basins, wall mirrors and a tiled shower",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.gallery.1": {
+    "src": "/images/client/renovations-gallery-01.webp",
+    "alt": "Black and red kitchen with an island and red bar stools",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.why-renovate": {
+    "src": "/images/client/renovations-why.webp",
+    "alt": "Bathroom with twin basins, wall mirrors and a tiled shower",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.overview": {
+    "src": "/images/client/renovations-overview.webp",
+    "alt": "Charcoal kitchen cabinetry with a central island and white worktops",
+    "width": 1448,
+    "height": 1086
+  },
+  "renovations-alterations.hero": {
+    "src": "/images/client/renovations-hero.webp",
+    "alt": "Light kitchen with a dark island worktop and pendant lighting",
+    "width": 1448,
+    "height": 1086
+  },
+  "design-build.why-design-build": {
+    "src": "/images/client/design-build-why.webp",
+    "alt": "Timber wall and roof framing during construction",
+    "width": 1448,
+    "height": 1086
+  },
+  "design-build.overview": {
+    "src": "/images/client/design-build-overview.webp",
+    "alt": "Timber floor framing viewed from above",
+    "width": 1448,
+    "height": 1086
+  },
+  "additions-extensions.why-extend": {
+    "src": "/images/client/additions-extensions-why.webp",
+    "alt": "Lawn and garden path beside a multi-storey home",
+    "width": 1448,
+    "height": 1086
+  },
+  "additions-extensions.overview": {
+    "src": "/images/client/additions-extensions-overview.webp",
+    "alt": "Timber outdoor kitchen bench with a fitted sink",
+    "width": 1448,
+    "height": 1086
+  },
+  "additions-extensions.hero": {
+    "src": "/images/client/additions-extensions-hero.webp",
+    "alt": "Timber deck and wide steps outside a home",
+    "width": 1448,
+    "height": 1086
+  },
+  "additions-extensions.gallery.1": {
+    "src": "/images/client/additions-extensions-deck.webp",
+    "alt": "Timber deck with built-in corner seating beside a fence",
+    "width": 1448,
+    "height": 1086
+  },
+  "about.original-portrait-reference": {
+    "src": "/images/client/rakesh-original-portrait.webp",
+    "alt": "Rakesh from On Site Building Construction",
+    "width": 789,
+    "height": 1200
+  },
+  "project.new-lynn.gallery.1": {
+    "src": "/images/client/new-lynn-outdoor-kitchen.webp",
+    "alt": "Timber outdoor kitchen bench with a fitted sink at the New Lynn home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.new-lynn.gallery.2": {
+    "src": "/images/client/new-lynn-deck-seating.webp",
+    "alt": "Built-in timber corner seating on the New Lynn deck",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.new-lynn.gallery.3": {
+    "src": "/images/client/new-lynn-front-elevation.webp",
+    "alt": "Charcoal and white exterior of the New Lynn home before front landscaping",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.new-lynn.gallery.4": {
+    "src": "/images/client/new-lynn-kitchen.webp",
+    "alt": "Charcoal kitchen cabinetry and a central island in the New Lynn home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.new-lynn.hero": {
+    "src": "/images/client/new-lynn-hero.webp",
+    "alt": "Front view of the New Lynn home with charcoal cladding, a landscaped lawn and double garage",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.new-lynn.gallery.5": {
+    "src": "/images/client/new-lynn-deck.webp",
+    "alt": "Timber deck and steps opening from the New Lynn home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.gallery.1": {
+    "src": "/images/client/manukau-heights-front-driveway.webp",
+    "alt": "Two-storey home with a driveway, front lawn and timber garage door",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.gallery.2": {
+    "src": "/images/client/manukau-heights-kitchen.webp",
+    "alt": "Kitchen with grey cabinetry, a window above the sink and a stainless-steel range hood",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.hero": {
+    "src": "/images/client/manukau-heights-hero.webp",
+    "alt": "Manukau Heights home with a glass balcony and terraced landscaping",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.gallery.3": {
+    "src": "/images/client/manukau-heights-street-view.webp",
+    "alt": "Street view of the Manukau Heights home with its garage open",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.gallery.4": {
+    "src": "/images/client/manukau-heights-balcony-detail.webp",
+    "alt": "Ground-floor entrance and upper balcony at the Manukau Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.manukau-heights.gallery.5": {
+    "src": "/images/client/manukau-heights-glass-balcony.webp",
+    "alt": "Covered glass balcony and ground-floor windows at the Manukau Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.hero": {
+    "src": "/images/client/whitford-hero.webp",
+    "alt": "Whitford Heights home with glass balconies, pale exterior walls and multiple garages",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.1": {
+    "src": "/images/client/whitford-kitchen-island.webp",
+    "alt": "Black and red kitchen with an island and red bar stools in Whitford Heights",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.2": {
+    "src": "/images/client/whitford-garden-path.webp",
+    "alt": "Lawn and garden path beside the Whitford Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.3": {
+    "src": "/images/client/whitford-lounge.webp",
+    "alt": "Whitford Heights lounge with black seating, red accents and a glass staircase",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.4": {
+    "src": "/images/client/whitford-rear-exterior.webp",
+    "alt": "Wide exterior view of the Whitford Heights home with glass balconies and a lawn",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.5": {
+    "src": "/images/client/whitford-kitchen-window.webp",
+    "alt": "Black and red kitchen with an island and worktop beneath the window",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.6": {
+    "src": "/images/client/whitford-open-plan-kitchen.webp",
+    "alt": "Open-plan kitchen and dining area in the Whitford Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.7": {
+    "src": "/images/client/whitford-dining.webp",
+    "alt": "Dining area beside wide glazed doors in the Whitford Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.8": {
+    "src": "/images/client/whitford-staircase-bar.webp",
+    "alt": "Curved bar and glass staircase with red accents in the Whitford Heights home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.9": {
+    "src": "/images/client/whitford-atrium-lounge.webp",
+    "alt": "Open interior with glass balustrades and an adjoining lounge in Whitford Heights",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.whitford-heights.gallery.10": {
+    "src": "/images/client/whitford-glass-balcony-exterior.webp",
+    "alt": "Whitford Heights exterior with a glass balcony and paved terrace",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.1": {
+    "src": "/images/client/botany-living-room.webp",
+    "alt": "Cream seating and burgundy carpet in the Botany living room",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.2": {
+    "src": "/images/client/botany-front-elevation.webp",
+    "alt": "Botany home exterior with arched windows, a red roof and garage",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.3": {
+    "src": "/images/client/botany-staircase.webp",
+    "alt": "Entrance hall with a burgundy-carpeted staircase in the Botany home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.hero": {
+    "src": "/images/client/botany-hero.webp",
+    "alt": "Front view of the Botany home with a red tiled roof and arched upper windows",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.4": {
+    "src": "/images/client/botany-leather-lounge.webp",
+    "alt": "Burgundy leather seating in the Botany living room",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.5": {
+    "src": "/images/client/botany-kitchen.webp",
+    "alt": "Olive-green kitchen cabinetry and an island in the Botany home",
+    "width": 1448,
+    "height": 1086
+  },
+  "project.botany.gallery.6": {
+    "src": "/images/client/botany-fireplace.webp",
+    "alt": "Red feature wall, fireplace and chandelier in the Botany home",
+    "width": 1448,
+    "height": 1086
+  }
+}

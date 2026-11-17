@@ -1,174 +1,65 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { masterContent } from "./master-content";
+import { useEffect, useId, useRef, useState } from "react";
+import type { GalleryImage } from "./client-media";
 
-const workImages = [
-  ["work-1.jpg", "Completed modern home exterior"],
-  ["work-2.jpg", "Residential construction project"],
-  ["work-3.jpg", "Finished contemporary home"],
-] as const;
-
-const serviceWorkImages = [
-  ["figma-newbuild-work-1.png", "Papakura residential new build"],
-  ["figma-newbuild-work-2.png", "Contemporary residential new build"],
-  ["figma-newbuild-work-3.png", "Whitford Heights residential new build"],
-] as const;
-
-const workPhaseCount = workImages.length - 1;
-
-const sampleTestimonials = Array.from({ length: 3 }, (_, id) => ({
-  id,
-  quote: masterContent.testimonials.quote,
-  client: masterContent.testimonials.client,
-}));
-
-export function ScrollableWorkGallery({ service = false }: { service?: boolean }) {
-  const images = service ? serviceWorkImages : workImages;
-  const [activePhase, setActivePhase] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const focusedProject = activePhase === 0 ? 0 : images.length - 1;
-
-  const showPhase = (index: number) => {
-    const nextPhase = (index + workPhaseCount) % workPhaseCount;
-    setActivePhase(nextPhase);
-  };
+export function PhotoGallery({ title, images }: { title: string; images: GalleryImage[] }) {
+  const headingId = useId();
+  const trackId = useId();
+  const track = useRef<HTMLDivElement>(null);
+  const [canScroll, setCanScroll] = useState({ previous: false, next: images.length > 2 });
 
   useEffect(() => {
-    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(
-      () => setActivePhase((current) => (current + 1) % workPhaseCount),
-      4600,
-    );
-    return () => window.clearTimeout(timer);
-  }, [activePhase, isPaused]);
+    const element = track.current;
+    if (!element) return;
+    const update = () => {
+      const previous = element.scrollLeft > 2;
+      const next = element.scrollLeft + element.clientWidth < element.scrollWidth - 2;
+      setCanScroll(current => current.previous === previous && current.next === next ? current : { previous, next });
+    };
+    const frame = requestAnimationFrame(update);
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    element.addEventListener("scroll", update, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      element.removeEventListener("scroll", update);
+    };
+  }, [images.length]);
 
-  return (
-    <section
-      className="home-work-section"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocusCapture={() => setIsPaused(true)}
-      onBlurCapture={() => setIsPaused(false)}
-    >
-      <div className="home-work-heading content-shell">
-        <div>
-          <h2>{masterContent.work.title}</h2>
-        </div>
+  if (!images.length) return null;
+
+  function scroll(direction: number) {
+    const element = track.current;
+    if (!element) return;
+    const firstImage = element.firstElementChild;
+    const gap = parseFloat(getComputedStyle(element).columnGap) || 0;
+    const distance = (firstImage?.getBoundingClientRect().width ?? element.clientWidth) + gap;
+    element.scrollBy({
+      left: direction * distance,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+  }
+
+  return <section className={`client-gallery ${images.length === 1 ? "client-gallery-single" : ""}`} aria-labelledby={headingId}>
+    <div className="content-shell">
+      <div className="client-gallery-heading">
+        <h2 id={headingId}>{title}</h2>
+        {images.length > 1 && <div className="client-gallery-controls" aria-label="Photo gallery controls">
+          <button type="button" onClick={() => scroll(-1)} disabled={!canScroll.previous} aria-label="Previous photos" aria-controls={trackId}>←</button>
+          <button type="button" onClick={() => scroll(1)} disabled={!canScroll.next} aria-label="Next photos" aria-controls={trackId}>→</button>
+        </div>}
       </div>
-      <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
-        <div className={`home-work-row phase-${activePhase}`}>
-          {images.map(([file, alt], index) => (
-            <figure
-              key={file}
-              className={index === focusedProject ? "is-focused" : ""}
-            >
-              <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) 50vw, 520px" unoptimized />
-            </figure>
-          ))}
-        </div>
+      <div className="client-gallery-track" id={trackId} ref={track}>
+        {images.map(item => <a key={item.src} href={item.href ?? item.src}
+          target={item.href ? undefined : "_blank"} rel={item.href ? undefined : "noopener noreferrer"}
+          aria-label={item.href ? `View ${item.label ?? item.alt} project` : `${item.alt} — open full photo in a new tab`}>
+          <Image src={item.src} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 700px) 90vw, 45vw" />
+          {item.label && <strong>{item.label} <span aria-hidden="true">→</span></strong>}
+        </a>)}
       </div>
-      <div className="work-gallery-footer content-shell">
-        <div className="work-dots" role="group" aria-label="Choose a project phase">
-          {Array.from({ length: workPhaseCount }, (_, index) => (
-            <button
-              type="button"
-              key={index}
-              className={index === activePhase ? "active" : ""}
-              onClick={() => showPhase(index)}
-              aria-label={`Show projects ${index + 1} and ${index + 2}`}
-              aria-current={index === activePhase ? "true" : undefined}
-            />
-          ))}
-        </div>
-        <div className="work-controls" aria-label="Project gallery controls">
-          <button type="button" className="work-arrow previous" onClick={() => showPhase(activePhase - 1)} aria-label="Previous project phase" />
-          <button type="button" className="work-arrow next" onClick={() => showPhase(activePhase + 1)} aria-label="Next project phase" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function TestimonialsCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const touchStartX = useRef<number | null>(null);
-  const testimonial = sampleTestimonials[activeIndex];
-  const goToPrevious = () => setActiveIndex((current) => (current - 1 + sampleTestimonials.length) % sampleTestimonials.length);
-  const goToNext = () => setActiveIndex((current) => (current + 1) % sampleTestimonials.length);
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      goToPrevious();
-    }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      goToNext();
-    }
-    if (event.key === "Home") {
-      event.preventDefault();
-      setActiveIndex(0);
-    }
-    if (event.key === "End") {
-      event.preventDefault();
-      setActiveIndex(sampleTestimonials.length - 1);
-    }
-  };
-
-  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartX.current === null) return;
-    const distance = event.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(distance) < 48) return;
-    if (distance > 0) goToPrevious();
-    else goToNext();
-  };
-
-  return (
-    <section
-      className="testimonials-section"
-      aria-labelledby="testimonials-heading"
-    >
-      <div className="content-shell testimonials-inner">
-        <div className="testimonials-heading">
-          <h2 id="testimonials-heading">{masterContent.testimonials.title}</h2>
-        </div>
-        <div
-          className="testimonial-carousel"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Customer testimonials"
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-          onTouchStart={(event) => { touchStartX.current = event.touches[0].clientX; }}
-          onTouchEnd={handleTouchEnd}
-        >
-          <button type="button" className="testimonial-arrow previous" onClick={goToPrevious} aria-label="Previous testimonial">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
-          </button>
-          <article key={activeIndex} aria-live="polite" aria-label={`Testimonial ${activeIndex + 1} of ${sampleTestimonials.length}`}>
-            <blockquote>“{testimonial.quote}”</blockquote>
-            <p><strong>{testimonial.client}</strong></p>
-          </article>
-          <button type="button" className="testimonial-arrow next" onClick={goToNext} aria-label="Next testimonial">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
-          </button>
-        </div>
-        <div className="testimonial-dots" role="group" aria-label="Choose a testimonial">
-          {sampleTestimonials.map((item, index) => (
-            <button
-              type="button"
-              key={item.id}
-              className={index === activeIndex ? "active" : ""}
-              onClick={() => setActiveIndex(index)}
-              aria-label={`Show testimonial ${index + 1}`}
-              aria-current={index === activeIndex ? "true" : undefined}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+    </div>
+  </section>;
 }
