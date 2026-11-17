@@ -121,7 +121,7 @@ export function SiteHeader({ file }: { file: string }) {
   const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
   return <header className="site-header"><div className="header-inner">
     <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
-      <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
+      <span className="header-logo"><Image src="/osbc-header-logo-cropped.svg" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
     </Link>
     <nav className="desktop-nav" aria-label="Primary navigation">
       <Link href="/" className={active === "home" ? "active" : ""}>Home</Link>
@@ -240,7 +240,7 @@ export function SiteFooter({ file }: { file: string }) {
   return <footer className="site-footer"><div className="content-shell">
     <div className="footer-top">
       <div className="footer-brand-column">
-        <Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link>
+        <Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo-cropped.svg" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link>
         <div className="footer-contact-details">
           <div><strong>Phone</strong><a href={masterContent.business.phoneHref}>{masterContent.business.phone}</a></div>
           <div><strong>Email</strong><a href={`mailto:${masterContent.business.email}`}>{masterContent.business.email}</a></div>
