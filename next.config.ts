@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
   ],
   turbopack: {
     rules: {
-      "*.css": {
+      // Keep CSS Modules on Next's native pipeline so their class maps survive.
+      "app/globals.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

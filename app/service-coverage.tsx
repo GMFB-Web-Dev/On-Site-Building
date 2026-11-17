@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { paths } from "./site-routes";
 import styles from "./service-coverage.module.css";
 
 type CoverageRegion = {
@@ -93,97 +91,33 @@ export const coverageRegions = [
   },
 ] as const satisfies readonly CoverageRegion[];
 
-const coverageQuestions = [
-  {
-    question: "Do you take on projects outside Auckland?",
-    answer: "We welcome enquiries from Waikato and Whangārei. Share your project location, the work you have in mind and your preferred timing so we can discuss availability and the next steps.",
-  },
-  {
-    question: "Does my project need to be a certain size?",
-    answer: "Send us a brief outline of what you want to build or change, together with the approximate project size and location. We’ll discuss whether the proposed work is a suitable fit and how we may be able to help.",
-  },
-  {
-    question: "What should I include in my enquiry?",
-    answer: "Include your suburb or town, the service you need, approximate project size and preferred timing. If you have plans or building consent documents, you can attach them to the enquiry form to help us understand the work.",
-  },
-];
-
-export function CoverageSection({ service, expanded = false }: { service?: string; expanded?: boolean }) {
+export function CoverageSection() {
   return (
-    <section className={`${styles.section} ${expanded ? styles.expanded : ""}`} aria-label="Building service areas">
-      <div className={styles.inner}>
-        <header className={styles.heading}>
-          <div>
-            <p className={styles.eyebrow}>{service || "Our service areas"}</p>
-            <h2>Auckland, Waikato &amp; Whangārei</h2>
-          </div>
-          <p className={styles.lead}>
-            We’re based in South Auckland and work across the Auckland region.
-            We also welcome project enquiries from Waikato and Whangārei.
-          </p>
-        </header>
-
+    <section className={styles.section} aria-label="Building service areas">
+      <div className="content-shell">
         <p className={styles.explanation}>
-          The places below are representative enquiry locations within our service regions.
-          Tell us your project’s size, location and preferred timing so we can confirm availability.
+          Representative suburbs and towns are listed below. Work in Waikato and Whangārei
+          is confirmed after discussing the project’s location and scope.
         </p>
 
         <div className={styles.regionGrid}>
           {coverageRegions.map((region) => (
-            <article className={`${styles.region} ${region.kind === "core" ? styles.core : ""} ${region.kind === "core" || region.id === "waikato" ? styles.wide : ""}`} key={region.id}>
-              {region.kind === "core" && <p className={styles.regionLabel}>Our home region</p>}
-              {region.kind === "wider" && <p className={styles.regionLabel}>Wider project enquiries</p>}
-              <h3>{region.name}</h3>
-              <p className={styles.regionDescription}>{region.description}</p>
-              <p className={styles.locationLabel}>{region.locationLabel}</p>
+            <section
+              className={`${styles.region} ${region.kind === "core" ? styles.core : ""}`}
+              aria-labelledby={`coverage-${region.id}`}
+              key={region.id}
+            >
+              <header className={styles.regionHeading}>
+                <h2 id={`coverage-${region.id}`}>{region.name}</h2>
+                {region.kind === "core" && <p className={styles.regionLabel}>Our home region</p>}
+                {region.kind === "wider" && <p className={styles.regionLabel}>Wider project enquiries</p>}
+              </header>
               <ul className={styles.locations} aria-label={region.locationLabel}>
                 {region.locations.map((location) => <li key={location}>{location}</li>)}
               </ul>
-            </article>
+            </section>
           ))}
         </div>
-
-        <div className={styles.nextStep}>
-          <div>
-            <h3>Tell us where you’re planning to build</h3>
-            <p>Share a few details and we’ll discuss your project with you.</p>
-          </div>
-          <div className={styles.actions}>
-            <Link className="cta-button" href={paths.contact}>DISCUSS YOUR PROJECT</Link>
-            {!expanded && <Link className={styles.textLink} href={paths.serviceAreas}>More about our service areas</Link>}
-          </div>
-        </div>
-
-        {expanded && (
-          <>
-            <section className={styles.projectSection} aria-label="Auckland building projects">
-              <div>
-                <p className={styles.eyebrow}>Explore our work</p>
-                <h2>Auckland homes we’ve built</h2>
-                <p>See the scope and photographs of these projects.</p>
-              </div>
-              <nav className={styles.projectLinks} aria-label="Featured building projects">
-                <Link href={paths.whitford}>Whitford Heights</Link>
-                <Link href={paths.manukau}>Manukau Heights</Link>
-                <Link href={paths.botany}>Botany</Link>
-                <Link href={paths.newLynn}>New Lynn</Link>
-                <Link href={paths.projects}>View all projects</Link>
-              </nav>
-            </section>
-
-            <section className={styles.faqSection} aria-label="Service area questions">
-              <h2>Planning a project in your area?</h2>
-              <div className={styles.faqGrid}>
-                {coverageQuestions.map((item) => (
-                  <div key={item.question}>
-                    <h3>{item.question}</h3>
-                    <p>{item.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </>
-        )}
       </div>
     </section>
   );

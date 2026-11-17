@@ -23,10 +23,9 @@ import {
   ValuesSection,
 } from "./content-sections";
 
-import { paths, serviceKeys, type PageKey, type ServicePageKey } from "./site-routes";
-import { pageDetails, heroDescription } from "./seo";
-import { Breadcrumbs, HomeLocalIntroduction, ServiceReading } from "./seo-components";
-import { CoverageSection } from "./service-coverage";
+import { paths, type PageKey } from "./site-routes";
+import { Breadcrumbs } from "./seo-components";
+import { CoverageSection, coverageRegions } from "./service-coverage";
 export type { PageKey } from "./site-routes";
 export { slugToPage } from "./site-routes";
 
@@ -182,7 +181,7 @@ function ResponsiveHero({ file }: { file:string }) {
   const replacement = clientImages[replacementKeys[page]];
   const hero = pageCopy[page].hero;
   const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about-onsite-building-auckland" } : { label: "SERVICES", href: "/building-services-auckland" };
-  return <section className="responsive-hero"><Image src={replacement?.src ?? `/design/${image}`} alt={replacement?.alt ?? ""} fill priority sizes="100vw" /><HeroOverlay/><div className="hero-content"><h1>{pageDetails[page as PageKey].heading ?? hero.title}</h1><p>{heroDescription(page as PageKey) ?? copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  return <section className="responsive-hero"><Image src={replacement?.src ?? `/design/${image}`} alt={replacement?.alt ?? ""} fill priority sizes="100vw" /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -226,14 +225,14 @@ export function SiteFooter({ file }: { file: string }) {
   const page = file.replace("footer-", "").replace(".png", "");
   const active = page === "service" ? "services" : page === "blog" ? "blogs" : ["whitford", "new-lynn"].includes(page) ? "projects" : page;
   const items = [["Home","/","home"],["Services","/building-services-auckland","services"],["About us","/about-onsite-building-auckland","about"],["Contact us","/contact-auckland-builders","contact"],["Blogs","/building-advice-auckland","blogs"],["Projects","/building-projects-auckland","projects"],["Service areas",paths.serviceAreas,"serviceAreas"]];
-  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div></div></footer>;
+  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><nav className="footer-regions" aria-label="Service areas"><strong>Service areas</strong><ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul></nav><div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div></div></footer>;
 }
 
 function VisualSection({ section, page }: { section: Section; page: PageKey }) {
   const [file,,,kind] = section;
   if (kind === "nav") return <SiteHeader file={file} />;
   if (kind === "hero") return <ResponsiveHero file={file} />;
-  if (file === "home-about.jpg") return <><HomeLocalIntroduction /><HomeAbout /></>;
+  if (file === "home-about.jpg") return <HomeAbout />;
   if (file === "home-work.png") return <PhotoGallery title="OUR WORK" images={projects.map(project => ({ ...project.hero, href: project.href, label: project.name }))} />;
   if (file === "service-work.png") return <PhotoGallery title="OUR WORK" images={serviceMedia[servicePageKeys[page]].gallery} />;
   if (file.startsWith("testimonials")) return null;
@@ -276,21 +275,20 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
 
 function ProjectHero({ hero, project }: { hero: [string,string]; project: ProjectKey }) {
   const image = getProject(project).hero;
-  return <section className="project-hero"><Image src={image.src} alt={image.alt} fill priority sizes="100vw" /><HeroOverlay/><div><h1>{pageDetails[project].heading ?? hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/building-services-auckland">SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><Image src={image.src} alt={image.alt} fill priority sizes="100vw" /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/building-services-auckland">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
   if (page === "serviceAreas") return <div className="site-canvas">
     <SiteHeader file="navbar-services.png" />
     <main id="main-content"><Breadcrumbs page={page} />
-      <header className="interior-intro content-shell"><p className="section-kicker">BASED IN MANUREWA, SOUTH AUCKLAND</p><h1>{pageDetails.serviceAreas.heading}</h1><p>Find out where we work and what to include when discussing your next building project.</p></header>
-      <CoverageSection expanded />
+      <header className="interior-intro content-shell"><h1>Service Areas</h1><p>Based in South Auckland, we work across Auckland, Waikato and Whangārei.</p></header>
+      <CoverageSection />
     </main><SiteFooter file="footer-services.png" />
   </div>;
   const config = pages[page];
   const [nav, ...rest] = config.sections;
   const footer = rest.find(section => section[0].startsWith("footer-"));
-  const isService = serviceKeys.includes(page as ServicePageKey);
   return <div className="site-canvas" data-page={page}>
     <RevealObserver /><VisualSection section={nav} page={page} />
     <main id="main-content"><Breadcrumbs page={page} />
@@ -298,7 +296,6 @@ export function SitePage({ page }: { page: PageKey }) {
       {rest.filter(section => !section[0].startsWith("testimonials") && !section[0].startsWith("footer-")).map((section, index) =>
         <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>
           {config.spacer && index === 1 ? <div style={{height:config.spacer,background:"var(--blue)"}} /> : null}
-          {isService && section[0].startsWith("contact-strip") && <><ServiceReading page={page as ServicePageKey} /><CoverageSection service={pageDetails[page].heading} /></>}
           <VisualSection section={section} page={page} />
         </div>)}
     </main>

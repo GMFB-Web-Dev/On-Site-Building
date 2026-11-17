@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { clientImages, getProject } from "./client-media";
 import legacyImageSizes from "./legacy-image-sizes.json";
-import { pageCopy, copyParagraphs } from "./master-content";
+import { pageCopy, masterContent } from "./master-content";
 import { paths, serviceKeys, blogKeys, type SitePageKey, type ServicePageKey, type BlogPageKey } from "./site-routes";
 
 export const SITE_URL = "https://onsitebuild.co.nz";
@@ -9,77 +9,78 @@ export const SITE_NAME = "On Site Building Construction";
 export const SEO_UPDATED = "2026-11-17";
 export const absoluteUrl = (path: string) => new URL(path, SITE_URL).href;
 
-type PageDetails = { title: string; description: string; label: string; heading?: string };
+// Search metadata is deliberately separate from the approved page copy.
+type PageDetails = { title: string; description: string; label: string };
 export const pageDetails: Record<SitePageKey, PageDetails> = {
   home: {
     title: "South Auckland Builders | On Site Building Construction",
     description: "Manurewa-based builders for home renovations, extensions, new homes and light commercial work across Auckland. Discuss your plans with On Site Building.",
-    label: "Home", heading: "Builders in South Auckland",
+    label: "Home",
   },
   services: {
     title: "Building Services Auckland | On Site Building Construction",
     description: "Explore Auckland renovations, extensions, new builds, design and build, and light commercial construction. Based in Manurewa with over 30 years' experience.",
-    label: "Building services", heading: "Building Services in Auckland",
+    label: "Building services",
   },
   service: {
     title: "New Home Builders Auckland | On Site Building Construction",
     description: "Build your new Auckland home with experienced South Auckland builders. From foundations to finishing, we coordinate construction and trusted specialist trades.",
-    label: "New home builders", heading: "New Home Builders in Auckland",
+    label: "New home builders",
   },
   serviceRenovations: {
     title: "House Renovations South Auckland | On Site Building",
     description: "House renovations and alterations across South Auckland and wider Auckland. Discuss layout changes and structural work with our Manurewa-based builders.",
-    label: "House renovations", heading: "House Renovations in South Auckland",
+    label: "House renovations",
   },
   serviceExtensions: {
     title: "Home Extensions Auckland | On Site Building Construction",
     description: "Plan a house extension in South Auckland or wider Auckland. Discuss extra bedrooms, larger living areas and connecting new spaces to your existing home.",
-    label: "Home extensions", heading: "Home Extensions in Auckland",
+    label: "Home extensions",
   },
   serviceDesignBuild: {
     title: "Design & Build Auckland | On Site Building Construction",
     description: "Turn your ideas into a new Auckland home. On Site Building works alongside an experienced architect to connect practical design with careful construction.",
-    label: "Design and build", heading: "Design and Build in Auckland",
+    label: "Design and build",
   },
   serviceCommercial: {
     title: "Light Commercial Builders Auckland | On Site Building",
     description: "Auckland builders for shops, dairies, laundromats and light commercial alterations. Plan practical layouts and building work with On Site Building Construction.",
-    label: "Light commercial building", heading: "Light Commercial Builders in Auckland",
+    label: "Light commercial building",
   },
   projects: {
     title: "Auckland Building Projects | On Site Building Construction",
     description: "See On Site Building's residential projects in Whitford Heights, Manukau Heights, Botany and New Lynn, with real project photographs and scope details.",
-    label: "Building projects", heading: "Our Building Projects in Auckland",
+    label: "Building projects",
   },
   whitford: {
     title: "Whitford Heights Design & Build | On Site Building",
     description: "Explore a three-storey, 667 m² design-and-build home in Whitford Heights, Auckland, with five bedrooms, entertainment spaces and real project photographs.",
-    label: "Whitford Heights", heading: "Whitford Heights Design and Build",
+    label: "Whitford Heights",
   },
   manukau: {
     title: "Manukau Heights New Home | On Site Building Construction",
     description: "View a five-bedroom, two-storey home in Manukau Heights, South Auckland. A residential design-and-build project from initial plans through to handover.",
-    label: "Manukau Heights", heading: "Manukau Heights New Home",
+    label: "Manukau Heights",
   },
   botany: {
     title: "Botany New Home, East Auckland | On Site Building",
     description: "See a six-bedroom, two-storey family home in Botany, East Auckland, featuring brick and plaster finishes and a red roof. View the project photographs.",
-    label: "Botany", heading: "Botany New Home, East Auckland",
+    label: "Botany",
   },
   newLynn: {
     title: "New Lynn New Home, West Auckland | On Site Building",
     description: "Explore a four-bedroom, two-storey New Lynn home with kitchen-to-deck access and outdoor entertaining. View this West Auckland residential building project.",
-    label: "New Lynn", heading: "New Lynn New Home, West Auckland",
+    label: "New Lynn",
   },
   about: {
     title: "About Our South Auckland Builders | On Site Building",
     description: "Meet On Site Building Construction, based in Manurewa, South Auckland. Over 30 years of building experience, practical advice and clear project communication.",
-    label: "About us", heading: "Your South Auckland Building Company",
+    label: "About us",
   },
   blogs: {
     title: "Auckland Building & Renovation Advice | On Site Building",
     description: "Read practical advice for Auckland renovations, extensions, new homes, design and build, and light commercial projects. Plan your next step with confidence.",
-    label: "Building advice", heading: "Building and Renovation Advice for Auckland",
+    label: "Building advice",
   },
   blog: {
     title: "Renovate or Rebuild in Auckland? | On Site Building",
@@ -114,12 +115,12 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
   contact: {
     title: "Contact Our Auckland Builders | On Site Building",
     description: "Discuss your renovation, extension, new home or commercial project. Call 021 715 196 or send your location, budget and plans to our Manurewa building team.",
-    label: "Contact", heading: "Talk to Your Auckland Builders",
+    label: "Contact",
   },
   serviceAreas: {
     title: "Auckland, Waikato & Whangārei Builders | On Site Building",
     description: "Explore On Site Building's service areas, from Manurewa and South Auckland to wider Auckland, Waikato and Whangārei. Discuss your location and project scope.",
-    label: "Service areas", heading: "Building Services Across Auckland, Waikato and Whangārei",
+    label: "Service areas",
   },
   privacy: {
     title: "Privacy Policy | On Site Building Construction",
@@ -205,6 +206,14 @@ export const siteStructuredData = {
   ],
 };
 
+const serviceNames: Record<ServicePageKey, string> = {
+  service: masterContent.services.labels.newBuilds,
+  serviceRenovations: masterContent.services.labels.renovations,
+  serviceExtensions: masterContent.services.labels.extensions,
+  serviceDesignBuild: masterContent.services.labels.designBuild,
+  serviceCommercial: masterContent.services.labels.commercial,
+};
+
 export function pageStructuredData(page: SitePageKey) {
   const details = pageDetails[page];
   const url = absoluteUrl(paths[page]);
@@ -213,7 +222,7 @@ export function pageStructuredData(page: SitePageKey) {
   const service = serviceKeys.includes(page as ServicePageKey);
   const crumbs = breadcrumbsFor(page);
   const image = pageImage(page);
-  const title = page in pageCopy ? pageCopy[page as keyof typeof pageCopy].hero.title : details.heading ?? details.label;
+  const title = page in pageCopy ? pageCopy[page as keyof typeof pageCopy].hero.title : details.label;
   const graph: Record<string, unknown>[] = [{
     "@type": page === "about" ? "AboutPage" : page === "contact" ? "ContactPage" : ["services", "projects", "blogs"].includes(page) ? "CollectionPage" : "WebPage",
     "@id": pageId, url, name: details.title, description: details.description,
@@ -228,7 +237,7 @@ export function pageStructuredData(page: SitePageKey) {
   });
   if (service) graph.push({
     "@type": "Service", "@id": `${url}#service`, url,
-    name: details.heading, serviceType: details.label, description: details.description,
+    name: serviceNames[page as ServicePageKey], serviceType: serviceNames[page as ServicePageKey], description: details.description,
     provider: { "@id": businessId }, areaServed: regionalCoverage,
     mainEntityOfPage: { "@id": pageId }, image: absoluteUrl(image.src),
   });
@@ -245,20 +254,4 @@ export function pageStructuredData(page: SitePageKey) {
     itemListElement: serviceKeys.map((key, index) => ({ "@type": "ListItem", position: index + 1, name: pageDetails[key].label, url: absoluteUrl(paths[key]) })),
   });
   return { "@context": "https://schema.org", "@graph": graph };
-}
-
-export const serviceGuides: Record<ServicePageKey, BlogPageKey[]> = {
-  serviceRenovations: ["blog", "blogBlending"],
-  serviceExtensions: ["blogExtension", "blogBlending"],
-  service: ["blogNewHome", "blog"],
-  serviceDesignBuild: ["blogDesignBuild", "blogNewHome"],
-  serviceCommercial: ["blogCommercial"],
-};
-
-export function heroDescription(page: SitePageKey) {
-  if (page === "home") return "Renovations, extensions and new homes, built around the way you live. Based in Manurewa, our experienced builders work across Auckland, with projects in Waikato and Whangārei considered around your plans and location.";
-  if (serviceKeys.includes(page as ServicePageKey)) {
-    return `${copyParagraphs(pageCopy[page as ServicePageKey].hero)[0]} Based in South Auckland, we work across Auckland and welcome enquiries from Waikato and Whangārei.`;
-  }
-  return undefined;
 }

@@ -118,6 +118,7 @@ async function main() {
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
   const registry = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
   const entries = Object.entries(registry.paths);
+  const approvedCopy = JSON.parse(readFileSync(join(root, "app/master-pages.json"), "utf8"));
   const routeSet = new Set(entries.map(([, path]) => path));
   const redirects = registry.permanentRedirects;
   if (!Array.isArray(redirects)) throw new Error("The route registry must export permanentRedirects.");
@@ -213,6 +214,13 @@ async function main() {
     documents.set(path, document);
     const h1s = document.querySelectorAll("h1");
     check(h1s.length === 1 && Boolean(normalized(h1s[0]?.text)), "primary-heading", path, { count: h1s.length });
+    if (approvedCopy[key]) {
+      check(normalized(h1s[0]?.text) === normalized(approvedCopy[key].hero.title), "approved-heading", path);
+      const introduction = approvedCopy[key].hero.nodes.find((node) => node.type === "paragraph")?.text;
+      if (introduction) check(normalized(document.querySelector("main p")?.text) === normalized(introduction), "approved-introduction", path);
+    }
+    const unresolvedClasses = document.querySelectorAll("[class]").filter((element) => /(?:^|\s)undefined(?:\s|$)/.test(element.getAttribute("class") || ""));
+    check(unresolvedClasses.length === 0, "unresolved-css-module", path, { count: unresolvedClasses.length });
     const titleNodes = document.querySelectorAll("title");
     const title = normalized(titleNodes[0]?.text);
     check(titleNodes.length === 1 && Boolean(title), "title", path, { count: titleNodes.length });

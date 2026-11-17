@@ -5,7 +5,6 @@ import { copyParagraphs, copySubsections, getCopySection, masterContent, pageCop
 
 import { clientImages, projects, getProject, serviceMedia, type ProjectKey } from "./client-media";
 import { PhotoGallery } from "./interactive-sections";
-import { ArticleIntroduction, ArticleServiceLinks } from "./seo-components";
 export type BlogKey = "blog" | "blogExtension" | "blogBlending" | "blogNewHome" | "blogCommercial" | "blogDesignBuild";
 type ServiceKey = "service" | "renovations" | "designBuild" | "extensions" | "commercial";
 
@@ -130,9 +129,8 @@ export function BlogArticleSection({ page }: { page: BlogKey }) {
   const wordCount = sections.flatMap(section => [section.title, ...section.nodes.flatMap(node => node.type === "list" ? node.items : [node.text])]).join(" ").trim().split(/\s+/).length;
   return <article className="article-section"><div className="content-shell article-layout">
     <aside aria-label="Table of contents"><strong>TABLE OF CONTENTS</strong><ol>{sections.map(section => <li key={section.title}><a href={`#${sectionId(section.title)}`}>{section.title}</a></li>)}</ol></aside>
-    <div className="article-body"><ArticleIntroduction page={page} /><div className="article-meta"><span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span></div>
+    <div className="article-body"><div className="article-meta"><span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span></div>
       {sections.map((section, index) => <section id={sectionId(section.title)} key={section.title} className={index === sections.length - 1 ? "article-callout" : undefined}><h2>{section.title}</h2><CopyNodes nodes={section.nodes} />{index === sections.length - 1 && <Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link>}</section>)}
-      <ArticleServiceLinks page={page} />
     </div>
   </div></article>;
 }

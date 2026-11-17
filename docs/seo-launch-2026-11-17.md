@@ -2,11 +2,11 @@
 
 ## Purpose and current state
 
-The client has approved the website for launch. This package preserves the approved design, real project photographs and five-service scope while adding local SEO and enquiry qualification.
+This branch is a review candidate. The original website was approved for launch, but subsequent visible SEO rewrites were rejected. The correction restores the approved headings, introductions and article copy while retaining technical SEO, real project photographs, the five-service scope and enquiry functionality.
 
 Canonical production origin: `https://onsitebuild.co.nz`.
 
-At the time of this checkpoint, the updated build has not been uploaded to the hosting project. The domain is registered with Dynadot and still uses parking. Its apex and www domains have been assigned in Vercel; the www redirect targets the apex with HTTP 308. DNS cutover is pending the updated deployment and live form check. Vercel deployment authorization and the GitHub app's organization/repository write grant are outstanding. Local validation does not establish public-domain availability or live email delivery.
+The GitHub launch branch has a working automatic Vercel preview in the original on-site-building project. GitHub access and Vercel team consent are complete. The custom domain still uses Dynadot parking. Its apex and www domains are assigned to the retained review project, which still needs the updated source deployment and live form check. Review the corrected preview before continuing the production cutover. Local validation does not establish public-domain availability or live email delivery.
 
 ## Content and location decisions
 
@@ -16,7 +16,9 @@ At the time of this checkpoint, the updated build has not been uploaded to the h
 - Five detailed service pages remain: renovations and alterations, additions and extensions, residential new builds, design and build, and light commercial construction.
 - Design and build describes collaboration with an architect partner. Light commercial examples remain shops, dairies, laundromats and suitable alterations.
 - Four supported project pages remain: Whitford Heights, Manukau Heights, Botany and New Lynn. Unverified projects and placeholder testimonials remain excluded.
-- Six existing building-advice articles have contextual Auckland introductions, related-service links and visible organization bylines. The update date reflects actual editorial changes; no original publication date is invented.
+- All 21 original pages render their approved hero headings and introductory paragraphs from the unchanged master copy. The six article bodies retain their original wording and original calls to action. Added SEO introductions, guide sections and extra calls to action have been removed.
+- Service regions appear as compact footer links to the dedicated directory. The directory retains seven groups and 67 representative suburbs/towns, using the site’s shared width and mobile gutters.
+- The Tailwind build rule is limited to app/globals.css so native CSS Module class mappings are preserved for the directory, form and legal pages.
 - The private residential street address must not appear in public content, structured data or maps.
 
 ## SEO implementation
@@ -39,7 +41,7 @@ Titles and descriptions use concise editorial length targets. Google does not im
 
 Keyword Planner research on 17 November 2026 used New Zealand, English and Google, with the historical period November 2025–October 2026. Thirty seed phrases produced 204 distinct ideas. The displayed search ranges and page recommendations are retained in the separate keyword workbook; account identifiers and research exports are not included in this repository.
 
-The homepage retains South Auckland builders as its main target. The renovation page now leads with house renovations in South Auckland, supported by wider Auckland service coverage and natural home-renovation wording. The homepage introduction links that service explicitly. The extension description now makes South Auckland and wider Auckland coverage clear. These editorial refinements retain the existing descriptive URLs and five-service structure.
+The homepage metadata targets South Auckland builders. The renovation metadata targets house renovations in South Auckland, and the extension metadata describes South Auckland and wider Auckland coverage. These keyword decisions remain in accurate search metadata and descriptive URLs; they no longer override the approved visible headlines or add promotional copy. Any future visible editorial changes should be reviewed as exact before/after proposals.
 
 Search ranges are estimates, close variants can overlap, and Google Ads competition measures advertisers rather than organic ranking difficulty. Regional demand does not establish a local office, an unconditional travel commitment or a reason to add an unconfirmed service.
 
@@ -68,15 +70,15 @@ Use `steven@weblaunch.co.nz` for the authorized internal test. Set the final pro
 - `node scripts/check-seo.mjs http://127.0.0.1:3000 --production-host`
 - `git diff --check`
 
-The HTTP checker validates page status, unique metadata, main headings, canonical/social tags, structured-data references, breadcrumbs, internal/fragment links, image URLs, robots, sitemap, 404 behavior and all legacy redirects. The production-host option is a local simulation; run the checker against the actual HTTPS domain after DNS and deployment are complete.
+The HTTP checker validates page status, unique metadata, exact approved hero headings and introductions, absence of unresolved CSS Module classes, canonical/social tags, structured-data references, breadcrumbs, internal/fragment links, image URLs, robots, sitemap, 404 behavior and all legacy redirects. The production-host option is a local simulation; run the checker against the actual HTTPS domain after DNS and deployment are complete.
 
-The final local checks passed: 24 pages, 20 one-hop redirects, 24 sitemap entries, 20 image URLs, 1,010 internal-link occurrences and 71 fragment links. Both preview and production-host simulations passed 4,941 assertions each with zero failures. These are local HTTP results, not a live-domain or inbox-delivery claim.
+The corrected local checks passed: 24 pages, 20 one-hop redirects, 24 sitemap entries, 20 image URLs, 1,128 internal-link occurrences and 239 fragment links. Both preview and production-host simulations passed 5,529 assertions each with zero failures. These are local HTTP results, not a live-domain or inbox-delivery claim.
 
 ## Launch sequence still required
 
-1. Restore the correct GitHub organization/repository app grant and Vercel project deployment authorization.
-2. Upload the committed launch branch to the existing repository and deploy the updated source to the retained On Site Building hosting project.
-3. Check desktop and mobile rendering on the actual deployment. Send the one authorized internal form test and verify delivery.
+1. Review the corrected branch preview, including desktop/mobile copy, service-area layout and footer. Main remains unchanged.
+2. After review, connect/deploy the approved source to the retained On Site Building hosting project.
+3. Confirm the deployed form configuration, send the one authorized internal test and verify delivery.
 4. Set the customer production recipient and redeploy so the environment change takes effect.
 5. Add the apex domain and `www`; keep the apex as canonical and redirect `www` permanently to it.
 6. Apply the exact DNS values supplied by Vercel in Dynadot, preserving any unrelated records. Verify HTTPS, domain redirects and the complete page check.
