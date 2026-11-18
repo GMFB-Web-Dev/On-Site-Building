@@ -98,7 +98,7 @@ export function EnquiryForm({ services, phone, phoneHref, email }: EnquiryFormPr
         <label htmlFor={`${id}-email`}>EMAIL*<input {...fieldProps("email")} type="email" autoComplete="email" placeholder="Email" maxLength={254} required />{fieldError("email")}</label>
         <label htmlFor={`${id}-phone`}>PHONE*<input {...fieldProps("phone")} type="tel" autoComplete="tel" placeholder="+64 21 345 6789" maxLength={30} required />{fieldError("phone")}</label>
       </div>
-      <label htmlFor={`${id}-service`}>SELECT A SERVICE*<select {...fieldProps("service")} defaultValue="" required><option value="">Select a service...</option>{services.map(service => <option key={service}>{service}</option>)}</select>{fieldError("service")}</label>
+      <label htmlFor={`${id}-service`}>SELECT A SERVICE*<select {...fieldProps("service")} defaultValue="" required><option value="">Select a service...</option>{services.map(service => <option key={service} value={service}>{service.toLowerCase().replace(/\b[a-z]/g, letter => letter.toUpperCase())}</option>)}</select>{fieldError("service")}</label>
       <div className="field-pair">
         <label htmlFor={`${id}-location`}>PROJECT SUBURB OR TOWN*<input {...fieldProps("location")} autoComplete="address-level2" placeholder="e.g. Manurewa" maxLength={120} required aria-describedby={`${id}-location-help${errors.location ? ` ${id}-location-error` : ""}`} />{fieldError("location")}</label>
         <label htmlFor={`${id}-size`}>PROJECT SIZE<select {...fieldProps("size")} defaultValue=""><option value="">Select a size (optional)</option>{PROJECT_SIZES.map(size => <option key={size}>{size}</option>)}</select>{fieldError("size")}</label>
