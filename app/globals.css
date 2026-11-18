@@ -50,7 +50,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .nav-service-trigger svg,.mobile-service-menu summary svg { display: block; width: 12px; height: 8px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform .22s ease; }
 .service-dropdown-menu { position: absolute; z-index: 120; top: calc(100% + 12px); left: 50%; display: flex; min-width: 292px; flex-direction: column; gap: 2px; padding: 10px; background: var(--ice); box-shadow: 0 16px 34px rgba(24,58,114,.2); opacity: 0; visibility: hidden; transform: translate(-50%,-8px); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; pointer-events: none; }
 .service-dropdown-menu::before { position: absolute; right: 0; bottom: 100%; left: 0; height: 12px; content: ""; }
-.service-dropdown-menu a { padding: 10px 12px; color: var(--navy); text-decoration: none; white-space: nowrap; }
+.service-dropdown-menu a { padding: 10px 12px; color: var(--navy); text-decoration: none; white-space: nowrap; text-transform: none; }
 .service-dropdown-menu a:hover,.service-dropdown-menu a:focus-visible { background: rgba(94,143,224,.14); transform: translateX(3px); }
 .nav-service-dropdown:hover .service-dropdown-menu,.nav-service-dropdown:focus-within .service-dropdown-menu { opacity: 1; visibility: visible; transform: translate(-50%,0); pointer-events: auto; }
 .nav-service-dropdown:hover .nav-service-trigger svg,.nav-service-dropdown:focus-within .nav-service-trigger svg { transform: rotate(180deg); }
@@ -173,6 +173,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .contact-methods strong { font-size: 28px; }
 .contact-methods span,.contact-methods u { font: 400 18px/1.5 var(--font-montserrat),sans-serif; }
 .contact-methods a[href^="mailto:"] span,.contact-methods a[href^="tel:"] span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.contact-areas-link { display: inline-block; max-width: 390px; font-size: clamp(14px,1.12vw,17px); line-height: 1.55; text-wrap: pretty; }
 .contact-cta-blue .contact-heading p,.contact-cta-blue .contact-methods a > span,.contact-cta-blue .contact-methods u { color: #fff; }
 .enquiry-section { background: var(--blue); padding: 66px 0 70px; font-family: var(--font-montserrat),sans-serif; }
 .enquiry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(42px,8vw,116px); align-items: stretch; }
@@ -522,7 +523,7 @@ a.project-tile:hover img { transform: scale(1.055); }
 .client-gallery-controls button:hover { background: var(--navy); color: #fff; }
 .client-gallery-controls button:disabled { opacity: .35; cursor: default; }
 .client-gallery-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px)/2); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--navy) #dce5f2; }
-.client-gallery-track > a { display: block; min-width: 0; scroll-snap-align: start; color: var(--navy); text-decoration: none; }
+.client-gallery-track > a,.client-gallery-track > .client-gallery-image { display: block; min-width: 0; scroll-snap-align: start; color: var(--navy); text-decoration: none; }
 .client-gallery-track img { display: block; width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
 .client-gallery-track strong { display: block; margin-top: 12px; font: 800 18px/1.4 var(--font-montserrat),sans-serif; text-transform: uppercase; }
 .client-gallery-single .client-gallery-track { grid-auto-columns: min(100%,900px); justify-content: center; }
@@ -568,3 +569,6 @@ a.project-tile:hover img { transform: scale(1.055); }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: none !important; }
 }
+
+/* Keep service names and mobile dropdown titles readable, not all-caps. */
+.service-dropdown-menu a,.mobile-service-menu a { text-transform: none; }
