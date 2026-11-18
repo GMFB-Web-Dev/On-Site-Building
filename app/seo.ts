@@ -6,7 +6,7 @@ import { paths, serviceKeys, blogKeys, type SitePageKey, type ServicePageKey, ty
 
 export const SITE_URL = "https://onsitebuild.co.nz";
 export const SITE_NAME = "On Site Building Construction";
-export const SEO_UPDATED = "2026-11-17";
+export const SEO_UPDATED = "2026-11-18";
 export const absoluteUrl = (path: string) => new URL(path, SITE_URL).href;
 
 // Search metadata is deliberately separate from the approved page copy.
@@ -23,8 +23,8 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "Building services",
   },
   service: {
-    title: "New Home Builders Auckland | On Site Building Construction",
-    description: "Build your new Auckland home with experienced South Auckland builders. From foundations to finishing, we coordinate construction and trusted specialist trades.",
+    title: "New Home Builders South Auckland | On Site Building",
+    description: "Build your new home in South Auckland with experienced local builders. From foundations to finishing, we coordinate construction and specialist trades.",
     label: "New home builders",
   },
   serviceRenovations: {
@@ -33,18 +33,18 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "House renovations",
   },
   serviceExtensions: {
-    title: "Home Extensions Auckland | On Site Building Construction",
-    description: "Plan a house extension in South Auckland or wider Auckland. Discuss extra bedrooms, larger living areas and connecting new spaces to your existing home.",
+    title: "Home Extensions South Auckland | On Site Building",
+    description: "Plan a house extension with our South Auckland builders. Discuss extra bedrooms, living areas and how new spaces connect naturally to your existing home.",
     label: "Home extensions",
   },
   serviceDesignBuild: {
-    title: "Design & Build Auckland | On Site Building Construction",
-    description: "Turn your ideas into a new Auckland home. On Site Building works alongside an experienced architect to connect practical design with careful construction.",
+    title: "Design & Build East Auckland | On Site Building",
+    description: "Explore design and build in East Auckland, backed by completed projects in Whitford and Botany. Our team works alongside an architect from concept to construction.",
     label: "Design and build",
   },
   serviceCommercial: {
-    title: "Light Commercial Builders Auckland | On Site Building",
-    description: "Auckland builders for shops, dairies, laundromats and light commercial alterations. Plan practical layouts and building work with On Site Building Construction.",
+    title: "Light Commercial Builders South Auckland | On Site Building",
+    description: "South Auckland light commercial building for shops, dairies, laundromats and alterations. Discuss practical layouts and building work with On Site Building.",
     label: "Light commercial building",
   },
   projects: {
