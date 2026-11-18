@@ -121,7 +121,7 @@ export function BlogsSection() {
 
 export function ServicesPromoSection() {
   const content = getCopySection("blogs", "OUR SERVICES");
-  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href="/building-services-auckland">SERVICES</Link></div></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href="/services-auckland">SERVICES</Link></div></div></section>;
 }
 
 export function BlogArticleSection({ page }: { page: BlogKey }) {
