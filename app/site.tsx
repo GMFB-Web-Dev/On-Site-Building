@@ -6,6 +6,7 @@ import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
 import { masterContent, pageCopy, copyParagraphs, type CopyPageKey } from "./master-content";
 import type { BlogKey } from "./content-sections";
+import { homeAboutImage, projectImages, pageHeroImages, serviceCardImages } from "./site-images";
 import {
   BenefitsSection,
   BlogArticleSection,
@@ -14,6 +15,7 @@ import {
   IntroSection,
   MissionSection,
   ProjectOverviewSection,
+  ProjectGallerySection,
   ProjectsSection,
   RelatedBlogsSection,
   ServiceAreaSection,
@@ -119,13 +121,13 @@ function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const items = [["Home","/","home"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"]];
   const labels = masterContent.services.labels;
-  const serviceItems = [["All Services","/services"],[labels.renovations,"/services/renovations-alterations"],[labels.newBuilds,"/services/residential-new-builds"],[labels.designBuild,"/services/design-build"],[labels.extensions,"/services/additions-extensions"],[labels.commercial,"/services/light-commercial-construction"]];
+  const serviceItems = [[labels.renovations,"/services/renovations-alterations"],[labels.newBuilds,"/services/residential-new-builds"],[labels.designBuild,"/services/design-build"],[labels.extensions,"/services/additions-extensions"],[labels.commercial,"/services/light-commercial-construction"]];
   const projectItems = [["New Lynn","/projects/new-lynn"],["Manukau Heights","/projects/manukau-heights"],["Whitford Heights","/projects/whitford-heights"],["Botany","/projects/botany"]];
   const servicesActive = active.startsWith("service");
   const projectsActive = ["projects", "whitford", "new-lynn", "manukau", "botany"].includes(active);
   return <header className="site-header"><div className="header-inner">
     <Link href="/" className="brand header-brand" aria-label="On Site Building Construction Limited home">
-      <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" priority unoptimized /></span>
+      <span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill loading="eager" unoptimized /></span>
     </Link>
     <nav className="desktop-nav" aria-label="Primary navigation">
       <Link href="/" className={active === "home" ? "active" : ""}>Home</Link>
@@ -142,7 +144,7 @@ function SiteHeader({ file }: { file: string }) {
     </nav>
     <MobileNavigation>
       <Link href="/">Home</Link>
-      <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <details className="mobile-service-menu" name="mobile-navigation-section"><summary><Link href="/services">Services</Link> <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       {items.slice(1).map(([label,href])=><Link key={href} href={href}>{label}</Link>)}
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       <a href={masterContent.business.phoneHref}>{masterContent.business.phone}</a>
@@ -178,7 +180,8 @@ function ResponsiveHero({ file }: { file:string }) {
   const { page, image } = heroContent[file];
   const hero = pageCopy[page].hero;
   const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about" } : { label: "SERVICES", href: "/services" };
-  return <section className="responsive-hero"><Image src={`/design/${image}`} alt="" fill priority sizes="100vw" unoptimized/><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  const assignedImage = pageHeroImages[page];
+  return <section className="responsive-hero"><Image src={assignedImage?.src ?? `/design/${image}`} alt={assignedImage?.alt ?? ""} fill preload sizes="(max-width: 800px) max(100vw, 520px), 100vw" /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
@@ -188,7 +191,7 @@ function HomeAbout() {
       {masterContent.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       <Link className="cta-button" href="/about">ABOUT US</Link>
     </div>
-    <div className="home-about-placeholder" role="img" aria-label="About On Site Building Construction image placeholder" />
+    <div className="home-about-photo"><Image src={homeAboutImage.src} alt={homeAboutImage.alt} fill sizes="(max-width: 800px) calc(100vw - 48px), 50vw" /></div>
   </section>;
 }
 
@@ -201,8 +204,8 @@ const serviceCards = [
 
 function ServicesSection() {
   return <section className="services-section"><div className="content-shell"><h2>{masterContent.services.title}</h2><p>{masterContent.services.description}</p><div className="services-grid">
-    {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={`/design/${image}`} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" unoptimized/><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
-    <Link id="light-commercial-construction" href="/services/light-commercial-construction" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.png" alt="" fill sizes="100vw" unoptimized/><span><strong>{masterContent.services.labels.commercial}</strong><small>LEARN MORE&nbsp; →</small></span></Link>
+    {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={serviceCardImages[id] ?? `/design/${image}`} alt="" fill sizes="(max-width: 800px) calc(100vw - 32px), (max-width: 1040px) calc(50vw - 40px), min(25vw - 36px, 304px)" /><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
+    <Link id="light-commercial-construction" href="/services/light-commercial-construction" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.png" alt="" fill sizes="(max-width: 800px) calc(100vw - 32px), min(100vw - 48px, 1312px)" /><span><strong>{masterContent.services.labels.commercial}</strong><small>LEARN MORE&nbsp; →</small></span></Link>
   </div></div></section>;
 }
 
@@ -230,7 +233,7 @@ function SiteFooter({ file }: { file: string }) {
   const page = file.replace("footer-", "").replace(".png", "");
   const active = page === "service" ? "services" : page === "blog" ? "blogs" : ["whitford", "new-lynn"].includes(page) ? "projects" : page;
   const items = [["Home","/","home"],["Services","/services","services"],["About us","/about","about"],["Contact us","/contact","contact"],["Blogs","/blogs","blogs"],["Projects","/projects","projects"]];
-  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill sizes="(max-width: 800px) 240px, 340px" unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><div className="footer-bottom"><span>© Developed by GMFB LTD. All rights reserved.</span><Link href="#">Privacy Policy</Link></div></div></footer>;
+  return <footer className="site-footer"><div className="content-shell"><div className="footer-top"><Link href="/" className="brand header-brand footer-brand" aria-label="On Site Building Construction Limited home"><span className="header-logo"><Image src="/osbc-header-logo.png" alt="On Site Building Construction Limited" fill unoptimized /></span></Link><nav aria-label="Footer navigation">{items.map(([label, href, key]) => <Link key={href} href={href} className={active === key ? "active" : ""} aria-current={active === key ? "page" : undefined}>{label}</Link>)}</nav></div><div className="footer-bottom"><span>© Developed by GMFB LTD. All rights reserved.</span><Link href="#">Privacy Policy</Link></div></div></footer>;
 }
 
 function VisualSection({ section, page }: { section: Section; page: PageKey }) {
@@ -239,7 +242,7 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
   if (kind === "hero") return <ResponsiveHero file={file} />;
   if (file === "home-about.jpg") return <HomeAbout />;
   if (file === "home-work.png") return <ScrollableWorkGallery />;
-  if (file === "service-work.png") return <ScrollableWorkGallery service />;
+  if (file === "service-work.png") return <ScrollableWorkGallery service page={page} />;
   if (file.startsWith("testimonials")) return <TestimonialsCarousel />;
   if (file === "home-services.png" || file === "services-list.png") return <ServicesSection />;
   if (file.startsWith("certification-")) return <CertificationSection blue={file === "certification-about.png" || file === "certification-home.png"} />;
@@ -278,12 +281,13 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
   return null;
 }
 
-function PlaceholderProjectHero({ hero }: { hero: [string,string] }) {
-  return <section className="project-hero"><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
+function ProjectHero({ hero, project }: { hero: [string,string]; project: keyof typeof projectImages }) {
+  const image = projectImages[project].hero;
+  return <section className="project-hero"><Image src={image.src} alt={image.alt} fill preload sizes="(max-width: 800px) max(100vw, 560px), 100vw" /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services">SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
   const config = pages[page]; const [nav,...rest] = config.sections;
-  return <main className="site-canvas" data-page={page}><RevealObserver/><VisualSection section={nav} page={page}/>{config.projectHero && <PlaceholderProjectHero hero={config.projectHero}/>} {rest.map((section,index) =>
-    <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>{config.spacer && index === 1 ? <div style={{height:config.spacer,background:"var(--blue)"}}/> : null}<VisualSection section={section} page={page}/></div>)}</main>;
+  return <main className="site-canvas" data-page={page}><RevealObserver/><VisualSection section={nav} page={page}/>{config.projectHero && <ProjectHero hero={config.projectHero} project={page as keyof typeof projectImages}/>} {rest.map((section,index) =>
+    <div key={section[0]} data-reveal={section[3] === "hero" ? undefined : ""}>{config.spacer && index === 1 ? <div style={{height:config.spacer,background:"var(--blue)"}}/> : null}<VisualSection section={section} page={page}/>{config.projectHero && index === 0 && <ProjectGallerySection project={page as keyof typeof projectImages}/>}</div>)}</main>;
 }

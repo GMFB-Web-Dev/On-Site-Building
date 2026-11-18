@@ -3,20 +3,14 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { masterContent } from "./master-content";
-
-const workImages = [
-  ["work-1.jpg", "Completed modern home exterior"],
-  ["work-2.jpg", "Residential construction project"],
-  ["work-3.jpg", "Finished contemporary home"],
-] as const;
+import { homeWorkImages, suppliedServiceGalleries } from "./site-images";
+import { galleryOffset } from "./gallery-position";
 
 const serviceWorkImages = [
-  ["figma-newbuild-work-1.png", "Papakura residential new build"],
-  ["figma-newbuild-work-2.png", "Contemporary residential new build"],
-  ["figma-newbuild-work-3.png", "Whitford Heights residential new build"],
+  ["/design/figma-newbuild-work-1.png", "Residential new build"],
+  ["/design/figma-newbuild-work-2.png", "Contemporary residential new build"],
+  ["/design/figma-newbuild-work-3.png", "Residential new build"],
 ] as const;
-
-const workPhaseCount = workImages.length - 1;
 
 const sampleTestimonials = Array.from({ length: 3 }, (_, id) => ({
   id,
@@ -24,11 +18,15 @@ const sampleTestimonials = Array.from({ length: 3 }, (_, id) => ({
   client: masterContent.testimonials.client,
 }));
 
-export function ScrollableWorkGallery({ service = false }: { service?: boolean }) {
-  const images = service ? serviceWorkImages : workImages;
+export function ScrollableWorkGallery({ service = false, page, gallery, heading = masterContent.work.title }: { service?: boolean; page?: string; gallery?: readonly (readonly [string, string])[]; heading?: string }) {
+  const images = gallery ?? (service ? suppliedServiceGalleries[page ?? "service"] ?? serviceWorkImages : homeWorkImages);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
   const [activePhase, setActivePhase] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const focusedProject = activePhase === 0 ? 0 : images.length - 1;
+  const workPhaseCount = images.length;
+  const focusedProject = activePhase % workPhaseCount;
 
   const showPhase = (index: number) => {
     const nextPhase = (index + workPhaseCount) % workPhaseCount;
@@ -36,13 +34,29 @@ export function ScrollableWorkGallery({ service = false }: { service?: boolean }
   };
 
   useEffect(() => {
-    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (workPhaseCount <= 1 || isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(
       () => setActivePhase((current) => (current + 1) % workPhaseCount),
-      4600,
+      gallery ? 6100 : page === "serviceRenovations" ? 5600 : page === "service" ? 6500 : 4600,
     );
     return () => window.clearTimeout(timer);
-  }, [activePhase, isPaused]);
+  }, [activePhase, isPaused, workPhaseCount, gallery, page]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+    const position = () => {
+      const item = track.children[focusedProject] as HTMLElement | undefined;
+      if (!item) return;
+      const offset = galleryOffset(item.offsetLeft, item.offsetWidth, viewport.clientWidth, track.scrollWidth);
+      track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    };
+    position();
+    const resize = new ResizeObserver(position);
+    resize.observe(viewport);
+    return () => resize.disconnect();
+  }, [focusedProject, workPhaseCount]);
 
   return (
     <section
@@ -50,41 +64,55 @@ export function ScrollableWorkGallery({ service = false }: { service?: boolean }
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
-      onBlurCapture={() => setIsPaused(false)}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false); }}
     >
       <div className="home-work-heading content-shell">
         <div>
-          <h2>{masterContent.work.title}</h2>
+          <h2>{heading}</h2>
         </div>
       </div>
-      <div className="home-work-viewport" aria-live="polite" aria-label={`Project phase ${activePhase + 1} of ${workPhaseCount}`}>
-        <div className={`home-work-row phase-${activePhase}`}>
+      <div className="home-work-viewport" ref={viewportRef} role="region" aria-roledescription="carousel" tabIndex={0} aria-live={isPaused ? "polite" : "off"} aria-label={`Image ${focusedProject + 1} of ${workPhaseCount}`}
+        onKeyDown={(event) => {
+          if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+            event.preventDefault();
+            showPhase(event.key === "Home" ? 0 : event.key === "End" ? workPhaseCount - 1 : focusedProject + (event.key === "ArrowLeft" ? -1 : 1));
+          }
+        }}
+        onTouchStart={(event) => { touchStartX.current = event.touches[0].clientX; }}
+        onTouchEnd={(event) => {
+          if (touchStartX.current === null) return;
+          const distance = event.changedTouches[0].clientX - touchStartX.current;
+          touchStartX.current = null;
+          if (Math.abs(distance) >= 48) showPhase(focusedProject + (distance > 0 ? -1 : 1));
+        }}>
+        <div className="home-work-row" ref={trackRef}>
           {images.map(([file, alt], index) => (
             <figure
               key={file}
               className={index === focusedProject ? "is-focused" : ""}
+              aria-label={`Image ${index + 1} of ${workPhaseCount}`}
             >
-              <Image src={`/design/${file}`} alt={alt} fill sizes="(max-width: 800px) 50vw, 520px" unoptimized />
+              <Image src={file} alt={alt} fill sizes="(max-width: 800px) calc((100vw - 56px) / 1.5), min(calc((100vw - 96px) / 2.5), 621px)" />
             </figure>
           ))}
         </div>
       </div>
       <div className="work-gallery-footer content-shell">
-        <div className="work-dots" role="group" aria-label="Choose a project phase">
+        <div className="work-dots" role="group" aria-label="Choose an image">
           {Array.from({ length: workPhaseCount }, (_, index) => (
             <button
               type="button"
               key={index}
-              className={index === activePhase ? "active" : ""}
+              className={index === focusedProject ? "active" : ""}
               onClick={() => showPhase(index)}
-              aria-label={`Show projects ${index + 1} and ${index + 2}`}
-              aria-current={index === activePhase ? "true" : undefined}
+              aria-label={`Show image ${index + 1}`}
+              aria-current={index === focusedProject ? "true" : undefined}
             />
           ))}
         </div>
         <div className="work-controls" aria-label="Project gallery controls">
-          <button type="button" className="work-arrow previous" onClick={() => showPhase(activePhase - 1)} aria-label="Previous project phase" />
-          <button type="button" className="work-arrow next" onClick={() => showPhase(activePhase + 1)} aria-label="Next project phase" />
+          <button type="button" className="work-arrow previous" onClick={() => showPhase(focusedProject - 1)} aria-label="Previous image" />
+          <button type="button" className="work-arrow next" onClick={() => showPhase(focusedProject + 1)} aria-label="Next image" />
         </div>
       </div>
     </section>

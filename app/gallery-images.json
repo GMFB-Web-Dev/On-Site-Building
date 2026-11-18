@@ -1,0 +1,260 @@
+{
+  "home": [
+    {
+      "src": "/images/work-whitford.webp",
+      "alt": "Whitford — Modern Glass-Balcony House",
+      "source": "Whitford/Modern Glass-Balcony House.png"
+    },
+    {
+      "src": "/images/design-build-benefits.webp",
+      "alt": "DESIGN & BUILD — WHY DESIGN & BUILD",
+      "source": "DESIGN & BUILD/WHY DESIGN & BUILD.png"
+    },
+    {
+      "src": "/images/work-manukau.webp",
+      "alt": "Manukau Heights — Modern Stone-Clad Home with Terraced Landscaping",
+      "source": "Manukau Heights/Modern Stone-Clad Home with Terraced Landscaping.png"
+    }
+  ],
+  "service": [
+    {
+      "src": "/images/residential-new-builds-gallery.webp",
+      "alt": "Residential New Builds — Gallery",
+      "source": "Residential New Builds/Gallery.png"
+    },
+    {
+      "src": "/images/residential-new-builds-gallery1.webp",
+      "alt": "Residential New Builds — Gallery1",
+      "source": "Residential New Builds/Gallery1.png"
+    },
+    {
+      "src": "/images/residential-new-builds-gallery-2.webp",
+      "alt": "Residential New Builds — Gallery 2",
+      "source": "Residential New Builds/Gallery 2.png"
+    },
+    {
+      "src": "/images/newbuild-gallery-3.webp",
+      "alt": "Residential New Builds — Gallery 3",
+      "source": "Residential New Builds/Gallery 3.png"
+    },
+    {
+      "src": "/images/newbuild-gallery-4.webp",
+      "alt": "Residential New Builds — Gallery 4",
+      "source": "Residential New Builds/Gallery 4.png"
+    },
+    {
+      "src": "/images/newbuild-gallery-5.webp",
+      "alt": "Residential New Builds — Gallery 5",
+      "source": "Residential New Builds/Gallery 5.png"
+    },
+    {
+      "src": "/images/residential-new-builds-gallery-6.webp",
+      "alt": "Residential New Builds — Gallery 6",
+      "source": "Residential New Builds/Gallery 6.png"
+    }
+  ],
+  "serviceRenovations": [
+    {
+      "src": "/images/renovations-gallery-1.webp",
+      "alt": "RENOVATIONS & ALTERATIONS — Gallery 1",
+      "source": "RENOVATIONS & ALTERATIONS/Gallery 1.png"
+    },
+    {
+      "src": "/images/renovations-benefits.webp",
+      "alt": "RENOVATIONS & ALTERATIONS — Gallery 2",
+      "source": "RENOVATIONS & ALTERATIONS/Gallery 2.png.png"
+    },
+    {
+      "src": "/images/renovations-intro.webp",
+      "alt": "RENOVATIONS & ALTERATIONS — Gallery 3",
+      "source": "RENOVATIONS & ALTERATIONS/Gallery 3.png.png"
+    },
+    {
+      "src": "/images/renovations-hero.webp",
+      "alt": "RENOVATIONS & ALTERATIONS — Gallery 4",
+      "source": "RENOVATIONS & ALTERATIONS/Gallery 4.png"
+    }
+  ],
+  "serviceExtensions": [
+    {
+      "src": "/images/extensions-hero.webp",
+      "alt": "ADDITIONS & EXTENSIONS — HERO",
+      "source": "ADDITIONS & EXTENSIONS/HERO.png"
+    },
+    {
+      "src": "/images/extensions-intro.webp",
+      "alt": "ADDITIONS & EXTENSIONS — ADDITIONS & EXTENSIONS",
+      "source": "ADDITIONS & EXTENSIONS/ADDITIONS & EXTENSIONS.png"
+    },
+    {
+      "src": "/images/extensions-deck.webp",
+      "alt": "ADDITIONS & EXTENSIONS — Sunlit Polished Wooden Deck Corner",
+      "source": "ADDITIONS & EXTENSIONS/Sunlit Polished Wooden Deck Corner.png"
+    }
+  ],
+  "serviceDesignBuild": [
+    {
+      "src": "/images/design-build-intro.webp",
+      "alt": "DESIGN & BUILD — DESIGN & BUILD",
+      "source": "DESIGN & BUILD/DESIGN & BUILD.png"
+    },
+    {
+      "src": "/images/design-build-benefits.webp",
+      "alt": "DESIGN & BUILD — WHY DESIGN & BUILD",
+      "source": "DESIGN & BUILD/WHY DESIGN & BUILD.png"
+    }
+  ],
+  "whitford": [
+    {
+      "src": "/images/whitford-elegant-dining-nook-with-garden-views.webp",
+      "alt": "Whitford — Elegant Dining Nook with Garden Views",
+      "source": "Whitford/Elegant Dining Nook with Garden Views.png"
+    },
+    {
+      "src": "/images/whitford-glossy-black-and-red-modern-kitchen.webp",
+      "alt": "Whitford — Glossy Black and Red Modern Kitchen",
+      "source": "Whitford/Glossy Black and Red Modern Kitchen.png"
+    },
+    {
+      "src": "/images/whitford-glossy-red-and-black-kitchen-interior.webp",
+      "alt": "Whitford — Glossy Red and Black Kitchen Interior",
+      "source": "Whitford/Glossy Red and Black Kitchen Interior.png"
+    },
+    {
+      "src": "/images/whitford-luxurious-red-accented-lobby-bar.webp",
+      "alt": "Whitford — Luxurious Red-Accented Lobby Bar",
+      "source": "Whitford/Luxurious Red-Accented Lobby Bar.png"
+    },
+    {
+      "src": "/images/whitford-luxury-lounge-with-dramatic-red-accents.webp",
+      "alt": "Whitford — Luxury Lounge with Dramatic Red Accents",
+      "source": "Whitford/Luxury Lounge with Dramatic Red Accents.png"
+    },
+    {
+      "src": "/images/whitford-overview.webp",
+      "alt": "Whitford — Modern Glass Atrium Lounge",
+      "source": "Whitford/Modern Glass Atrium Lounge.png"
+    },
+    {
+      "src": "/images/work-whitford.webp",
+      "alt": "Whitford — Modern Glass-Balcony House",
+      "source": "Whitford/Modern Glass-Balcony House.png"
+    },
+    {
+      "src": "/images/whitford-modern-house-walkway-and-terraced-garden.webp",
+      "alt": "Whitford — Modern House Walkway and Terraced Garden",
+      "source": "Whitford/Modern House Walkway and Terraced Garden.png"
+    },
+    {
+      "src": "/images/whitford-modern-house-with-glass-balcony-and-stone-accents.webp",
+      "alt": "Whitford — Modern House with Glass Balcony and Stone Accents",
+      "source": "Whitford/Modern House with Glass Balcony and Stone Accents.png"
+    },
+    {
+      "src": "/images/whitford-sleek-red-and-black-designer-kitchen.webp",
+      "alt": "Whitford — Sleek Red and Black Designer Kitchen",
+      "source": "Whitford/Sleek Red and Black Designer Kitchen.png"
+    }
+  ],
+  "newLynn": [
+    {
+      "src": "/images/new-lynn-overview.webp",
+      "alt": "New Lynn — Clean Modern Charcoal Kitchen",
+      "source": "New Lynn/Clean Modern Charcoal Kitchen.png"
+    },
+    {
+      "src": "/images/new-lynn-modern-charcoal-and-white-home.webp",
+      "alt": "New Lynn — Modern Charcoal and White Home",
+      "source": "New Lynn/Modern Charcoal and White Home.png"
+    },
+    {
+      "src": "/images/new-lynn-hero.webp",
+      "alt": "New Lynn — Modern Charcoal and White Suburban Home",
+      "source": "New Lynn/Modern Charcoal and White Suburban Home.png"
+    },
+    {
+      "src": "/images/new-lynn-sunlit-modern-timber-terrace.webp",
+      "alt": "New Lynn — Sunlit Modern Timber Terrace",
+      "source": "New Lynn/Sunlit Modern Timber Terrace.png"
+    },
+    {
+      "src": "/images/new-lynn-sunlit-polished-wooden-deck-corner.webp",
+      "alt": "New Lynn — Sunlit Polished Wooden Deck Corner",
+      "source": "New Lynn/Sunlit Polished Wooden Deck Corner.png"
+    },
+    {
+      "src": "/images/new-lynn-sunlit-wooden-outdoor-sink-kitchen.webp",
+      "alt": "New Lynn — Sunlit Wooden Outdoor Sink Kitchen",
+      "source": "New Lynn/Sunlit Wooden Outdoor Sink Kitchen.png"
+    }
+  ],
+  "manukau": [
+    {
+      "src": "/images/manukau-heights-bright-contemporary-kitchen-with-window-sink.webp",
+      "alt": "Manukau Heights — Bright Contemporary Kitchen with Window Sink",
+      "source": "Manukau Heights/Bright Contemporary Kitchen with Window Sink.png"
+    },
+    {
+      "src": "/images/manukau-heights-contemporary-stone-clad-house-exterior.webp",
+      "alt": "Manukau Heights — Contemporary Stone-Clad House Exterior",
+      "source": "Manukau Heights/Contemporary Stone-Clad House Exterior.png"
+    },
+    {
+      "src": "/images/manukau-heights-hero.webp",
+      "alt": "Manukau Heights — Modern Stone Home with Driveway and No. 12",
+      "source": "Manukau Heights/Modern Stone Home with Driveway and No. 12.png"
+    },
+    {
+      "src": "/images/manukau-heights-overview.webp",
+      "alt": "Manukau Heights — Modern Stone Home with Glass Balcony",
+      "source": "Manukau Heights/Modern Stone Home with Glass Balcony.png"
+    },
+    {
+      "src": "/images/work-manukau.webp",
+      "alt": "Manukau Heights — Modern Stone-Clad Home with Terraced Landscaping",
+      "source": "Manukau Heights/Modern Stone-Clad Home with Terraced Landscaping.png"
+    },
+    {
+      "src": "/images/manukau-heights-modern-suburban-home-with-open-garage.webp",
+      "alt": "Manukau Heights — Modern Suburban Home with Open Garage",
+      "source": "Manukau Heights/Modern Suburban Home with Open Garage.png"
+    }
+  ],
+  "botany": [
+    {
+      "src": "/images/botany-overview.webp",
+      "alt": "Botany — Elegant Burgundy and Cream Living Room",
+      "source": "Botany/Elegant Burgundy and Cream Living Room.png"
+    },
+    {
+      "src": "/images/botany-modern-olive-green-kitchen-interior.webp",
+      "alt": "Botany — Modern Olive-Green Kitchen Interior",
+      "source": "Botany/Modern Olive-Green Kitchen Interior.png"
+    },
+    {
+      "src": "/images/botany-modern-white-and-red-roofed-family-home.webp",
+      "alt": "Botany — Modern White-and-Red Roofed Family Home",
+      "source": "Botany/Modern White-and-Red Roofed Family Home.png"
+    },
+    {
+      "src": "/images/botany-polished-burgundy-staircase-foyer.webp",
+      "alt": "Botany — Polished Burgundy Staircase Foyer",
+      "source": "Botany/Polished Burgundy Staircase Foyer.png"
+    },
+    {
+      "src": "/images/botany-symmetrical-red-wall-with-crystal-chandelier.webp",
+      "alt": "Botany — Symmetrical Red Wall with Crystal Chandelier",
+      "source": "Botany/Symmetrical Red Wall with Crystal Chandelier.png"
+    },
+    {
+      "src": "/images/botany-traditional-burgundy-leather-living-room.webp",
+      "alt": "Botany — Traditional Burgundy Leather Living Room",
+      "source": "Botany/Traditional Burgundy Leather Living Room.png"
+    },
+    {
+      "src": "/images/botany-hero.webp",
+      "alt": "Botany — Upscale Suburban Home with Red-Tiled Roof",
+      "source": "Botany/Upscale Suburban Home with Red-Tiled Roof.png"
+    }
+  ]
+}
