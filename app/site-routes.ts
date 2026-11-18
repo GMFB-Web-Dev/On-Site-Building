@@ -1,12 +1,12 @@
 /** One canonical address for each page. Old public URLs are permanently redirected. */
 export const paths = {
   home: "/",
-  services: "/building-services-auckland",
-  service: "/services/new-home-builders-auckland",
+  services: "/services-auckland",
+  service: "/services/new-home-builders-south-auckland",
   serviceRenovations: "/services/home-renovations-south-auckland",
-  serviceDesignBuild: "/services/design-and-build-auckland",
-  serviceExtensions: "/services/home-extensions-auckland",
-  serviceCommercial: "/services/light-commercial-builders-auckland",
+  serviceDesignBuild: "/services/design-and-build-east-auckland",
+  serviceExtensions: "/services/home-extensions-south-auckland",
+  serviceCommercial: "/services/light-commercial-builders-south-auckland",
   projects: "/building-projects-auckland",
   whitford: "/projects/whitford-heights-design-build-auckland",
   manukau: "/projects/manukau-heights-new-home-auckland",
@@ -63,7 +63,15 @@ export const legacyPaths: Partial<Record<SitePageKey, string>> = {
   contact: "/contact",
 };
 
-export const permanentRedirects = Object.entries(legacyPaths).map(([key, source]) => ({
+export const previousCanonicalPaths: Partial<Record<SitePageKey,string>> = {
+  services: "/building-services-auckland",
+  service: "/services/new-home-builders-auckland",
+  serviceDesignBuild: "/services/design-and-build-auckland",
+  serviceExtensions: "/services/home-extensions-auckland",
+  serviceCommercial: "/services/light-commercial-builders-auckland",
+};
+
+export const permanentRedirects = [...Object.entries(legacyPaths), ...Object.entries(previousCanonicalPaths)].map(([key, source]) => ({
   source,
   destination: paths[key as SitePageKey],
   permanent: true,
