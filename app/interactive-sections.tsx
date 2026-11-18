@@ -18,12 +18,12 @@ export function PhotoGallery({ title, images }: { title: string; images: Gallery
 
       </div>
       <div className="client-gallery-track" id={trackId} tabIndex={images.length > 1 ? 0 : undefined} role="region" aria-label={`${title} photos, scroll to explore`}>
-        {images.map(item => <a key={item.src} href={item.href ?? item.src}
-          target={item.href ? undefined : "_blank"} rel={item.href ? undefined : "noopener noreferrer"}
-          aria-label={item.href ? `View ${item.label ?? item.alt} project` : `${item.alt} — open full photo in a new tab`}>
-          <Image src={item.src} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 700px) 90vw, 45vw" />
-          {item.label && <strong>{item.label} <span aria-hidden="true">→</span></strong>}
-        </a>)}
+        {images.map(item => {
+          const picture = <><Image src={item.src} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 700px) 90vw, 45vw" />{item.label && <strong>{item.label} <span aria-hidden="true">→</span></strong>}</>;
+          return item.href
+            ? <a key={item.src} href={item.href} aria-label={`View ${item.label ?? item.alt} project`}>{picture}</a>
+            : <div className="client-gallery-image" key={item.src}>{picture}</div>;
+        })}
       </div>
     </div>
   </section>;
