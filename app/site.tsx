@@ -113,6 +113,9 @@ const pages: Record<Exclude<PageKey, "serviceAreas">, { sections: Section[]; pro
     s("contact-form.png",878,"Project enquiry form","form"), s("contact-map.png",854,"Auckland, Waikato and Whangārei service area map"), s("footer-contact.png",279,"Footer navigation") ] },
 };
 
+const displayServiceLabel = (name: string) =>
+  name.toLowerCase().replace(/\b[a-z]/g, letter => letter.toUpperCase());
+
 export function SiteHeader({ file }: { file: string }) {
   const active = file.replace("navbar-", "").replace(".png", "");
   const labels = masterContent.services.labels;
@@ -128,7 +131,7 @@ export function SiteHeader({ file }: { file: string }) {
       <Link href="/" className={active === "home" ? "active" : ""}>Home</Link>
       <div className={`nav-service-dropdown ${servicesActive ? "active" : ""}`}>
         <Link className="nav-service-trigger" href="/building-services-auckland">Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
-        <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
+        <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{displayServiceLabel(label)}</Link>)}</div>
       </div>
       <Link href={paths.about} className={active === "about" ? "active" : ""}>About us</Link>
       <div className={`nav-service-dropdown ${projectsActive ? "active" : ""}`}>
@@ -141,7 +144,7 @@ export function SiteHeader({ file }: { file: string }) {
     </nav>
     <MobileNavigation>
       <Link href="/">Home</Link>
-      <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
+      <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{serviceItems.map(([label,href])=><Link key={label} href={href}>{displayServiceLabel(label)}</Link>)}</div></details>
       <Link href={paths.about}>About us</Link>
       <details className="mobile-service-menu" name="mobile-navigation-section"><summary>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></summary><div>{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div></details>
       <Link href={paths.blogs}>Blogs</Link>
@@ -236,7 +239,7 @@ function ContactCTA({ blue = false }: { blue?: boolean }) {
   return <section className={`contact-cta ${blue ? "contact-cta-blue" : ""}`}><div className="content-shell"><div className="contact-heading"><h2>{masterContent.contact.title}</h2><p>{masterContent.contact.description}</p></div><div className="contact-methods">
     <a href={`mailto:${masterContent.business.email}`}><b><Image src="/icons/email.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.emailLabel}</strong><span>{masterContent.business.email}</span></a>
     <a href={masterContent.business.phoneHref}><b><Image src="/icons/phone.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.phoneLabel}</strong><span>{masterContent.business.phone}</span></a>
-    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.areasLabel}</strong><Link href={paths.serviceAreas}>{masterContent.business.serviceAreas}</Link></span>
+    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.areasLabel}</strong><Link href={paths.serviceAreas} className="contact-areas-link">{coverageRegions.map(region => region.id === "north-auckland" ? "North Shore" : region.name).join(" · ")}</Link></span>
   </div></div></section>;
 }
 
@@ -269,7 +272,7 @@ export function SiteFooter({ file }: { file: string }) {
       </div>
       <nav className="footer-link-column" aria-label="Footer services">
         <h2>Services</h2>
-        <ul>{services.map(([label,href]) => <li key={href}><Link href={href}>{label}</Link></li>)}</ul>
+        <ul>{services.map(([label,href]) => <li key={href}><Link href={href}>{displayServiceLabel(label)}</Link></li>)}</ul>
       </nav>
       <nav className="footer-link-column" aria-label="Footer projects">
         <h2>Projects</h2>
