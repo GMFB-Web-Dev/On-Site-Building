@@ -12,7 +12,7 @@ export const absoluteUrl = (path: string) => new URL(path, SITE_URL).href;
 type PageDetails = { title: string; description: string; label: string };
 export const pageDetails: Record<SitePageKey, PageDetails> = {
   home: {
-    title: "South Auckland Builders | On Site Building Construction",
+    title: "On Site Building | South Auckland Builders",
     description: "Manurewa-based builders for home renovations, extensions, new homes and light commercial work across Auckland. Discuss your plans with On Site Building.",
     label: "Home",
   },
