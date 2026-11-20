@@ -2,11 +2,11 @@
 export const paths = {
   home: "/",
   services: "/services-auckland",
-  service: "/services/new-home-builders-south-auckland",
-  serviceRenovations: "/services/home-renovations-south-auckland",
-  serviceDesignBuild: "/services/design-and-build-east-auckland",
-  serviceExtensions: "/services/home-extensions-south-auckland",
-  serviceCommercial: "/services/light-commercial-builders-south-auckland",
+  service: "/services-auckland/new-home-builders-south-auckland",
+  serviceRenovations: "/services-auckland/home-renovations-south-auckland",
+  serviceDesignBuild: "/services-auckland/design-and-build-east-auckland",
+  serviceExtensions: "/services-auckland/home-extensions-south-auckland",
+  serviceCommercial: "/services-auckland/light-commercial-builders-south-auckland",
   projects: "/building-projects-auckland",
   whitford: "/projects/whitford-heights-design-build-auckland",
   manukau: "/projects/manukau-heights-new-home-auckland",
@@ -71,7 +71,13 @@ export const previousCanonicalPaths: Partial<Record<SitePageKey,string>> = {
   serviceCommercial: "/services/light-commercial-builders-auckland",
 };
 
-export const permanentRedirects = [...Object.entries(legacyPaths), ...Object.entries(previousCanonicalPaths)].map(([key, source]) => ({
+const previousServiceDetailPaths = serviceKeys.map(key => [key, paths[key].replace(`${paths.services}/`, "/services/")] as const);
+
+export const permanentRedirects = [
+  ...Object.entries(legacyPaths),
+  ...Object.entries(previousCanonicalPaths),
+  ...previousServiceDetailPaths,
+].map(([key, source]) => ({
   source,
   destination: paths[key as SitePageKey],
   permanent: true,

@@ -130,7 +130,7 @@ export function SiteHeader({ file }: { file: string }) {
     <nav className="desktop-nav" aria-label="Primary navigation">
       <Link href="/" className={active === "home" ? "active" : ""}>Home</Link>
       <div className={`nav-service-dropdown ${servicesActive ? "active" : ""}`}>
-        <Link className="nav-service-trigger" href="/services-auckland">Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
+        <Link className="nav-service-trigger" href={paths.services}>Services <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{serviceItems.map(([label,href])=><Link key={label} href={href}>{displayServiceLabel(label)}</Link>)}</div>
       </div>
       <Link href={paths.about} className={active === "about" ? "active" : ""}>About us</Link>
@@ -206,7 +206,7 @@ function ResponsiveHero({ file }: { file:string }) {
   const extra = heroAlternatives[page] ?? [];
   const images = [original, ...extra].filter((photo, index, all) => all.findIndex(other => other.src === photo.src) === index);
   const hero = pageCopy[page].hero;
-  const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about-onsite-building-auckland" } : { label: "SERVICES", href: "/services-auckland" };
+  const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about-onsite-building-auckland" } : { label: "SERVICES", href: paths.services };
   return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
@@ -222,16 +222,16 @@ function HomeAbout() {
 }
 
 const serviceCards = [
-  [masterContent.services.labels.renovations,clientImages["renovations-alterations.hero"].src,"/services/home-renovations-south-auckland","renovations-alterations"],
-  [masterContent.services.labels.newBuilds,clientImages["residential-new-builds.hero"].src,"/services/new-home-builders-south-auckland","residential-new-builds"],
-  [masterContent.services.labels.designBuild,clientImages["design-build.overview"].src,"/services/design-and-build-east-auckland","design-build"],
-  [masterContent.services.labels.extensions,clientImages["additions-extensions.hero"].src,"/services/home-extensions-south-auckland","additions-extensions"],
+  [masterContent.services.labels.renovations,clientImages["renovations-alterations.hero"].src,paths.serviceRenovations,"renovations-alterations"],
+  [masterContent.services.labels.newBuilds,clientImages["residential-new-builds.hero"].src,paths.service,"residential-new-builds"],
+  [masterContent.services.labels.designBuild,clientImages["design-build.overview"].src,paths.serviceDesignBuild,"design-build"],
+  [masterContent.services.labels.extensions,clientImages["additions-extensions.hero"].src,paths.serviceExtensions,"additions-extensions"],
 ];
 
 function ServicesSection() {
   return <section className="services-section"><div className="content-shell"><h2>{masterContent.services.title}</h2><p>{masterContent.services.description}</p><div className="services-grid">
     {serviceCards.map(([title,image,href,id])=><Link id={id} href={href} className="service-card" key={title}><Image src={image} alt="" fill sizes="(max-width: 800px) 100vw, 25vw" /><span><strong>{title}</strong><small>LEARN MORE&nbsp; →</small></span></Link>)}
-    <Link id="light-commercial-construction" href="/services/light-commercial-builders-south-auckland" className="service-card service-card-wide"><Image src="/design/figma-service-commercial.webp" alt="" fill sizes="100vw" /><span><strong>{masterContent.services.labels.commercial}</strong><small>LEARN MORE&nbsp; →</small></span></Link>
+    <Link id="light-commercial-construction" href={paths.serviceCommercial} className="service-card service-card-wide"><Image src="/design/figma-service-commercial.webp" alt="" fill sizes="100vw" /><span><strong>{masterContent.services.labels.commercial}</strong><small>LEARN MORE&nbsp; →</small></span></Link>
   </div></div></section>;
 }
 
@@ -335,7 +335,7 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
 function ProjectHero({ hero, project }: { hero: [string,string]; project: ProjectKey }) {
   const photos = getProject(project);
   const images = [photos.hero, ...photos.gallery.slice(0,1)];
-  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href="/services-auckland">SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={paths.services}>SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {

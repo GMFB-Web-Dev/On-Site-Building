@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ServiceAreaMap } from "./service-area-map";
+import { paths } from "./site-routes";
 import { copyParagraphs, copySubsections, getCopySection, masterContent, pageCopy, type CopyNode, type CopyPageKey, type CopySection } from "./master-content";
 
 import { clientImages, projects, getProject, serviceMedia, type ProjectKey } from "./client-media";
@@ -121,7 +122,7 @@ export function BlogsSection() {
 
 export function ServicesPromoSection() {
   const content = getCopySection("blogs", "OUR SERVICES");
-  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href="/services-auckland">SERVICES</Link></div></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href={paths.services}>SERVICES</Link></div></div></section>;
 }
 
 export function BlogArticleSection({ page }: { page: BlogKey }) {

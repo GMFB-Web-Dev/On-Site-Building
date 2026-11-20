@@ -27,7 +27,7 @@ The GitHub launch branch has a working automatic Vercel preview in the original 
 - One main heading per page; visible breadcrumbs and semantic page structure.
 - Canonical URLs and Open Graph/Twitter images on the production origin.
 - 24-entry XML sitemap and crawlable robots.txt; API routes excluded from crawling.
-- 20 permanent 308 redirects from changed URLs, preserving query parameters in one hop.
+- 30 permanent 308 redirects from changed URLs, preserving query parameters in one hop.
 - Consistent internal links to canonical destinations; no generated suburb doorway pages.
 - Structured data: Organization, WebSite, appropriate WebPage/collection types, 5 Service entities, 6 BlogPosting entities and 23 BreadcrumbList entities.
 - No fabricated ratings, review schema, private-address LocalBusiness markup or unsupported FAQ rich-result claims.
@@ -92,12 +92,12 @@ No Search Console ownership verification, analytics property or Google Business 
 | Page key | Production path |
 |---|---|
 | `home` | `/` |
-| `services` | `/building-services-auckland` |
-| `service` | `/services/new-home-builders-auckland` |
-| `serviceRenovations` | `/services/home-renovations-south-auckland` |
-| `serviceDesignBuild` | `/services/design-and-build-auckland` |
-| `serviceExtensions` | `/services/home-extensions-auckland` |
-| `serviceCommercial` | `/services/light-commercial-builders-auckland` |
+| `services` | `/services-auckland` |
+| `service` | `/services-auckland/new-home-builders-south-auckland` |
+| `serviceRenovations` | `/services-auckland/home-renovations-south-auckland` |
+| `serviceDesignBuild` | `/services-auckland/design-and-build-east-auckland` |
+| `serviceExtensions` | `/services-auckland/home-extensions-south-auckland` |
+| `serviceCommercial` | `/services-auckland/light-commercial-builders-south-auckland` |
 | `projects` | `/building-projects-auckland` |
 | `whitford` | `/projects/whitford-heights-design-build-auckland` |
 | `manukau` | `/projects/manukau-heights-new-home-auckland` |
