@@ -72,7 +72,7 @@ Search Console can use its GTM ownership verification method if the signed-in Go
 
 ## Deployment and verification
 
-Work stays on `main`. Set the Vercel project's Production Branch to `main` if it still points at the launch branch, enter the environment variables, and deploy that branch using the existing Vercel workflow. Do not merge the launch branch wholesale.
+Work stays on `main`. The production Vercel project is `on-site-building`, whose Production Branch is `main`. The custom domain `onsitebuild.co.nz` and its `www` redirect were moved from `on-site-building-review` to this project after validating the CMS-enabled deployment. The review project's launch branch and unrelated environment variables were left intact. Future pushes to `main` deploy through the existing Git integration.
 
 Local checks:
 
@@ -87,6 +87,6 @@ The integration test uses an isolated local HTTPS mock CMS and the built product
 
 After deployment, check the index, all six canonical article URLs, images, canonical metadata, sitemap and old redirects on the hosted domain. Confirm an unknown article returns 404. Verify the webhook from Payload using the real private secret. No private secret should appear in generated HTML, client JavaScript, logs or Git.
 
-The Vercel CLI login was invalid during this implementation, so production environment changes and a hosted CMS-backed deployment could not be verified with that login. Renew the Vercel login or deploy `main` in the Vercel dashboard, then perform the hosted checks above.
+The Vercel login was renewed and the four CMS variables were confirmed on the production project. Hosted checks on `https://onsitebuild.co.nz` passed for the CMS index, canonical articles, media, sitemap, unknown-slug HTTP 404, old URL redirects, the `www` redirect, GTM loading, and missing/incorrect webhook secrets returning HTTP 401. No CMS posts were created or edited. Accepted signed notifications, drafts, deletion and renaming were tested with isolated fixtures; the production shared secret is stored as a sensitive Vercel variable and was not disclosed or extracted for a live signed test. Search Console ownership verification remains an account-side step.
 
 References: [installed Next.js docs](../node_modules/next/dist/docs/), [Payload rich-text rendering](https://payloadcms.com/docs/rich-text/converters).
