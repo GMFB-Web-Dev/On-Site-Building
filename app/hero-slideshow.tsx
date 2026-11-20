@@ -8,7 +8,6 @@ type Props = { images: SiteImage[]; label: string; intervalMs?: number };
 
 export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [documentVisible, setDocumentVisible] = useState(true);
@@ -33,10 +32,10 @@ export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
   }, []);
 
   useEffect(() => {
-    if (total < 2 || paused || !visible || reducedMotion || !documentVisible) return;
+    if (total < 2 || !visible || reducedMotion || !documentVisible) return;
     const timer = window.setTimeout(() => setIndex(current => (current + 1) % total), intervalMs);
     return () => window.clearTimeout(timer);
-  }, [index, total, paused, visible, reducedMotion, documentVisible, intervalMs]);
+  }, [index, total, visible, reducedMotion, documentVisible, intervalMs]);
 
   if (!total) return null;
   return <div
@@ -44,18 +43,13 @@ export function HeroSlideshow({ images, label, intervalMs = 4800 }: Props) {
     className="hero-slideshow"
     aria-label={label}
     aria-roledescription="slideshow"
-    onMouseEnter={() => setPaused(true)}
-    onMouseLeave={() => setPaused(false)}
-    onFocus={() => setPaused(true)}
-    onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}
   >
     {images.map((item, i) => <div
       key={item.src}
       className={`hero-slide ${index === i ? "is-active" : ""}`}
       aria-hidden={index !== i}
     >
-      <Image src={item.src} alt={index === i ? item.alt : ""} fill priority={i === 0} sizes="100vw" />
+      <Image src={item.src} alt={index === i ? item.alt : ""} fill priority={i === 0} loading={i === 0 ? undefined : "eager"} sizes="100vw" />
     </div>)}
-
   </div>;
 }

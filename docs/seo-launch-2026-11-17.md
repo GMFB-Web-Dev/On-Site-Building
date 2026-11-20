@@ -81,8 +81,9 @@ The corrected local checks passed: 24 pages, 20 one-hop redirects, 24 sitemap en
 3. Confirm the deployed form configuration, send the one authorized internal test and verify delivery.
 4. Set the customer production recipient and redeploy so the environment change takes effect.
 5. Add the apex domain and `www`; keep the apex as canonical and redirect `www` permanently to it.
-6. Apply the exact DNS values supplied by Vercel in Dynadot, preserving any unrelated records. Verify HTTPS, domain redirects and the complete page check.
-7. Verify ownership in Google Search Console and submit `/sitemap.xml` when the production domain is reachable. Inspect priority service URLs and monitor indexing.
+6. After approval, connect `onsitebuild.co.nz` through Cloudflare. If changing nameservers at the registrar, preserve existing mail and other DNS records in Cloudflare first. Apply the exact apex and www targets supplied by Vercel. Verify HTTPS, the www redirect and the complete page check.
+7. Verify the domain property in Google Search Console and submit `/sitemap.xml` after production is reachable. Request indexing for the homepage and priority service pages, then monitor their indexing status.
+8. Check for an existing Google Business Profile before creating or claiming the Maps listing. Complete owner verification and configure the profile as a service-area business if customers are served at their locations. Add the approved business details, service areas, five services, project photos and launch update. Keep the private residential address off the public listing.
 
 No Search Console ownership verification, analytics property or Google Business Profile update is claimed in this package. No test email has been sent to the client.
 

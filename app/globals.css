@@ -38,6 +38,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .header-logo { position: relative; display: block; width: 100%; height: 64px; overflow: hidden; }
 .header-logo img { object-fit: contain; object-position: left center; mix-blend-mode: screen; transition: transform .3s ease; }
 .header-brand:hover .header-logo img { transform: scale(1.018); }
+.site-header .header-brand,.site-header .header-logo { overflow: visible; }
+.site-header .header-logo img { transform-origin: left center; }
 .brand-mark { display: grid; place-items: center; width: 46px; height: 34px; border: 2px solid currentColor; border-radius: 18px 18px 5px 5px; font-size: 11px; transition: transform .25s ease, background-color .25s ease; }
 .brand:hover .brand-mark { transform: translateY(-2px) rotate(-2deg); background: rgba(255,255,255,.1); }
 .brand small { display: block; text-align: center; font-size: 8px; letter-spacing: .28em; }
@@ -173,7 +175,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .contact-methods strong { font-size: 28px; }
 .contact-methods span,.contact-methods u { font: 400 18px/1.5 var(--font-montserrat),sans-serif; }
 .contact-methods a[href^="mailto:"] span,.contact-methods a[href^="tel:"] span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-.contact-areas-link { display: inline-block; max-width: 390px; font-size: clamp(14px,1.12vw,17px); line-height: 1.55; text-wrap: pretty; }
+.contact-areas-link { display: inline-block; max-width: 390px; font-size: clamp(14px,1.12vw,17px); line-height: 1.55; text-wrap: pretty; text-decoration: none; }
+.contact-areas-link:hover { color: #102955; text-decoration: none; }
 .contact-cta-blue .contact-heading p,.contact-cta-blue .contact-methods a > span,.contact-cta-blue .contact-methods u { color: #fff; }
 .enquiry-section { background: var(--blue); padding: 66px 0 70px; font-family: var(--font-montserrat),sans-serif; }
 .enquiry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(42px,8vw,116px); align-items: stretch; }
@@ -521,10 +524,17 @@ a.project-tile:hover img { transform: scale(1.055); }
 .client-gallery-controls { display: flex; gap: 10px; }
 .client-gallery-controls button { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--navy); background: transparent; color: var(--navy); font-size: 24px; cursor: pointer; }
 .client-gallery-controls button:hover { background: var(--navy); color: #fff; }
-.client-gallery-controls button:disabled { opacity: .35; cursor: default; }
+.client-gallery-controls .client-gallery-playback { width: auto; min-width: 58px; padding-inline: 8px; font-size: 14px; }
 .client-gallery-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px)/2); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--navy) #dce5f2; }
 .client-gallery-track > a,.client-gallery-track > .client-gallery-image { display: block; min-width: 0; scroll-snap-align: start; color: var(--navy); text-decoration: none; }
-.client-gallery-track img { display: block; width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
+.client-gallery-frame { display: block; overflow: hidden; aspect-ratio: 4/3; }
+.client-gallery-track img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .client-gallery-track > :is(a,.client-gallery-image):hover img { transform: scale(1.055); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .client-gallery-track > a:focus-visible img { transform: scale(1.055); }
+}
 .client-gallery-track strong { display: block; margin-top: 12px; font: 800 18px/1.4 var(--font-montserrat),sans-serif; text-transform: uppercase; }
 .client-gallery-single .client-gallery-track { grid-auto-columns: min(100%,900px); justify-content: center; }
 @media(max-width:1100px) {
@@ -533,7 +543,7 @@ a.project-tile:hover img { transform: scale(1.055); }
 @media(max-width:700px) {
   .client-gallery { padding: 42px 0; }
   .client-gallery-track { grid-auto-columns: 92%; gap: 14px; }
-  .client-gallery-heading { align-items: flex-start; }
+  .client-gallery-heading { align-items: flex-start; flex-wrap: wrap; }
   .client-gallery h2 { max-width: 70%; font-size: 28px; }
   .client-gallery-controls { gap: 6px; }
   .client-gallery-controls button { width: 38px; height: 38px; }
@@ -557,8 +567,8 @@ a.project-tile:hover img { transform: scale(1.055); }
 }
 
 
-/* Subtle, manually controllable photography slideshows on approved hero sections. */
-.hero-slideshow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; transform: none; }
+/* Decorative hero slides fade automatically and leave foreground links interactive. */
+.hero-slideshow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; transform: none; pointer-events: none; }
 .hero-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility .9s ease; }
 .hero-slide.is-active { opacity: 1; visibility: visible; }
 .hero-slide img { object-fit: cover; object-position: center; }

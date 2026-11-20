@@ -113,7 +113,12 @@ export function CoverageSection() {
                 {region.kind === "wider" && <p className={styles.regionLabel}>Wider project enquiries</p>}
               </header>
               <ul className={styles.locations} aria-label={region.locationLabel}>
-                {region.locations.map((location) => <li key={location}>{location}</li>)}
+                {region.locations.map((location, index) => (
+                  <li key={location}>
+                    {location}
+                    {index < region.locations.length - 1 && <span className={styles.locationSeparator} aria-hidden="true">|</span>}
+                  </li>
+                ))}
               </ul>
             </section>
           ))}

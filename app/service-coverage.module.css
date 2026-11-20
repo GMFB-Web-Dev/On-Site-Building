@@ -44,15 +44,15 @@
 .locations {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 5px;
+  gap: 2px 8px;
   margin: 0;
   padding: 0;
   list-style: none;
   color: #17233a;
 }
 
-.locations li:not(:last-child)::after {
-  content: ",";
+.locationSeparator {
+  margin-inline-start: 8px;
 }
 
 @media (max-width: 800px) {

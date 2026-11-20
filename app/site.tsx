@@ -239,7 +239,7 @@ function ContactCTA({ blue = false }: { blue?: boolean }) {
   return <section className={`contact-cta ${blue ? "contact-cta-blue" : ""}`}><div className="content-shell"><div className="contact-heading"><h2>{masterContent.contact.title}</h2><p>{masterContent.contact.description}</p></div><div className="contact-methods">
     <a href={`mailto:${masterContent.business.email}`}><b><Image src="/icons/email.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.emailLabel}</strong><span>{masterContent.business.email}</span></a>
     <a href={masterContent.business.phoneHref}><b><Image src="/icons/phone.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.phoneLabel}</strong><span>{masterContent.business.phone}</span></a>
-    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.areasLabel}</strong><Link href={paths.serviceAreas} className="contact-areas-link">{coverageRegions.map(region => region.id === "north-auckland" ? "North Shore" : region.name).join(" · ")}</Link></span>
+    <span><b><Image src="/icons/pin.svg" alt="" width={42} height={42} unoptimized /></b><strong>{masterContent.contact.areasLabel}</strong><Link href={paths.serviceAreas} className="contact-areas-link">{coverageRegions.map(region => region.id === "north-auckland" ? "North Shore" : region.name).join(" | ")}</Link></span>
   </div></div></section>;
 }
 
