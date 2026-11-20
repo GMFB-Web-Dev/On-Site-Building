@@ -280,7 +280,12 @@ export function SiteFooter({ file }: { file: string }) {
       </nav>
       <nav className="footer-link-column footer-regions" aria-label="Footer service areas">
         <h2>Service Areas</h2>
-        <ul>{coverageRegions.map(region => <li key={region.id}><Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link></li>)}</ul>
+        <ul>{coverageRegions.map((region, index) => (
+          <li key={region.id}>
+            <Link href={`${paths.serviceAreas}#coverage-${region.id}`}>{region.name}</Link>
+            {index < coverageRegions.length - 1 && <span aria-hidden="true">|</span>}
+          </li>
+        ))}</ul>
       </nav>
     </div>
     <div className="footer-bottom"><span>© 2026 Onsite Building Construction Limited. All rights reserved.</span><nav aria-label="Legal links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms of Use</Link></nav></div>

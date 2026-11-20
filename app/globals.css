@@ -34,12 +34,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .site-header { position: sticky; z-index: 100; top: 0; height: var(--site-header-height); background: var(--blue); box-shadow: 0 4px 18px rgba(24,58,114,.16); font-family: var(--font-montserrat),sans-serif; }
 .header-inner { width: min(100% - 48px,1312px); height: 100%; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font: 800 10px/1.15 var(--font-montserrat),sans-serif; letter-spacing: .02em; }
-.header-brand { width: clamp(230px,24vw,340px); min-width: 230px; height: 100%; overflow: hidden; }
-.header-logo { position: relative; display: block; width: 100%; height: 64px; overflow: hidden; }
-.header-logo img { object-fit: contain; object-position: left center; mix-blend-mode: screen; transition: transform .3s ease; }
-.header-brand:hover .header-logo img { transform: scale(1.018); }
-.site-header .header-brand,.site-header .header-logo { overflow: visible; }
-.site-header .header-logo img { transform-origin: left center; }
+.header-brand { width: clamp(230px,24vw,340px); min-width: 230px; height: 100%; }
+.header-logo { position: relative; display: block; width: 100%; height: 64px; }
+.header-logo img { object-fit: contain; object-position: left center; mix-blend-mode: screen; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .header-logo img { transform: scale(.975); transform-origin: left center; transition: transform .3s ease; }
+  .header-brand:hover .header-logo img { transform: scale(1); }
+}
 .brand-mark { display: grid; place-items: center; width: 46px; height: 34px; border: 2px solid currentColor; border-radius: 18px 18px 5px 5px; font-size: 11px; transition: transform .25s ease, background-color .25s ease; }
 .brand:hover .brand-mark { transform: translateY(-2px) rotate(-2deg); background: rgba(255,255,255,.1); }
 .brand small { display: block; text-align: center; font-size: 8px; letter-spacing: .28em; }
@@ -195,7 +196,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .site-footer { background: var(--blue); border-top: 1px solid var(--navy); padding: 60px 0 30px; font-family: var(--font-montserrat),sans-serif; }
 .footer-top { display: grid; grid-template-columns: minmax(230px,1.35fr) minmax(180px,1.05fr) minmax(135px,.75fr) minmax(260px,1.35fr); align-items: start; gap: clamp(22px,3vw,48px); }
 .footer-brand-column { min-width: 0; }
-.footer-brand-column .footer-brand { width: min(100%,340px); min-width: 0; height: 64px; overflow: hidden; }
+.footer-brand-column .footer-brand { width: min(100%,340px); min-width: 0; height: 64px; }
 .footer-contact-details { display: grid; gap: 24px; margin-top: 32px; font: 400 15px/1.6 var(--font-manrope),sans-serif; }
 .footer-contact-details > div { display: grid; gap: 5px; min-width: 0; }
 .footer-contact-details strong,.footer-link-column h2 { display: block; margin: 0; font: 800 15px/1.5 var(--font-montserrat),sans-serif; text-transform: uppercase; }
@@ -206,7 +207,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .footer-link-column li { min-width: 0; }
 .footer-link-column a { display: inline-block; font: 400 14px/1.5 var(--font-manrope),sans-serif; text-decoration: none; overflow-wrap: break-word; }
 .footer-link-column a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.footer-regions ul { grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 16px; row-gap: 14px; align-items: start; }
+.footer-regions ul { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.footer-regions li { display: inline-flex; align-items: center; gap: 8px; }
+.footer-regions a:hover { color: #102955; text-decoration: none; }
 .footer-bottom { display: flex; justify-content: center; gap: 24px; margin-top: 58px; padding-top: 28px; border-top: 1px solid var(--navy); font: 400 14px/1.5 var(--font-manrope),sans-serif; }
 .section-heading { font-family: var(--font-montserrat),sans-serif; }
 .section-heading h2 { margin: 0; color: var(--navy); white-space: pre-line; font-size: clamp(40px,3.9vw,56px); line-height: 1.08; font-weight: 900; letter-spacing: -.025em; }
@@ -383,7 +386,6 @@ a.project-tile:hover img { transform: scale(1.055); }
 @media (max-width: 1180px) {
   .desktop-nav { display: none; }
   .header-inner { gap: 16px; }
-  .site-header .header-brand:hover .header-logo img { transform: none; }
   .mobile-nav { display: block; }
   .mobile-nav > nav { position: fixed; right: 24px; top: calc(var(--site-header-height) + 8px); width: min(360px,calc(100% - 32px)); max-height: calc(100dvh - var(--site-header-height) - 24px - env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; padding: 12px; border: 1px solid rgba(24,58,114,.18); border-radius: 8px; background: var(--ice); box-shadow: 0 12px 28px rgba(24,58,114,.2); display: flex; flex-direction: column; gap: 4px; animation: menu-in .22s ease both; }
   .mobile-nav nav a { display: flex; align-items: center; min-height: 48px; padding: 12px; border-radius: 4px; text-decoration: none; overflow-wrap: anywhere; }
@@ -465,8 +467,6 @@ a.project-tile:hover img { transform: scale(1.055); }
   .footer-top { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 38px 24px; }
   .footer-brand-column .footer-brand { width: min(100%,340px); }
   .footer-link-column a,.footer-bottom a { display: inline-flex; align-items: center; min-height: 36px; }
-  .footer-regions ul { column-gap: 12px; row-gap: 5px; }
-  .footer-regions a { min-height: 36px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .section-heading h2 { font-size: clamp(36px,10vw,48px); }
   .certification-section { padding: 52px 0; }
@@ -561,7 +561,6 @@ a.project-tile:hover img { transform: scale(1.055); }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 16px; }
   .footer-brand-column { grid-column: 1 / -1; }
   .footer-regions { grid-column: 1 / -1; }
-  .footer-regions ul { grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 20px; }
   .footer-link-column h2 { font-size: 14px; }
   .footer-link-column a { font-size: 13px; }
 }
