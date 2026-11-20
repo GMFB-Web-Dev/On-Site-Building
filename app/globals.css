@@ -267,6 +267,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .projects-showcase-related .project-tile b { color: #fff; }
 .project-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 38px; }
 .projects-showcase-compact:not(.services-projects-showcase) .project-card-grid { grid-template-columns: repeat(4,1fr); }
+.projects-showcase-compact.projects-showcase-related .project-card-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
 .project-tile { position: relative; min-height: 430px; overflow: hidden; color: #fff; text-decoration: none; }
 .project-tile-placeholder { background: #bfc3c8; }
 .project-tile img { object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }

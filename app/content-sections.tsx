@@ -4,6 +4,7 @@ import { ServiceAreaMap } from "./service-area-map";
 import { copyParagraphs, copySubsections, getCopySection, masterContent, pageCopy, type CopyNode, type CopyPageKey } from "./master-content";
 import { aboutPortraitImage, projectImages, serviceSectionImages, suppliedProjectGalleries } from "./site-images";
 import { ScrollableWorkGallery } from "./interactive-sections";
+import { paths } from "./site-routes";
 
 type ProjectKey = "whitford" | "newLynn" | "manukau" | "botany";
 type ServiceKey = "service" | "renovations" | "designBuild" | "extensions" | "commercial";
@@ -81,7 +82,9 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
   const allProjects = !relatedTo && !compact;
   return <section className={`projects-showcase ${relatedTo || compact ? "projects-showcase-compact" : ""} ${compact ? "services-projects-showcase" : ""} ${allProjects ? "projects-showcase-all" : ""} ${relatedTo ? "projects-showcase-related" : ""}`}><div className="content-shell">
     <SectionHeading title={content.title} copy={copyParagraphs(content)[0]} />
-    <div className="project-card-grid">{copySubsections(content).map(project => {
+    <div className="project-card-grid">{relatedTo ? (Object.keys(projectImages) as ProjectKey[]).filter(project => project !== relatedTo).map(project =>
+      <Link className="project-tile project-tile-placeholder" href={paths[project]} key={project}><span><strong>{pageCopy[project].hero.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>
+    ) : copySubsections(content).map(project => {
       const card = <span><strong>{project.title}</strong>{project.title === "Whitford Heights" && <b>LEARN MORE&nbsp; →</b>}</span>;
       return project.title === "Whitford Heights"
         ? <Link className="project-tile" href="/projects/whitford-heights-design-build-auckland" key={project.title}><Image src={projectImages.whitford.hero.src} alt={projectImages.whitford.hero.alt} fill sizes="(max-width: 800px) calc(100vw - 32px), min(50vw - 39px, 641px)" />{card}</Link>
