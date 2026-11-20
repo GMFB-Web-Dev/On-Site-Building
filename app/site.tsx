@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNavigation } from "./mobile-navigation";
+import { EnquiryForm } from "./enquiry-form";
 import { ScrollableWorkGallery, TestimonialsCarousel } from "./interactive-sections";
 import { RevealObserver } from "./reveal-observer";
 import { ServiceAreaMap } from "./service-area-map";
@@ -207,15 +208,7 @@ export function ContactCTA({ blue = false }: { blue?: boolean }) {
 }
 
 function EnquirySection({ withMap = true }: { withMap?: boolean }) {
-  return <section className={`enquiry-section ${withMap ? "with-map" : ""}`}><div className="content-shell enquiry-grid"><form action="/contact-auckland-builders" method="get" aria-label="Project enquiry form">
-    <div className="field-pair"><label>FIRST NAME*<input name="firstName" placeholder="First Name" /></label><label>LAST NAME*<input name="lastName" placeholder="Last Name" /></label></div>
-    <div className="field-pair"><label>EMAIL*<input name="email" type="email" placeholder="Email" /></label><label>PHONE*<input name="phone" type="tel" placeholder="+64 21 345 6789" /></label></div>
-    <label>SELECT A SERVICE*<select name="service" defaultValue=""><option value="">Select One...</option>{Object.values(masterContent.services.labels).map((label) => <option key={label}>{label}</option>)}</select></label>
-    <label>PROJECT SIZE<select name="size" defaultValue="25 sqm"><option>25 sqm</option><option>50 sqm</option><option>100+ sqm</option></select></label>
-    <label>UPLOAD FILES HERE<input name="files" placeholder="E.g Designs or Building Consents" /></label>
-    <label>MESSAGE<textarea name="message" placeholder="Type your message here..." /></label>
-    <label className="checkbox"><input type="checkbox" name="terms" /> I AGREE TO THE TERMS AND CONDITIONS</label><button className="cta-button" type="submit">SUBMIT</button>
-  </form>{withMap && <ServiceAreaMap className="map-panel" />}</div></section>;
+  return <section className={`enquiry-section ${withMap ? "with-map" : ""}`}><div className="content-shell enquiry-grid"><EnquiryForm services={Object.values(masterContent.services.labels)} />{withMap && <ServiceAreaMap className="map-panel" />}</div></section>;
 }
 
 export function SiteFooter({ file }: { file: string }) {

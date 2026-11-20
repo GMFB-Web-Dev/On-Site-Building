@@ -63,8 +63,9 @@ The app queues these data-layer events:
 | --- | --- | --- |
 | `onsite_page_view` | `page_path` | Initial load and client-side URL changes |
 | `onsite_contact_click` | `contact_method` (`phone` or `email`), `page_path` | Business phone/email link click |
+| `onsite_enquiry_sent` | `page_path` | Resend accepts the business enquiry notification |
 
-No query parameters, form values, contact names, or enquiry messages are included in these custom events. Existing form submission behavior is unchanged; submitting the current GET form is not reported as a successful lead.
+No query parameters, form values, contact names, or enquiry messages are included in these custom events. Enquiry forms now submit privately through the Resend-backed `/api/contact` endpoint; a success event is emitted only after the business notification is accepted. See [contact email setup](contact-email.md).
 
 Use Tag Assistant to confirm the container is detected on the deployed domain. In GTM, configure the intended analytics tags/custom event triggers and publish the container. If using the custom page-view event for GA4, avoid also counting automatic/history page views for the same navigation. Installing GTM does not create a GA4 property, grant account ownership, or confirm Search Console verification.
 

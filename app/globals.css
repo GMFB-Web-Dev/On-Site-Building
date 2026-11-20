@@ -162,6 +162,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .enquiry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(42px,8vw,116px); align-items: stretch; }
 .enquiry-section:not(.with-map) .enquiry-grid { grid-template-columns: 1fr; }
 .enquiry-section form { display: flex; flex-direction: column; gap: 16px; }
+.enquiry-fields { display: flex; min-width: 0; flex-direction: column; gap: 16px; margin: 0; padding: 0; border: 0; }
+.visually-hidden,.form-honeypot { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.form-honeypot { left: -10000px; }
+.form-help { font: 400 13px/1.5 var(--font-manrope),sans-serif; }
+.form-field-error { color: #651414; font: 700 14px/1.5 var(--font-manrope),sans-serif; }
+.enquiry-section [aria-invalid="true"] { border-color: #651414; box-shadow: 0 0 0 1px #651414; }
+.form-feedback { padding: 20px; border: 1px solid var(--navy); background: var(--ice); font: 400 16px/1.5 var(--font-manrope),sans-serif; }
+.form-feedback p { margin: 8px 0 0; }
+.form-feedback-error { border-color: #651414; color: #651414; }
+.enquiry-section fieldset:disabled { opacity: .75; }
+.enquiry-section button:disabled,.enquiry-section fieldset:disabled button { cursor: wait; transform: none; }
+.form-upload-summary { font: 400 14px/1.5 var(--font-manrope),sans-serif; }
+.form-upload-summary ul { margin: 0; padding-left: 20px; overflow-wrap: anywhere; }
+.form-upload-summary button { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--navy); text-decoration: underline; cursor: pointer; }
 .field-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .enquiry-section label { display: flex; flex-direction: column; gap: 7px; color: var(--navy); font-size: 13px; font-weight: 800; }
 .enquiry-section input,.enquiry-section select,.enquiry-section textarea { width: 100%; border: 1px solid var(--navy); border-radius: 0; background: var(--ice); padding: 12px 14px; color: #111; font: 400 15px/1.4 var(--font-manrope),sans-serif; }

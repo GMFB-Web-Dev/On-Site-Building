@@ -8,12 +8,15 @@
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts tests/*.test.tsx",
-    "test:integration": "tsx --test tests/integration/*.test.ts"
+    "test:integration": "tsx --test tests/integration/*.test.ts",
+    "email:preview": "tsx scripts/preview-enquiry-emails.tsx"
   },
   "dependencies": {
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-email": "^6.11.16",
+    "resend": "^6.39.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

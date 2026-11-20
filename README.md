@@ -28,6 +28,10 @@ The blog index is `/building-advice-auckland`; `/blogs` redirects there. `/blogs
 
 See [CMS and tracking setup](docs/cms-and-tracking.md) for Vercel variables, webhook verification, GTM events, and deployment checks.
 
+## Enquiry forms
+
+The enquiry forms send branded business notifications and customer acknowledgements through Resend. Set the server-only `RESEND_API_KEY` variable before deploying. Sender/recipient defaults, optional overrides, attachment limits and local email previews are described in [contact email setup](docs/contact-email.md).
+
 ## Checks
 
 ```bash
