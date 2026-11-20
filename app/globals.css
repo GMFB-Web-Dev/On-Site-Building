@@ -262,8 +262,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .projects-showcase .section-heading p { color: #fff; }
 .projects-showcase-related { background: #fff; }
 .projects-showcase-related .section-heading p { color: #111; }
-.projects-showcase-related .project-tile-placeholder { background: #777; }
-.projects-showcase-related .project-tile::after { display: none; }
 .projects-showcase-related .project-tile b { color: #fff; }
 .project-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 38px; }
 .projects-showcase-compact:not(.services-projects-showcase) .project-card-grid { grid-template-columns: repeat(4,1fr); }
