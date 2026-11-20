@@ -1,24 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ServiceAreaMap } from "./service-area-map";
-import { copyParagraphs, copySubsections, getCopySection, masterContent, pageCopy, type CopyNode, type CopyPageKey, type CopySection } from "./master-content";
+import { copyParagraphs, copySubsections, getCopySection, masterContent, pageCopy, type CopyNode, type CopyPageKey } from "./master-content";
 import { aboutPortraitImage, projectImages, serviceSectionImages, suppliedProjectGalleries } from "./site-images";
 import { ScrollableWorkGallery } from "./interactive-sections";
 
 type ProjectKey = "whitford" | "newLynn" | "manukau" | "botany";
-export type BlogKey = "blog" | "blogExtension" | "blogBlending" | "blogNewHome" | "blogCommercial" | "blogDesignBuild";
 type ServiceKey = "service" | "renovations" | "designBuild" | "extensions" | "commercial";
 
 const servicePages: Record<ServiceKey, CopyPageKey> = { service: "service", renovations: "serviceRenovations", extensions: "serviceExtensions", designBuild: "serviceDesignBuild", commercial: "serviceCommercial" };
 const serviceImages: Record<ServiceKey, string> = { service: "figma-newbuild-intro.png", renovations: "figma-service-renovations.png", extensions: "figma-service-extensions.png", designBuild: "figma-service-design-build.png", commercial: "figma-service-commercial.png" };
-const blogs: { page: BlogKey; image: string; href: string }[] = [
-  { page: "blog", image: "figma-blog-renovate-rebuild.png", href: "/blogs/renovate-or-rebuild" },
-  { page: "blogExtension", image: "figma-blog-extension.png", href: "/blogs/planning-a-home-extension" },
-  { page: "blogBlending", image: "figma-blog-blending.png", href: "/blogs/blending-old-and-new" },
-  { page: "blogCommercial", image: "figma-blog-commercial.png", href: "/blogs/light-commercial-construction" },
-  { page: "blogDesignBuild", image: "figma-blog-design-build.png", href: "/blogs/design-and-build-process" },
-  { page: "blogNewHome", image: "figma-blog-new-home.png", href: "/blogs/building-a-new-home" },
-];
 
 function SectionHeading({ title, copy }: { title: string; copy?: string }) {
   return <header className="section-heading"><h2>{title}</h2>{copy && <p>{copy}</p>}</header>;
@@ -69,7 +60,7 @@ export function ValuesSection() {
 export function MissionSection() {
   return <section className="mission-section"><div className="content-shell mission-grid">
     {["OUR MISSION", "OUR PURPOSE"].map(title => { const content = getCopySection("about", title); return <article key={title}><h2>{content.title}</h2><CopyNodes nodes={content.nodes} /></article>; })}
-    <Link className="cta-button outline-button" href="/contact">CONTACT</Link>
+    <Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link>
   </div></section>;
 }
 
@@ -80,7 +71,7 @@ export function BenefitsSection({ service = "service" }: { service?: ServiceKey 
     <div className="benefits-photo"><Image src={serviceSectionImages[service]?.benefits ?? `/design/${service === "service" ? "figma-newbuild-benefits.png" : serviceImages[service]}`} alt={pageCopy[servicePages[service]].sections[0].title} fill sizes="(max-width: 800px) calc(100vw - 32px), (max-width: 1040px) calc(100vw - 48px), 624px" /></div>
     <div className="benefits-content"><SectionHeading title={content.title} /><div className="benefit-grid">
       {copySubsections(content).map((item, index) => <article className="benefit-card" key={item.title}><span><Image src={`/icons/${icons[index]}`} alt="" width={48} height={48} unoptimized /></span><h3>{item.title}</h3><CopyNodes nodes={item.nodes} /></article>)}
-    </div><Link className="cta-button outline-button" href="/contact">CONTACT</Link></div>
+    </div><Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link></div>
   </div></section>;
 }
 
@@ -93,7 +84,7 @@ export function ProjectsSection({ relatedTo, compact = false }: { relatedTo?: Pr
     <div className="project-card-grid">{copySubsections(content).map(project => {
       const card = <span><strong>{project.title}</strong>{project.title === "Whitford Heights" && <b>LEARN MORE&nbsp; →</b>}</span>;
       return project.title === "Whitford Heights"
-        ? <Link className="project-tile" href="/projects/whitford-heights" key={project.title}><Image src={projectImages.whitford.hero.src} alt={projectImages.whitford.hero.alt} fill sizes="(max-width: 800px) calc(100vw - 32px), min(50vw - 39px, 641px)" />{card}</Link>
+        ? <Link className="project-tile" href="/projects/whitford-heights-design-build-auckland" key={project.title}><Image src={projectImages.whitford.hero.src} alt={projectImages.whitford.hero.alt} fill sizes="(max-width: 800px) calc(100vw - 32px), min(50vw - 39px, 641px)" />{card}</Link>
         : <article className="project-tile project-tile-placeholder" id={sectionId(project.title)} key={project.title}>{card}</article>;
     })}</div>
   </div></section>;
@@ -111,41 +102,9 @@ export function ProjectGallerySection({ project }: { project: ProjectKey }) {
   return <ScrollableWorkGallery gallery={suppliedProjectGalleries[project]} heading="PROJECT GALLERY" />;
 }
 
-function BlogCards({ sections, related = false }: { sections: CopySection[]; related?: boolean }) {
-  const sizes = related
-    ? "(max-width: 800px) calc(100vw - 32px), (max-width: 1040px) calc(50vw - 40px), min(25vw - 36px, 304px)"
-    : "(max-width: 800px) calc(100vw - 32px), min(50vw - 40px, 640px)";
-  return <div className="blog-card-grid">{sections.map(section => {
-    const blog = blogs.find(blog => pageCopy[blog.page].hero.title === section.title);
-    if (!blog) throw new Error(`Missing blog route: ${section.title}`);
-    return <Link className="blog-card" href={blog.href} key={blog.page}><div><Image src={`/design/${blog.image}`} alt="" fill sizes={sizes} /></div><span><strong>{section.title}</strong><b>LEARN MORE&nbsp; →</b></span></Link>;
-  })}</div>;
-}
-
-export function BlogsSection() {
-  const content = getCopySection("blogs", "ALL BLOGS");
-  return <section className="blogs-grid-section"><div className="content-shell"><SectionHeading title={content.title} copy={copyParagraphs(content)[0]} /><BlogCards sections={copySubsections(content)} /></div></section>;
-}
-
 export function ServicesPromoSection() {
   const content = getCopySection("blogs", "OUR SERVICES");
-  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href="/services">SERVICES</Link></div></div></section>;
-}
-
-export function BlogArticleSection({ page }: { page: BlogKey }) {
-  const sections = pageCopy[page].sections.filter(section => !["OUR BLOGS", masterContent.contact.title].includes(section.title));
-  const wordCount = sections.flatMap(section => [section.title, ...section.nodes.flatMap(node => node.type === "list" ? node.items : [node.text])]).join(" ").trim().split(/\s+/).length;
-  return <article className="article-section"><div className="content-shell article-layout">
-    <aside aria-label="Table of contents"><strong>TABLE OF CONTENTS</strong><ol>{sections.map(section => <li key={section.title}><a href={`#${sectionId(section.title)}`}>{section.title}</a></li>)}</ol></aside>
-    <div className="article-body"><div className="article-meta"><span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span></div>
-      {sections.map((section, index) => <section id={sectionId(section.title)} key={section.title} className={index === sections.length - 1 ? "article-callout" : undefined}><h2>{section.title}</h2><CopyNodes nodes={section.nodes} />{index === sections.length - 1 && <Link className="cta-button outline-button" href="/contact">CONTACT</Link>}</section>)}
-    </div>
-  </div></article>;
-}
-
-export function RelatedBlogsSection({ page }: { page: BlogKey }) {
-  const content = getCopySection(page, "OUR BLOGS");
-  return <section className="related-blogs-section"><div className="content-shell"><SectionHeading title={content.title} copy={copyParagraphs(content)[0]} /><BlogCards sections={copySubsections(content)} related /></div></section>;
+  return <section className="services-promo-section"><div className="content-shell"><h2>{content.title}</h2><div><CopyNodes nodes={content.nodes} /><Link className="cta-button outline-button" href="/services-auckland">SERVICES</Link></div></div></section>;
 }
 
 export function ServiceAreaSection() {

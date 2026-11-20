@@ -7,11 +7,13 @@ const pages = JSON.parse(readFileSync("app/master-pages.json", "utf8"));
 const extracted = JSON.parse(execFileSync(process.execPath, ["scripts/extract-master-copy.mjs", "docs/On Site Copy Writing.docx"], { encoding: "utf8" }));
 assert.deepEqual(pages, extracted, "Website copy must match the checked-in master DOCX.");
 
-const mapping = readFileSync("app/site.tsx", "utf8").split("export const slugToPage")[1].split("};")[0];
-const routes = { home: "/", ...Object.fromEntries([...mapping.matchAll(/(?:"([^"]+)"|(\w+))\s*:\s*"([^"]+)"/g)].map(match => [match[3], `/${match[1] || match[2]}`])) };
+const { paths: routes, blogKeys } = await import("../app/site-routes.ts");
 const normalize = text => text.replace(/\s+/g, " ").trim().toLowerCase();
 let checked = 0;
+let checkedPages = 0;
 for (const [key, page] of Object.entries(pages)) {
+  // Published blog copy now belongs to Payload; verify it in the CMS integration suite.
+  if (key === "blogs" || blogKeys.includes(key)) continue;
   const response = await fetch(`${baseUrl}${routes[key]}`);
   assert.ok(response.ok, `${routes[key]} returned ${response.status}`);
   const html = await response.text();
@@ -23,5 +25,6 @@ for (const [key, page] of Object.entries(pages)) {
     }
   }
   console.log(`Verified ${routes[key]}`);
+  checkedPages++;
 }
-console.log(`${checked} headings, paragraphs and list items match the DOCX across ${Object.keys(pages).length} pages.`);
+console.log(`${checked} headings, paragraphs and list items match the DOCX across ${checkedPages} non-blog pages.`);
