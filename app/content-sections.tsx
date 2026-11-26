@@ -11,12 +11,12 @@ type ServiceKey = "service" | "renovations" | "designBuild" | "extensions" | "co
 
 const servicePages: Record<ServiceKey, CopyPageKey> = { service: "service", renovations: "serviceRenovations", extensions: "serviceExtensions", designBuild: "serviceDesignBuild", commercial: "serviceCommercial" };
 const blogs: { page: BlogKey; image: string; href: string }[] = [
-  { page: "blog", image: "figma-blog-renovate-rebuild.webp", href: "/blogs/renovate-or-rebuild-auckland" },
-  { page: "blogExtension", image: "figma-blog-extension.webp", href: "/blogs/planning-home-extension-auckland" },
-  { page: "blogBlending", image: "figma-blog-blending.webp", href: "/blogs/blending-old-new-home-renovation-auckland" },
-  { page: "blogCommercial", image: "figma-blog-commercial.webp", href: "/blogs/light-commercial-construction-auckland" },
-  { page: "blogDesignBuild", image: "figma-blog-design-build.webp", href: "/blogs/design-build-process-auckland" },
-  { page: "blogNewHome", image: "figma-blog-new-home.webp", href: "/blogs/building-new-home-auckland" },
+  { page: "blog", image: "figma-blog-renovate-rebuild.webp", href: paths.blog },
+  { page: "blogExtension", image: "figma-blog-extension.webp", href: paths.blogExtension },
+  { page: "blogBlending", image: "figma-blog-blending.webp", href: paths.blogBlending },
+  { page: "blogCommercial", image: "figma-blog-commercial.webp", href: paths.blogCommercial },
+  { page: "blogDesignBuild", image: "figma-blog-design-build.webp", href: paths.blogDesignBuild },
+  { page: "blogNewHome", image: "figma-blog-new-home.webp", href: paths.blogNewHome },
 ];
 
 function SectionHeading({ title, copy }: { title: string; copy?: string }) {
@@ -45,13 +45,21 @@ export function CertificationSection({ blue = false }: { blue?: boolean }) {
   </div></section>;
 }
 
+const localIntro: Record<ServiceKey, string> = {
+  service: "Planning a new home in Manurewa? Bring your site details and any drawings to our first conversation so we can talk through access, layout and the build sequence.",
+  renovations: "For a renovation in Manurewa, tell us which rooms need to change and whether you plan to live in the house during the work. Both affect how we stage the project.",
+  extensions: "If you’re extending a home in Manurewa, photos of the existing roofline, outdoor space and access down the side help us discuss where the addition could connect.",
+  designBuild: "Our Manurewa team works with an architect to take a new home from early ideas through construction. The Whitford Heights project shows how that process came together on a completed build.",
+  commercial: "For a shop or commercial fit-out in Manurewa, tell us about trading hours, delivery access and any areas that need to stay open while work is under way.",
+};
+
 export function IntroSection({ type }: { type: "about" | ServiceKey }) {
   const isService = type !== "about";
   const page = type === "about" ? "about" : servicePages[type];
   const content = pageCopy[page].sections[0];
   const image = type === "about" ? clientImages["about.built-from-the-ground-up"] : serviceMedia[type].overview;
   return <section className={`split-story-section ${isService ? "service-intro-section" : ""}`}><div className="content-shell split-story-grid">
-    <div className="split-story-copy"><SectionHeading title={content.title} /><CopyNodes nodes={content.nodes} /></div>
+    <div className="split-story-copy"><SectionHeading title={content.title} /><CopyNodes nodes={content.nodes} />{type !== "about" && <p>{localIntro[type]}</p>}</div>
     <div className={`split-story-media ${type === "about" ? "portrait-media" : ""}`}><Image src={image.src} alt={image.alt} fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
   </div></section>;
 }
@@ -67,7 +75,7 @@ export function ValuesSection() {
 export function MissionSection() {
   return <section className="mission-section"><div className="content-shell mission-grid">
     {["OUR MISSION", "OUR PURPOSE"].map(title => { const content = getCopySection("about", title); return <article key={title}><h2>{content.title}</h2><CopyNodes nodes={content.nodes} /></article>; })}
-    <Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link>
+    <Link className="cta-button outline-button" href={paths.contact}>CONTACT</Link>
   </div></section>;
 }
 
@@ -79,7 +87,7 @@ export function BenefitsSection({ service = "service" }: { service?: ServiceKey 
     {image && <div className="benefits-photo"><Image src={image.src} alt={image.alt} fill sizes="(max-width: 900px) 100vw, 45vw" /></div>}
     <div className="benefits-content"><SectionHeading title={content.title} /><div className="benefit-grid">
       {copySubsections(content).map((item, index) => <article className="benefit-card" key={item.title}><span><Image src={`/icons/${icons[index]}`} alt="" width={48} height={48} unoptimized /></span><h3>{item.title}</h3><CopyNodes nodes={item.nodes} /></article>)}
-    </div><Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link></div>
+    </div><Link className="cta-button outline-button" href={paths.contact}>CONTACT</Link></div>
   </div></section>;
 }
 
@@ -130,8 +138,8 @@ export function BlogArticleSection({ page }: { page: BlogKey }) {
   const wordCount = sections.flatMap(section => [section.title, ...section.nodes.flatMap(node => node.type === "list" ? node.items : [node.text])]).join(" ").trim().split(/\s+/).length;
   return <article className="article-section"><div className="content-shell article-layout">
     <aside aria-label="Table of contents"><strong>TABLE OF CONTENTS</strong><ol>{sections.map(section => <li key={section.title}><a href={`#${sectionId(section.title)}`}>{section.title}</a></li>)}</ol></aside>
-    <div className="article-body"><div className="article-meta"><span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span></div>
-      {sections.map((section, index) => <section id={sectionId(section.title)} key={section.title} className={index === sections.length - 1 ? "article-callout" : undefined}><h2>{section.title}</h2><CopyNodes nodes={section.nodes} />{index === sections.length - 1 && <Link className="cta-button outline-button" href="/contact-auckland-builders">CONTACT</Link>}</section>)}
+    <div className="article-body"><div className="article-meta"><span>By <Link href={paths.about}>On Site Building Construction</Link>, Manurewa</span><span>{Math.max(1, Math.ceil(wordCount / 200))} min read</span></div>
+      {sections.map((section, index) => <section id={sectionId(section.title)} key={section.title} className={index === sections.length - 1 ? "article-callout" : undefined}><h2>{section.title}</h2><CopyNodes nodes={section.nodes} />{index === sections.length - 1 && <Link className="cta-button outline-button" href={paths.contact}>CONTACT</Link>}</section>)}
     </div>
   </div></article>;
 }

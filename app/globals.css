@@ -524,7 +524,6 @@ a.project-tile:hover img { transform: scale(1.055); }
 .client-gallery-controls { display: flex; gap: 10px; }
 .client-gallery-controls button { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--navy); background: transparent; color: var(--navy); font-size: 24px; cursor: pointer; }
 .client-gallery-controls button:hover { background: var(--navy); color: #fff; }
-.client-gallery-controls .client-gallery-playback { width: auto; min-width: 58px; padding-inline: 8px; font-size: 14px; }
 .client-gallery-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 24px)/2); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--navy) #dce5f2; }
 .client-gallery-track > a,.client-gallery-track > .client-gallery-image { display: block; min-width: 0; scroll-snap-align: start; color: var(--navy); text-decoration: none; }
 .client-gallery-frame { display: block; overflow: hidden; aspect-ratio: 4/3; }

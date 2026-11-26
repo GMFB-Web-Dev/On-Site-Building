@@ -25,9 +25,7 @@ export function PhotoGallery({ title, images }: { title: string; images: Gallery
   const headingId = useId();
   const trackId = useId();
   const trackRef = useRef<HTMLDivElement>(null);
-  const mouseOver = useRef(false);
   const [canScroll, setCanScroll] = useState(false);
-  const [paused, setPaused] = useState(false);
   const photoCount = images.length;
 
   useEffect(() => {
@@ -39,38 +37,12 @@ export function PhotoGallery({ title, images }: { title: string; images: Gallery
     return () => observer.disconnect();
   }, [photoCount]);
 
-  useEffect(() => {
-    const track = trackRef.current;
-    const section = track?.closest("section");
-    if (!track || !section || !canScroll || paused) return;
-
-    let inView = false;
-    const observer = new IntersectionObserver(([entry]) => {
-      inView = entry.intersectionRatio >= 0.25;
-    }, { threshold: 0.25 });
-    observer.observe(track);
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const timer = window.setInterval(() => {
-      if (inView && !document.hidden && !reducedMotion.matches && !mouseOver.current && !section.contains(document.activeElement)) {
-        moveGallery(track, 1);
-      }
-    }, 4600);
-
-    return () => {
-      observer.disconnect();
-      window.clearInterval(timer);
-    };
-  }, [canScroll, paused]);
-
   if (!photoCount) return null;
 
   return (
     <section
       className={`client-gallery ${photoCount === 1 ? "client-gallery-single" : ""}`}
       aria-labelledby={headingId}
-      onPointerEnter={(event) => { mouseOver.current = event.pointerType === "mouse"; }}
-      onPointerLeave={() => { mouseOver.current = false; }}
     >
       <div className="content-shell">
         <div className="client-gallery-heading">
@@ -78,9 +50,6 @@ export function PhotoGallery({ title, images }: { title: string; images: Gallery
           {canScroll && (
             <div className="client-gallery-controls" role="group" aria-label={`${title} controls`}>
               <button type="button" aria-label="Previous photos" aria-controls={trackId} onClick={() => { if (trackRef.current) moveGallery(trackRef.current, -1); }}>‹</button>
-              <button type="button" className="client-gallery-playback" aria-controls={trackId} onClick={() => setPaused((current) => !current)}>
-                {paused ? "Play" : "Pause"}
-              </button>
               <button type="button" aria-label="Next photos" aria-controls={trackId} onClick={() => { if (trackRef.current) moveGallery(trackRef.current, 1); }}>›</button>
             </div>
           )}
