@@ -1,10 +1,11 @@
+import { JsonLdScript } from "next-seo";
 import { pageStructuredData } from "./seo";
 import type { SitePageKey } from "./site-routes";
 
-export function JsonLd({ data }: { data: unknown }) {
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
+export function JsonLd({ data, scriptKey }: { data: unknown; scriptKey: string }) {
+  return <JsonLdScript scriptKey={scriptKey} data={data} />;
 }
 
 export function PageStructuredData({ page }: { page: SitePageKey }) {
-  return <JsonLd data={pageStructuredData(page)} />;
+  return <JsonLd scriptKey="page-schema" data={pageStructuredData(page)} />;
 }

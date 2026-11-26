@@ -1,3 +1,5 @@
+import { serviceOfferings, offeringAnchor } from "./service-offerings";
+import type { ServicePageKey } from "./site-routes";
 import Image from "next/image";
 import Link from "next/link";
 import { ServiceAreaMap } from "./service-area-map";
@@ -59,7 +61,12 @@ export function IntroSection({ type }: { type: "about" | ServiceKey }) {
   const content = pageCopy[page].sections[0];
   const image = type === "about" ? clientImages["about.built-from-the-ground-up"] : serviceMedia[type].overview;
   return <section className={`split-story-section ${isService ? "service-intro-section" : ""}`}><div className="content-shell split-story-grid">
-    <div className="split-story-copy"><SectionHeading title={content.title} /><CopyNodes nodes={content.nodes} />{type !== "about" && <p>{localIntro[type]}</p>}</div>
+    <div className="split-story-copy"><SectionHeading title={content.title} /><CopyNodes nodes={content.nodes} />{type !== "about" && <>
+      <p>{localIntro[type]}</p>
+      <ul aria-label="Types of work">{serviceOfferings[servicePages[type] as ServicePageKey].map(name =>
+        <li key={name} id={offeringAnchor(name)}>{name}</li>
+      )}</ul>
+    </>}</div>
     <div className={`split-story-media ${type === "about" ? "portrait-media" : ""}`}><Image src={image.src} alt={image.alt} fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
   </div></section>;
 }

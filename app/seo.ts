@@ -1,3 +1,4 @@
+import { serviceOfferings, offeringAnchor } from "./service-offerings";
 import type { Metadata } from "next";
 import { clientImages, getProject, projects } from "./client-media";
 import legacyImageSizes from "./legacy-image-sizes.json";
@@ -13,7 +14,7 @@ export const absoluteUrl = (path: string) => new URL(path, SITE_URL).href;
 type PageDetails = { title: string; description: string; label: string };
 export const pageDetails: Record<SitePageKey, PageDetails> = {
   home: {
-    title: "Manurewa Builders, South Auckland | On Site Building Construction",
+    title: "South Auckland Builders Based in Manurewa | On Site Building Construction",
     description: "Manurewa-based builders for home renovations, extensions, new homes and light commercial work across Auckland. Discuss your plans with On Site Building.",
     label: "Home",
   },
@@ -23,17 +24,17 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "Building services",
   },
   service: {
-    title: "New Home Builders in Manurewa | On Site Building",
+    title: "New Home Builders in South Auckland | On Site Building",
     description: "Build your new home in South Auckland with experienced local builders. From foundations to finishing, we coordinate construction and specialist trades.",
     label: "New home builders",
   },
   serviceRenovations: {
-    title: "Home Renovations in Manurewa | On Site Building",
+    title: "House Renovations in South Auckland | On Site Building",
     description: "House renovations and alterations across South Auckland and wider Auckland. Discuss layout changes and structural work with our Manurewa-based builders.",
     label: "House renovations",
   },
   serviceExtensions: {
-    title: "Home Extensions in Manurewa | On Site Building",
+    title: "Home Extensions in South Auckland | On Site Building",
     description: "Plan a house extension with our South Auckland builders. Discuss extra bedrooms, living areas and how new spaces connect naturally to your existing home.",
     label: "Home extensions",
   },
@@ -73,7 +74,7 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "New Lynn",
   },
   about: {
-    title: "About Our Manurewa Builders, South Auckland | On Site Building",
+    title: "About Our South Auckland Builders Based in Manurewa | On Site Building",
     description: "Meet On Site Building Construction, based in Manurewa, South Auckland. Over 30 years of building experience, practical advice and clear project communication.",
     label: "About us",
   },
@@ -196,14 +197,17 @@ export const siteStructuredData = {
   "@graph": [
     {
       "@type": "Organization", "@id": businessId, name: SITE_NAME,
-      legalName: "Onsite Building Construction Limited", alternateName: "Onsite Building",
+      foundingDate: "2003", legalName: "Onsite Building Construction Limited", alternateName: "Onsite Building",
       url: SITE_URL, logo: absoluteUrl("/osbc-header-logo.png"), image: absoluteUrl(clientImages["home.hero"].src),
       telephone: "+6421715196", email: "onsitebuilding1@gmail.com",
       description: "Manurewa-based building company providing renovations, extensions, new homes, design and build, and light commercial construction in Auckland, Waikato and Whangārei.",
       areaServed: regionalCoverage,
+      hasOfferCatalog: { "@type": "OfferCatalog", name: "Building services", url: absoluteUrl(paths.services) },
       contactPoint: { "@type": "ContactPoint", telephone: "+6421715196", email: "onsitebuilding1@gmail.com", contactType: "project enquiries", availableLanguage: "English" },
     },
-    { "@type": "WebSite", "@id": websiteId, url: SITE_URL, name: SITE_NAME, alternateName: "Onsite Building", publisher: { "@id": businessId }, inLanguage: "en-NZ" },
+    { "@type": "WebSite", "@id": websiteId, url: SITE_URL, name: SITE_NAME, alternateName: "Onsite Building", publisher: { "@id": businessId }, inLanguage: "en-NZ",
+      hasPart: [paths.services, paths.projects, paths.blogs].map(path => absoluteUrl(path)),
+    },
   ],
 };
 
@@ -240,6 +244,16 @@ export function pageStructuredData(page: SitePageKey) {
     "@type": "Service", "@id": `${url}#service`, url,
     name: serviceNames[page as ServicePageKey], serviceType: serviceNames[page as ServicePageKey], description: details.description,
     provider: { "@id": businessId }, areaServed: regionalCoverage,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog", name: serviceNames[page as ServicePageKey],
+      itemListElement: serviceOfferings[page as ServicePageKey].map(name => {
+        const anchor = url + "#" + offeringAnchor(name);
+        return { "@type": "Offer", itemOffered: {
+          "@type": "Service", "@id": anchor, url: anchor, name, serviceType: name,
+          provider: { "@id": businessId },
+        } };
+      }),
+    },
     mainEntityOfPage: { "@id": pageId }, image: absoluteUrl(image.src),
   });
   if (article) graph.push({

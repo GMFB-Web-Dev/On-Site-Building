@@ -119,6 +119,11 @@ async function main() {
   const registry = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
   const entries = Object.entries(registry.paths);
   const approvedCopy = JSON.parse(readFileSync(join(root, "app/master-pages.json"), "utf8"));
+  const heroes = JSON.parse(readFileSync(join(root, "app/approved-heroes.json"), "utf8"));
+  for (const [key, hero] of Object.entries(heroes)) {
+    approvedCopy[key].hero.title = hero.title;
+    if (hero.introduction) approvedCopy[key].hero.nodes = [{ type: "paragraph", text: hero.introduction }];
+  }
   const routeSet = new Set(entries.map(([, path]) => path));
   const redirects = registry.permanentRedirects;
   if (!Array.isArray(redirects)) throw new Error("The route registry must export permanentRedirects.");
@@ -262,9 +267,15 @@ async function main() {
     const nodes = data.flatMap(objects);
     const typed = nodes.filter((node) => types(node).length);
     const definitions = new Set(typed.map((node) => node["@id"]).filter(Boolean));
+    const children = typed.filter(node => types(node).includes("Offer")).map(offer => offer.itemOffered);
+    for (const child of children) {
+      check(child?.["@type"] === "Service" && child.url?.startsWith(canonical + "#") &&
+        document.querySelectorAll("[id]").some(el => el.id === child.url.split("#")[1] && el.text === child.name),
+        "visible-subservice", path);
+    }
     const byType = (type) => typed.filter((node) => types(node).includes(type));
     for (const type of Object.keys(typePages)) {
-      const count = byType(type).length;
+      const count = byType(type).filter(node => !children.includes(node)).length;
       entityCounts[type] += count;
       if (count) typePages[type]++;
       const wanted = type === "Service" ? servicePaths.has(path) : type === "BlogPosting" ? blogPaths.has(path) : path !== "/";
@@ -291,7 +302,7 @@ async function main() {
       const items = breadcrumb.itemListElement;
       check(Array.isArray(items) && items.length >= 2 && items.every((item, index) => item.position === index + 1 && normalized(item.name) && (index === items.length - 1 || item.item)), "breadcrumb-items", path);
     }
-    for (const node of [...byType("Service"), ...byType("BlogPosting")]) {
+    for (const node of [...byType("Service").filter(node => !children.includes(node)), ...byType("BlogPosting")]) {
       check(node.url === canonical && Boolean(node.name || node.headline) && Boolean(node.description), "main-entity-content", path);
       const pageReference = typeof node.mainEntityOfPage === "string" ? node.mainEntityOfPage : node.mainEntityOfPage?.["@id"];
       check(typeof pageReference === "string" && pageReference.split("#")[0] === canonical, "main-entity-page", path);

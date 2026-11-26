@@ -206,7 +206,7 @@ function ResponsiveHero({ file }: { file:string }) {
   const extra = heroAlternatives[page] ?? [];
   const images = [original, ...extra].filter((photo, index, all) => all.findIndex(other => other.src === photo.src) === index);
   const hero = pageCopy[page].hero;
-  const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: paths.about } : { label: "SERVICES", href: paths.services };
+  const secondary = page === "about" ? { label: "Explore our projects", href: paths.projects } : file === "hero-services.png" ? { label: "ABOUT US", href: paths.about } : { label: "SERVICES", href: paths.services };
   return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 

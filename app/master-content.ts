@@ -1,3 +1,4 @@
+import approvedHeroes from "./approved-heroes.json";
 import sourcePages from "./master-pages.json";
 
 // Extracted verbatim from docs/On Site Copy Writing.docx.
@@ -8,7 +9,16 @@ export type CopyNode =
 export type CopySection = { title: string; nodes: CopyNode[] };
 export type CopyPage = { hero: CopySection; sections: CopySection[] };
 export type CopyPageKey = keyof typeof sourcePages;
-export const pageCopy = sourcePages as Record<CopyPageKey, CopyPage>;
+export const pageCopy = { ...sourcePages } as Record<CopyPageKey, CopyPage>;
+for (const [key, override] of Object.entries(approvedHeroes)) {
+  const page = key as CopyPageKey;
+  const hero = sourcePages[page].hero;
+  pageCopy[page] = {
+    ...sourcePages[page],
+    hero: { title: override.title, nodes: "introduction" in override
+      ? [{ type: "paragraph", text: override.introduction }] : hero.nodes as CopyNode[] },
+  } as CopyPage;
+}
 
 export function getCopySection(page: CopyPageKey, title: string): CopySection {
   const section = pageCopy[page].sections.find(section => section.title.toUpperCase() === title.toUpperCase());

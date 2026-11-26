@@ -20,5 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  return <html lang="en-NZ" className={`${montserrat.variable} ${manrope.variable}`}><body><a className="skip-link" href="#main-content">Skip to main content</a><JsonLd data={siteStructuredData} />{children}</body></html>;
+  return <html lang="en-NZ" className={`${montserrat.variable} ${manrope.variable}`}><body><a className="skip-link" href="#main-content">Skip to main content</a><JsonLd scriptKey="site-schema" data={siteStructuredData} />{children}</body></html>;
 }
