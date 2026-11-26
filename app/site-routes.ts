@@ -12,7 +12,7 @@ export const paths = {
   manukau: "/projects/manukau-heights-new-home-auckland",
   botany: "/projects/botany-new-home-east-auckland",
   newLynn: "/projects/new-lynn-new-home-west-auckland",
-  about: "/manurewa-builders",
+  about: "/manurewa-builder",
   blogs: "/manurewa-building-advice",
   blog: "/blogs/renovate-or-rebuild-manurewa",
   blogExtension: "/blogs/planning-home-extension-manurewa",
