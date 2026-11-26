@@ -135,7 +135,7 @@ export function SiteHeader({ file }: { file: string }) {
       </div>
       <Link href={paths.about} className={active === "about" ? "active" : ""}>About us</Link>
       <div className={`nav-service-dropdown ${projectsActive ? "active" : ""}`}>
-        <Link className="nav-service-trigger" href="/building-projects-auckland">Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
+        <Link className="nav-service-trigger" href={paths.projects}>Projects <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" /></svg></Link>
         <div className="service-dropdown-menu">{projectItems.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}</div>
       </div>
       <Link href={paths.blogs} className={active.startsWith("blog") ? "active" : ""}>Blogs</Link>
@@ -206,16 +206,17 @@ function ResponsiveHero({ file }: { file:string }) {
   const extra = heroAlternatives[page] ?? [];
   const images = [original, ...extra].filter((photo, index, all) => all.findIndex(other => other.src === photo.src) === index);
   const hero = pageCopy[page].hero;
-  const secondary = file === "hero-services.png" ? { label: "ABOUT US", href: "/about-onsite-building-auckland" } : { label: "SERVICES", href: paths.services };
-  return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  const secondary = page === "about" ? { label: "Explore our projects", href: paths.projects } : file === "hero-services.png" ? { label: "ABOUT US", href: paths.about } : { label: "SERVICES", href: paths.services };
+  return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
 }
 
 function HomeAbout() {
   return <section className="home-about-section">
     <div className="home-about-copy">
       <h2>{masterContent.about.title}</h2>
+      <p>Based in Manurewa, South Auckland, we build new homes, renovate existing houses and extend homes for growing families.</p>
       {masterContent.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      <Link className="cta-button" href="/about-onsite-building-auckland">ABOUT US</Link>
+      <Link className="cta-button" href={paths.about}>ABOUT US</Link>
     </div>
     <div className="home-about-placeholder"><Image src={clientImages["home.about"].src} alt={clientImages["home.about"].alt} fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
   </section>;
@@ -340,7 +341,7 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
 function ProjectHero({ hero, project }: { hero: [string,string]; project: ProjectKey }) {
   const photos = getProject(project);
   const images = [photos.hero, ...photos.gallery.slice(0,1)];
-  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href="/contact-auckland-builders">CONTACT</Link><Link className="cta-button cta-button-on-image" href={paths.services}>SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={paths.services}>SERVICES</Link></div></div></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {

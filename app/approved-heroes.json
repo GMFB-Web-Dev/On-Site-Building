@@ -1,0 +1,10 @@
+{
+  "home": { "title": "South Auckland builders based in Manurewa" },
+  "about": {
+    "title": "Meet your Manurewa builder",
+    "introduction": "On Site Building Construction was founded in 2003. Based in Manurewa, our team brings over 30 years of building experience to new homes, renovations and extensions across South Auckland and beyond. Whether we’re building from the ground up or making room for a growing family, we keep you involved with honest advice and clear communication from the start."
+  },
+  "serviceRenovations": { "title": "House renovations in South Auckland" },
+  "serviceExtensions": { "title": "Home extensions in South Auckland" },
+  "service": { "title": "New home builders in South Auckland" }
+}

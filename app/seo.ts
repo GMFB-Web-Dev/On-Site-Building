@@ -1,19 +1,20 @@
+import { serviceOfferings, offeringAnchor } from "./service-offerings";
 import type { Metadata } from "next";
-import { clientImages, getProject } from "./client-media";
+import { clientImages, getProject, projects } from "./client-media";
 import legacyImageSizes from "./legacy-image-sizes.json";
 import { pageCopy, masterContent } from "./master-content";
 import { paths, serviceKeys, blogKeys, type SitePageKey, type ServicePageKey, type BlogPageKey } from "./site-routes";
 
 export const SITE_URL = "https://onsitebuild.co.nz";
 export const SITE_NAME = "On Site Building Construction";
-export const SEO_UPDATED = "2026-11-18";
+export const SEO_UPDATED = "2026-11-27";
 export const absoluteUrl = (path: string) => new URL(path, SITE_URL).href;
 
 // Search metadata is deliberately separate from the approved page copy.
 type PageDetails = { title: string; description: string; label: string };
 export const pageDetails: Record<SitePageKey, PageDetails> = {
   home: {
-    title: "South Auckland Builders | On Site Building Construction",
+    title: "South Auckland Builders Based in Manurewa | On Site Building Construction",
     description: "Manurewa-based builders for home renovations, extensions, new homes and light commercial work across Auckland. Discuss your plans with On Site Building.",
     label: "Home",
   },
@@ -23,27 +24,27 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "Building services",
   },
   service: {
-    title: "New Home Builders South Auckland | On Site Building",
+    title: "New Home Builders in South Auckland | On Site Building",
     description: "Build your new home in South Auckland with experienced local builders. From foundations to finishing, we coordinate construction and specialist trades.",
     label: "New home builders",
   },
   serviceRenovations: {
-    title: "House Renovations South Auckland | On Site Building",
+    title: "House Renovations in South Auckland | On Site Building",
     description: "House renovations and alterations across South Auckland and wider Auckland. Discuss layout changes and structural work with our Manurewa-based builders.",
     label: "House renovations",
   },
   serviceExtensions: {
-    title: "Home Extensions South Auckland | On Site Building",
+    title: "Home Extensions in South Auckland | On Site Building",
     description: "Plan a house extension with our South Auckland builders. Discuss extra bedrooms, living areas and how new spaces connect naturally to your existing home.",
     label: "Home extensions",
   },
   serviceDesignBuild: {
-    title: "Design & Build East Auckland | On Site Building",
-    description: "Explore design and build in East Auckland, backed by completed projects in Whitford and Botany. Our team works alongside an architect from concept to construction.",
+    title: "Design & Build in Manurewa | On Site Building",
+    description: "Plan a design-and-build home in Manurewa, backed by completed projects in Whitford and Botany. Our team works alongside an architect from concept to construction.",
     label: "Design and build",
   },
   serviceCommercial: {
-    title: "Light Commercial Builders South Auckland | On Site Building",
+    title: "Light Commercial Builders in Manurewa | On Site Building",
     description: "South Auckland light commercial building for shops, dairies, laundromats and alterations. Discuss practical layouts and building work with On Site Building.",
     label: "Light commercial building",
   },
@@ -73,12 +74,12 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "New Lynn",
   },
   about: {
-    title: "About Our South Auckland Builders | On Site Building",
+    title: "About Our South Auckland Builders Based in Manurewa | On Site Building",
     description: "Meet On Site Building Construction, based in Manurewa, South Auckland. Over 30 years of building experience, practical advice and clear project communication.",
     label: "About us",
   },
   blogs: {
-    title: "Auckland Building & Renovation Advice | On Site Building",
+    title: "Building Advice from Manurewa Builders | On Site Building",
     description: "Read practical advice for Auckland renovations, extensions, new homes, design and build, and light commercial projects. Plan your next step with confidence.",
     label: "Building advice",
   },
@@ -113,7 +114,7 @@ export const pageDetails: Record<SitePageKey, PageDetails> = {
     label: "Building a new home",
   },
   contact: {
-    title: "Contact Our Auckland Builders | On Site Building",
+    title: "Building Quotes in Manurewa | On Site Building",
     description: "Discuss your renovation, extension, new home or commercial project. Call 021 715 196 or send your location, budget and plans to our Manurewa building team.",
     label: "Contact",
   },
@@ -184,6 +185,7 @@ export function breadcrumbsFor(page: SitePageKey) {
 const businessId = `${SITE_URL}/#business`;
 const websiteId = `${SITE_URL}/#website`;
 export const regionalCoverage = [
+  { "@type": "Place", name: "Manurewa", containedInPlace: { "@type": "City", name: "Auckland" } },
   { "@type": "AdministrativeArea", name: "Auckland", containedInPlace: { "@type": "Country", name: "New Zealand" } },
   { "@type": "AdministrativeArea", name: "Waikato", containedInPlace: { "@type": "Country", name: "New Zealand" } },
   { "@type": "City", name: "Whangārei", containedInPlace: { "@type": "Country", name: "New Zealand" } },
@@ -195,14 +197,17 @@ export const siteStructuredData = {
   "@graph": [
     {
       "@type": "Organization", "@id": businessId, name: SITE_NAME,
-      legalName: "Onsite Building Construction Limited", alternateName: "Onsite Building",
+      foundingDate: "2003", legalName: "Onsite Building Construction Limited", alternateName: "Onsite Building",
       url: SITE_URL, logo: absoluteUrl("/osbc-header-logo.png"), image: absoluteUrl(clientImages["home.hero"].src),
       telephone: "+6421715196", email: "onsitebuilding1@gmail.com",
       description: "Manurewa-based building company providing renovations, extensions, new homes, design and build, and light commercial construction in Auckland, Waikato and Whangārei.",
       areaServed: regionalCoverage,
+      hasOfferCatalog: { "@type": "OfferCatalog", name: "Building services", url: absoluteUrl(paths.services) },
       contactPoint: { "@type": "ContactPoint", telephone: "+6421715196", email: "onsitebuilding1@gmail.com", contactType: "project enquiries", availableLanguage: "English" },
     },
-    { "@type": "WebSite", "@id": websiteId, url: SITE_URL, name: SITE_NAME, alternateName: "Onsite Building", publisher: { "@id": businessId }, inLanguage: "en-NZ" },
+    { "@type": "WebSite", "@id": websiteId, url: SITE_URL, name: SITE_NAME, alternateName: "Onsite Building", publisher: { "@id": businessId }, inLanguage: "en-NZ",
+      hasPart: [paths.services, paths.projects, paths.blogs].map(path => absoluteUrl(path)),
+    },
   ],
 };
 
@@ -239,6 +244,16 @@ export function pageStructuredData(page: SitePageKey) {
     "@type": "Service", "@id": `${url}#service`, url,
     name: serviceNames[page as ServicePageKey], serviceType: serviceNames[page as ServicePageKey], description: details.description,
     provider: { "@id": businessId }, areaServed: regionalCoverage,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog", name: serviceNames[page as ServicePageKey],
+      itemListElement: serviceOfferings[page as ServicePageKey].map(name => {
+        const anchor = url + "#" + offeringAnchor(name);
+        return { "@type": "Offer", itemOffered: {
+          "@type": "Service", "@id": anchor, url: anchor, name, serviceType: name,
+          provider: { "@id": businessId },
+        } };
+      }),
+    },
     mainEntityOfPage: { "@id": pageId }, image: absoluteUrl(image.src),
   });
   if (article) graph.push({
@@ -249,6 +264,30 @@ export function pageStructuredData(page: SitePageKey) {
     publisher: { "@id": businessId }, mainEntityOfPage: { "@id": pageId }, inLanguage: "en-NZ",
     articleSection: "Building and renovation advice",
   });
+  const project = projects.find(entry => entry.key === page);
+  if (project) {
+    const photos = [project.hero, project.overview, ...project.gallery];
+    graph[0].mainEntity = { "@id": `${url}#project` };
+    graph.push({
+      "@type": "CreativeWork", "@id": `${url}#project`, name: title, description: details.description,
+      mainEntityOfPage: { "@id": pageId }, creator: { "@id": businessId },
+      contentLocation: { "@type": "Place", name: project.name },
+      image: photos.map(photo => ({
+        "@type": "ImageObject", "@id": absoluteUrl(photo.src), contentUrl: absoluteUrl(photo.src),
+        caption: photo.alt, width: photo.width, height: photo.height,
+      })),
+    });
+  }
+  if (page === "projects" || page === "blogs") {
+    const keys = page === "blogs" ? blogKeys : projects.map(project => project.key);
+    graph[0].mainEntity = { "@id": `${url}#list` };
+    graph.push({
+      "@type": "ItemList", "@id": `${url}#list`, name: details.label,
+      itemListElement: keys.map((key, index) => ({
+        "@type": "ListItem", position: index + 1, name: pageDetails[key].label, url: absoluteUrl(paths[key]),
+      })),
+    });
+  }
   if (page === "services") graph.push({
     "@type": "ItemList", "@id": `${url}#services`, name: "Building services in Auckland",
     itemListElement: serviceKeys.map((key, index) => ({ "@type": "ListItem", position: index + 1, name: pageDetails[key].label, url: absoluteUrl(paths[key]) })),
