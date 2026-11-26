@@ -12,7 +12,7 @@ export const paths = {
   manukau: "/projects/manukau-heights-new-home-auckland",
   botany: "/projects/botany-new-home-east-auckland",
   newLynn: "/projects/new-lynn-new-home-west-auckland",
-  about: "/south-auckland-building-company",
+  about: "/manurewa-builders",
   blogs: "/manurewa-building-advice",
   blog: "/blogs/renovate-or-rebuild-manurewa",
   blogExtension: "/blogs/planning-home-extension-manurewa",
@@ -96,6 +96,7 @@ export const permanentRedirects = [
   ...Object.entries(previousCanonicalPaths),
   ...previousServiceDetailPaths,
   ...Object.entries(launchPaths),
+  ["about", "/south-auckland-building-company"],
 ].map(([key, source]) => ({
   source,
   destination: paths[key as SitePageKey],
