@@ -195,6 +195,13 @@ function HeroOverlay() {
   return <span className="hero-shade" aria-hidden="true" />;
 }
 
+function HeroLocationBadges() {
+  return <ul className="hero-location-badges" role="list" aria-label="Builder location">
+    <li>South Auckland Builders</li>
+    <li>Based in Manurewa</li>
+  </ul>;
+}
+
 function ResponsiveHero({ file }: { file:string }) {
   const { page, image } = heroContent[file];
   const replacementKeys: Record<string, string> = {
@@ -207,7 +214,7 @@ function ResponsiveHero({ file }: { file:string }) {
   const images = [original, ...extra].filter((photo, index, all) => all.findIndex(other => other.src === photo.src) === index);
   const hero = pageCopy[page].hero;
   const secondary = page === "about" ? { label: "Explore our projects", href: paths.projects } : file === "hero-services.png" ? { label: "ABOUT US", href: paths.about } : { label: "SERVICES", href: paths.services };
-  return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content">{page === "home" && <span style={{ display: "block", marginBottom: 12, fontFamily: '"Snell Roundhand", "Segoe Script", "Apple Chancery", "URW Chancery L", cursive', fontSize: "clamp(17px, 2.2vw, 23px)", lineHeight: 1.3 }}>{hero.title}</span>}<h1>{page === "home" ? "Built Around the Way You Live." : hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div></section>;
+  return <section className="responsive-hero"><HeroSlideshow images={images} label={`${hero.title} photographs`} /><HeroOverlay/><div className="hero-content"><h1>{page === "home" ? "Built Around the Way You Live." : hero.title}</h1><p>{copyParagraphs(hero)[0]}</p><div><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={secondary.href}>{secondary.label}</Link></div></div><HeroLocationBadges /></section>;
 }
 
 function HomeAbout() {
@@ -341,14 +348,14 @@ function VisualSection({ section, page }: { section: Section; page: PageKey }) {
 function ProjectHero({ hero, project }: { hero: [string,string]; project: ProjectKey }) {
   const photos = getProject(project);
   const images = [photos.hero, ...photos.gallery.slice(0,1)];
-  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={paths.services}>SERVICES</Link></div></div></section>;
+  return <section className="project-hero"><HeroSlideshow images={images} label={`${photos.name} project photographs`} /><HeroOverlay/><div><h1>{hero[0]}</h1><p>{hero[1]}</p><div className="project-actions"><Link className="cta-button cta-button-on-image" href={paths.contact}>CONTACT</Link><Link className="cta-button cta-button-on-image" href={paths.services}>SERVICES</Link></div></div><HeroLocationBadges /></section>;
 }
 
 export function SitePage({ page }: { page: PageKey }) {
   if (page === "serviceAreas") return <div className="site-canvas">
     <SiteHeader file="navbar-services.png" />
     <main id="main-content">
-      <header className="interior-intro content-shell"><h1>Service Areas</h1><p>Based in South Auckland, we work across Auckland, Waikato and Whangārei.</p></header>
+      <header className="interior-intro content-shell"><h1>Service Areas</h1><p>Based in South Auckland, we work across Auckland, Waikato and Whangārei.</p><HeroLocationBadges /></header>
       <CoverageSection />
     </main><SiteFooter file="footer-serviceAreas.png" />
   </div>;
