@@ -198,7 +198,7 @@ function HeroOverlay() {
 function HeroLocationBadges() {
   return <ul className="hero-location-badges" role="list" aria-label="Builder location">
     <li>South Auckland Builders</li>
-    <li>Based in Manurewa</li>
+    <li>Based In Manurewa</li>
   </ul>;
 }
 
